@@ -1,13 +1,37 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>registerPage</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">registerPage</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="flex-center">
+  <ion-card class="ion-margin-top">
+    <ion-card-header>
+      <ion-card-title>Create a new account</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-grid>
+        <ion-row class="ion-justify-content-start">
+          <ion-col>
+            <ion-input label="First name" labelPlacement="stacked" placeholder="" type="text"></ion-input>
+          </ion-col>
+          <ion-col>
+            <ion-input label="Last name" labelPlacement="stacked" placeholder="" type="text"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-left: 5px;">
+          <ion-input label="Email" labelPlacement="stacked" placeholder="" type="email"></ion-input>
+        </ion-row>
+        <ion-row style="margin-left: 5px;">
+          <ion-input label="Phone number" labelPlacement="stacked" placeholder="" type="tel"></ion-input>
+        </ion-row>
+        <ion-row style="margin-left: 5px;">
+          <ion-input label="Password" labelPlacement="stacked" placeholder="" type="password"></ion-input>
+        </ion-row>
+        <ion-row style="margin-left: 5px;">
+          <ion-input label="Confirm password" labelPlacement="stacked" placeholder="" type="password"></ion-input>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  
+    <ion-button expand="full" type="submit" style="align-self: flex-start;text-transform: initial;">Register</ion-button>
+    <ion-button class="ion-float-left" fill="clear" expand="full" style="text-transform: initial;">Already have an account?</ion-button>
+  </ion-card>
+  </div>
 </ion-content>
