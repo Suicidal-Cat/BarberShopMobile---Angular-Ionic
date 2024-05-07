@@ -6,15 +6,18 @@
       </ion-card-header>
     
       <ion-card-content>
-        <ion-item>
-          <ion-input label="Email" labelPlacement="stacked" placeholder="" type="email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input label="Password" labelPlacement="stacked" placeholder="" type="Password"></ion-input>
-        </ion-item>
-        <ion-button expand="full" type="submit">LOGIN</ion-button>
-        <ion-button class="ion-float-left" fill="clear" expand="full" style="text-transform: initial;">Forgot your password?</ion-button>
-        <ion-button class="ion-float-left" fill="clear" expand="full" style="text-transform: initial;">Register here</ion-button>
+      <form #loginForm="ngForm" (ngSubmit)="loginUser(loginForm)">
+        <ion-input label="Email" labelPlacement="floating" placeholder="" type="email" 
+        required email ngModel name="Email" #emailE="ngModel" pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"></ion-input>
+        <!-- <ion-text  *ngIf="emailE.dirty && emailE.errors?.['email']" color="danger">Invalid email address</ion-text> -->
+
+        <ion-input label="Password" labelPlacement="floating" placeholder="" type="password" required minlength="8" ngModel name="Password" #passwordE="ngModel"></ion-input>
+        <ion-text  *ngIf="passwordE.dirty && passwordE.errors?.['minlength']" color="danger">Password must have at least 8 characters</ion-text>
+
+        <ion-button expand="block" type="submit" [disabled]="loginForm.invalid">LOGIN</ion-button>
+        <ion-button class="ion-float-left" fill="clear" expand="block" style="text-transform: initial;">Forgot your password?</ion-button>
+        <ion-button class="ion-float-left" fill="clear" expand="block" style="text-transform: initial;">Register here</ion-button>
+      </form>
       </ion-card-content>
     </ion-card>
   </div>

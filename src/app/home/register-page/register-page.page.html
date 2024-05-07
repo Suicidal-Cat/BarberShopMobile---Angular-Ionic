@@ -6,31 +6,37 @@
     </ion-card-header>
   
     <ion-card-content>
+      <form #registerForm="ngForm" (ngSubmit)="registerUser(registerForm)">
       <ion-grid>
         <ion-row class="ion-justify-content-start">
           <ion-col>
-            <ion-input label="First name" labelPlacement="stacked" placeholder="" type="text"></ion-input>
+            <ion-input label="First name" labelPlacement="floating" placeholder="" type="text" required ngModel name="FirstName"></ion-input>
           </ion-col>
           <ion-col>
-            <ion-input label="Last name" labelPlacement="stacked" placeholder="" type="text"></ion-input>
+            <ion-input label="Last name" labelPlacement="floating" placeholder="" type="text" required ngModel name="LastName"></ion-input>
           </ion-col>
         </ion-row>
         <ion-row style="margin-left: 5px;">
-          <ion-input label="Email" labelPlacement="stacked" placeholder="" type="email"></ion-input>
+          <ion-input label="Email" labelPlacement="floating" placeholder="" type="email" 
+          required ngModel name="Email" pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"></ion-input>
         </ion-row>
         <ion-row style="margin-left: 5px;">
-          <ion-input label="Phone number" labelPlacement="stacked" placeholder="" type="tel"></ion-input>
+          <ion-input label="Phone number" labelPlacement="floating" placeholder="+38XXXXXXXXXXX" type="text" 
+          required ngModel name="PhoneNumber" pattern="^\+(381|387|382|385)([1-9][0-9]{0,2})?([0-9]{6,7})$" #phoneE="ngModel"></ion-input>
+          <ion-text  *ngIf="phoneE.dirty && phoneE.errors?.['pattern']" color="danger">Format: +38XXXXXXXXXXX</ion-text>
         </ion-row>
         <ion-row style="margin-left: 5px;">
-          <ion-input label="Password" labelPlacement="stacked" placeholder="" type="password"></ion-input>
+          <ion-input label="Password" labelPlacement="floating" placeholder="" type="password" required minlength="8" ngModel name="Password" #passwordE="ngModel"></ion-input>
         </ion-row>
         <ion-row style="margin-left: 5px;">
-          <ion-input label="Confirm password" labelPlacement="stacked" placeholder="" type="password"></ion-input>
+          <ion-input label="Confirm password" labelPlacement="floating" placeholder="" type="password" required minlength="8" ngModel name="ConfirmPassword" #passwordConfirmE="ngModel"></ion-input>
+          <ion-text  *ngIf="passwordConfirmE.dirty && passwordConfirmE.value!=passwordE.value" color="danger">Password doesn't match.</ion-text>
         </ion-row>
       </ion-grid>
+      <ion-button expand="full" type="submit" style="text-transform: initial;" [disabled]="registerForm.invalid || (passwordConfirmE.value!=passwordE.value)">Register</ion-button>
+      </form>
     </ion-card-content>
   
-    <ion-button expand="full" type="submit" style="align-self: flex-start;text-transform: initial;">Register</ion-button>
     <ion-button class="ion-float-left" fill="clear" expand="full" style="text-transform: initial;">Already have an account?</ion-button>
   </ion-card>
   </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-register-page',
@@ -12,4 +13,8 @@ export class RegisterPagePage implements OnInit {
   ngOnInit() {
   }
 
+  registerUser(registerForm:NgForm){
+    delete registerForm.value['ConfirmPassword'];
+    console.log(registerForm.value)
+  }
 }
