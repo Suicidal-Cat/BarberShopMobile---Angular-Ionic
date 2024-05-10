@@ -10,15 +10,16 @@
       <ion-grid>
         <ion-row class="ion-justify-content-start">
           <ion-col>
-            <ion-input label="First name" labelPlacement="floating" placeholder="" type="text" required ngModel name="FirstName"></ion-input>
+            <ion-input label="First name" labelPlacement="floating" placeholder="" type="text" required minlength="3" ngModel name="FirstName"></ion-input>
           </ion-col>
           <ion-col>
-            <ion-input label="Last name" labelPlacement="floating" placeholder="" type="text" required ngModel name="LastName"></ion-input>
+            <ion-input label="Last name" labelPlacement="floating" placeholder="" type="text" required minlength="3" ngModel name="LastName"></ion-input>
           </ion-col>
         </ion-row>
         <ion-row style="margin-left: 5px;">
           <ion-input label="Email" labelPlacement="floating" placeholder="" type="email" 
           required ngModel name="Email" pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"></ion-input>
+          <ion-text  *ngIf="emailExists" color="danger">Email is already taken.</ion-text>
         </ion-row>
         <ion-row style="margin-left: 5px;">
           <ion-input label="Phone number" labelPlacement="floating" placeholder="+38XXXXXXXXXXX" type="text" 
@@ -33,10 +34,19 @@
           <ion-text  *ngIf="passwordConfirmE.dirty && passwordConfirmE.value!=passwordE.value" color="danger">Password doesn't match.</ion-text>
         </ion-row>
       </ion-grid>
-      <ion-button expand="full" type="submit" style="text-transform: initial;" [disabled]="registerForm.invalid || (passwordConfirmE.value!=passwordE.value)">Register</ion-button>
+      <ion-button expand="full" type="submit" style="text-transform: initial;" [disabled]="registerForm.invalid || (passwordConfirmE.value!=passwordE.value)">
+        <div *ngIf="showSpinner">
+          <ion-spinner></ion-spinner>
+        </div>
+        <div *ngIf="!showSpinner">
+          Register
+        </div>
+      </ion-button>
       </form>
+      <div *ngIf="showError">
+        <ion-text color="danger">There is a problem with your registration. Please try again later.</ion-text>
+      </div>
     </ion-card-content>
-  
     <ion-button class="ion-float-left" fill="clear" expand="full" style="text-transform: initial;">Already have an account?</ion-button>
   </ion-card>
   </div>
