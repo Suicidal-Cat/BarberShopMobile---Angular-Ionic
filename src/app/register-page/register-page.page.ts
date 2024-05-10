@@ -27,7 +27,7 @@ export class RegisterPagePage implements OnInit {
       next:(response) =>{
         this.showSpinner=false;
         this.emailExists=false;
-        this.router.navigateByUrl("/home");
+        this.router.navigateByUrl("/login");
       },
       error: error =>{
         //this.showError=true;

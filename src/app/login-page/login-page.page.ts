@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AccountService } from '../services/Account/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -8,14 +10,27 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginPagePage implements OnInit {
 
-  constructor() { }
+  showSpinner=false;
+  showError=false;
+
+  constructor(private accountService:AccountService,private router:Router) { }
 
   ngOnInit() {
   }
 
   loginUser(loginForm:NgForm){
-    console.log(loginForm.value)
-    console.log(loginForm)
+    this.showSpinner=true;
+    this.accountService.login(loginForm.value).subscribe({
+      next:(response)=>{
+        console.log(response);
+        this.router.navigateByUrl("/home");
+        this.showSpinner=false;
+      },
+      error:(error)=>{
+        this.showError=true;
+        this.showSpinner=false;
+      }
+    })
   }
 
 }
