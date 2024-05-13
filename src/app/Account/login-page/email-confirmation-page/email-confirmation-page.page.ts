@@ -19,15 +19,17 @@ export class EmailConfirmationPagePage implements OnInit {
 
   sendLinkEmail(emailForm: NgForm) {
     this.accountService.resendEmailConfirmation(emailForm.value["Email"]).subscribe({
-      next: (data)=>{
+      next: (data:any)=>{
+        console.log(data);
         this.showError=false;
-        this.responseMessage="Confirmation link is sent. Please confirm your email.";
+        this.responseMessage=data.message as string;
       },
       error:(error)=>{
         console.log(error.error);
         this.responseMessage=error.error;
         this.showError=true;
-      }
+      },
+      
     });
   }
 
