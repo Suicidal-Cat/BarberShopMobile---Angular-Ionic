@@ -1,0 +1,31 @@
+<ion-content [fullscreen]="true">
+  <div class="flex-center">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Resend email confirmation link</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <div *ngIf="showError">
+          <ion-text color="danger">{{responseMessage}}</ion-text>
+        </div>
+
+        <div *ngIf="showError==false && responseMessage!=''">
+          <ion-text color="success">{{responseMessage}}</ion-text>
+        </div>
+      
+      <form #emailForm="ngForm" (ngSubmit)="sendLinkEmail(emailForm)">
+
+        <ion-input label="Email" labelPlacement="floating" placeholder="" type="email" 
+        required email ngModel name="Email" 
+        pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"></ion-input>
+        
+        <ion-button expand="block" type="submit" [disabled]="emailForm.invalid">
+            LOGIN
+        </ion-button>
+      </form>     
+      </ion-card-content>
+      <ion-button class="ion-float-left" fill="clear" expand="block" style="text-transform: initial;" routerLink="/login">Login here</ion-button>
+    </ion-card>
+  </div>
+</ion-content>
