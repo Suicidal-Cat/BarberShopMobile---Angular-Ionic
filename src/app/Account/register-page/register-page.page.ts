@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AccountService } from '../services/Account/account.service';
+import { AccountService } from '../../services/Account/account.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +13,7 @@ export class RegisterPagePage implements OnInit {
   showSpinner=false;
   emailExists=false;
   showError=false;
+  isAlertOpen=false;
 
   constructor(private accountService:AccountService,private router:Router) { }
 
@@ -28,7 +29,7 @@ export class RegisterPagePage implements OnInit {
       next:(response) =>{
         this.showSpinner=false;
         this.emailExists=false;
-        this.router.navigateByUrl("/login");
+        this.setAlertOpen(true);
       },
       error: error =>{
         //this.showError=true;
@@ -41,5 +42,10 @@ export class RegisterPagePage implements OnInit {
         this.showSpinner=false;
       }
     });
+  }
+
+  setAlertOpen(isOpen:boolean){
+    this.isAlertOpen=isOpen;
+    if(this.isAlertOpen==false)this.router.navigateByUrl("/login");
   }
 }

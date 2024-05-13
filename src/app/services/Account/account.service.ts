@@ -91,4 +91,12 @@ export class AccountService {
     }
     return false;
   }
+
+  resendEmailConfirmation(email:string){
+    return this.http.post(`${environment.appUrl}/mobile/account/resend-email-confirmation/${email}`,{});
+  }
+
+  sendPasswordResetLink(email:string){
+    return this.http.post(`${environment.appUrl}/mobile/account/forgotPassword/${email}`,{});
+  }
 }

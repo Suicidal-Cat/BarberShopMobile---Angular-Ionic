@@ -10,6 +10,10 @@ const routes: Routes = [
   },  {
     path: 'email-confirmation-page',
     loadChildren: () => import('./email-confirmation-page/email-confirmation-page.module').then( m => m.EmailConfirmationPagePageModule)
+  },
+  {
+    path: 'password-reset-page',
+    loadChildren: () => import('./password-reset-page/password-reset-page.module').then( m => m.PasswordResetPagePageModule)
   }
 
 ];
