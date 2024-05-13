@@ -17,6 +17,7 @@ export class RegisterPagePage implements OnInit {
   constructor(private accountService:AccountService,private router:Router) { }
 
   ngOnInit() {
+    if(this.accountService.isAuthenticated())this.router.navigateByUrl("/home");
   }
 
   registerUser(registerForm:NgForm){

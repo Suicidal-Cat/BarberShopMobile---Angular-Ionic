@@ -12,22 +12,25 @@ export class LoginPagePage implements OnInit {
 
   showSpinner=false;
   showError=false;
+  errorMessage!:string;
 
   constructor(private accountService:AccountService,private router:Router) { }
 
   ngOnInit() {
+    if(this.accountService.isAuthenticated())this.router.navigateByUrl("/home");
   }
 
   loginUser(loginForm:NgForm){
     this.showSpinner=true;
     this.accountService.login(loginForm.value).subscribe({
       next:(response)=>{
-        console.log(response);
         this.router.navigateByUrl("/home");
         this.showSpinner=false;
       },
       error:(error)=>{
         this.showError=true;
+        if(error.status==0 || error.status==500)this.errorMessage="There is something wrong. Please try again later."
+        else this.errorMessage="Invalid email or password."
         this.showSpinner=false;
       }
     })

@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { authenticationGuard } from './guards/authentication.guard';
 
 const routes: Routes = [
   {
     path: 'home',
+    canMatch:[authenticationGuard],
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {

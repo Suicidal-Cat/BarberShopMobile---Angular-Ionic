@@ -7,7 +7,7 @@
     
       <ion-card-content>
         <div *ngIf="showError">
-          <ion-text color="danger">Invalid email or password</ion-text>
+          <ion-text color="danger">{{errorMessage}}</ion-text>
         </div>
       <form #loginForm="ngForm" (ngSubmit)="loginUser(loginForm)">
         <ion-input label="Email" labelPlacement="floating" placeholder="" type="email" 
