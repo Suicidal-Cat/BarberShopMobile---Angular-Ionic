@@ -17,7 +17,13 @@ export class PasswordResetPagePage implements OnInit {
   }
 
   sendLinkPassword(passwordForm: NgForm) {
-    this.accountService.sendPasswordResetLink(passwordForm.value["Email"]).subscribe({
+    const resendPassword=this.accountService.sendPasswordResetLink(passwordForm.value["Email"]);
+    if(resendPassword==undefined){
+      this.responseMessage="There is something wrong. Please try again later.";
+      this.showError=true;
+      return;
+    }
+    resendPassword.subscribe({
       next: (data:any)=>{
         this.showError=false;
         this.responseMessage=data.message as string;

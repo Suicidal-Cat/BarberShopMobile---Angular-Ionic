@@ -1,10 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Login } from 'src/app/models/Account/login';
 import { Register } from 'src/app/models/Account/register';
 import { User } from 'src/app/models/Account/user';
+import { Link } from 'src/app/models/Hateoas/Link';
+import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,23 +15,30 @@ import { environment } from 'src/environments/environment';
 export class AccountService {
 
   private loggedUser:User | null=null;
+  private rootLinks!:Link[];
 
   constructor(private http:HttpClient,private router:Router) { }
 
   register(model:Register){
-    return this.http.post(`${environment.appUrl}/mobile/account/register`,model,{responseType: 'text'});
+    const link=this.rootLinks.find((link)=>link.rel=="register");
+    if(link!=undefined){
+      return this.http.request(link.method,link.href,{body:model});
+    }
+    else return undefined;
   }
 
   login(model:Login){
-    return this.http.post<User>(`${environment.appUrl}/mobile/account/login`,model).pipe(
-      map((user:User)=>{
-        if(user){
-          this.setUser(user);
-          //return user;
-        }
-        //return null;
-      })
-    );;
+    const link=this.rootLinks.find((link)=>link.rel=="login");
+    if(link!=undefined){
+      return this.http.request<User>(link.method,link?.href,{body:model}).pipe(
+        map((user:User)=>{
+          if(user){
+            this.setUser(user);
+          }
+        })
+      );
+    }
+    return undefined;
   }
 
   logout(){
@@ -62,9 +71,16 @@ export class AccountService {
       return undefined;
     }
 
+    if(this.rootLinks==undefined){
+      console.log("da")
+      return undefined;
+    }
+    const link=this.rootLinks.find((link)=>link.rel=="refreshToken");
+    if(link==undefined)return undefined;
     let headers=new HttpHeaders();
     headers=headers.set('Authorization','Bearer '+ jwt);
-    return this.http.get<User>(`${environment.appUrl}/mobile/account/refreshToken`,{headers}).pipe(
+
+    return this.http.request<User>(link.method,link.href,{headers}).pipe(
       map((user:User)=>{
         if(user){
           this.setUser(user);
@@ -93,10 +109,23 @@ export class AccountService {
   }
 
   resendEmailConfirmation(email:string){
-    return this.http.post(`${environment.appUrl}/mobile/account/resend-email-confirmation/${email}`,{});
+    const link=this.rootLinks.find((link)=>link.rel=="resendEmail");
+    if(link==undefined)return undefined;
+    return this.http.request(link.method,`${link.href}/${email}`,{body:{}});
   }
 
   sendPasswordResetLink(email:string){
-    return this.http.post(`${environment.appUrl}/mobile/account/forgotPassword/${email}`,{});
+    const link=this.rootLinks.find((link)=>link.rel=="forgotPassword");
+    if(link==undefined)return undefined;
+    return this.http.request(link.method,`${link.href}/${email}`,{body:{}});
+  }
+
+  rootNavigation(){
+    let headers=new HttpHeaders();
+    headers=headers.set('Accept','application/vnd.barber.hateoas+json');
+    this.http.get<LinkCollection<string>>(`${environment.appUrl}/mobile`,{headers}).subscribe({
+      next:(value:LinkCollection<string>)=>{this.rootLinks=value.links},
+      error:(error)=>console.log(error)
+    })
   }
 }

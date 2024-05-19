@@ -22,19 +22,26 @@ export class LoginPagePage implements OnInit {
 
   loginUser(loginForm:NgForm){
     this.showSpinner=true;
-    this.accountService.login(loginForm.value).subscribe({
-      next:(response)=>{
-        this.router.navigateByUrl("/home");
-        this.showSpinner=false;
-      },
-      error:(error)=>{
-        console.log(error);
-        if(error.status==0 || error.status==500)this.errorMessage="There is something wrong. Please try again later."
-        else this.errorMessage=error.error;
-        this.showError=true;
-        this.showSpinner=false;
-      }
-    })
+    const login=this.accountService.login(loginForm.value);
+    if(login==undefined){
+      this.showError=true;
+      this.showSpinner=false;
+      this.errorMessage="There is something wrong. Please try again later."
+    }
+    else {
+      login.subscribe({
+        next:(response)=>{
+          this.router.navigateByUrl("/home");
+          this.showSpinner=false;
+        },
+        error:(error)=>{
+          if(error.status==0 || error.status==500)this.errorMessage="There is something wrong. Please try again later."
+          else this.errorMessage=error.error;
+          this.showError=true;
+          this.showSpinner=false;
+        }
+      })
+    }
   }
 
 }

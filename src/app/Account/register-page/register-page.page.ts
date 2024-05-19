@@ -25,14 +25,20 @@ export class RegisterPagePage implements OnInit {
     this.showSpinner=true;
 
     delete registerForm.value['ConfirmPassword'];
-    this.accountService.register(registerForm.value).subscribe({
+    const register=this.accountService.register(registerForm.value);
+    if(register==undefined){
+      this.emailExists=false;
+      this.showError=true;
+      this.showSpinner=false;
+      return;
+    }
+    register.subscribe({
       next:(response) =>{
         this.showSpinner=false;
         this.emailExists=false;
         this.setAlertOpen(true);
       },
       error: error =>{
-        //this.showError=true;
         console.log(error.error);
         if(error.error=="Email is already taken!")this.emailExists=true;
         else {

@@ -7,17 +7,18 @@ import { AccountService } from './services/Account/account.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit{
-  constructor(private accountService:AccountService) {}
+  constructor(private accountService:AccountService) {
+  }
 
   ngOnInit(): void {
-    this.checkUser();
+    this.accountService.rootNavigation();
   }
 
-  private checkUser(){
-    const jwt=this.accountService.getJWT();
-    if(jwt!=null){
-      const result=this.accountService.refreshUser(jwt);
-      if(result!=undefined)result.subscribe();
-    }
-  }
+  // private checkUser(){
+  //   const jwt=this.accountService.getJWT();
+  //   if(jwt!=null){
+  //     const result=this.accountService.refreshUser(jwt);
+  //     if(result!=undefined)result.subscribe();
+  //   }
+  // }
 }
