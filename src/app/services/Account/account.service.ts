@@ -30,10 +30,11 @@ export class AccountService {
   login(model:Login){
     const link=this.rootLinks.find((link)=>link.rel=="login");
     if(link!=undefined){
-      return this.http.request<User>(link.method,link?.href,{body:model}).pipe(
-        map((user:User)=>{
+      return this.http.request<LinkCollection<User>>(link.method,link?.href,{body:model}).pipe(
+        map((user:LinkCollection<User>)=>{
           if(user){
-            this.setUser(user);
+            this.setUser(user.value);
+            console.log(user.value);
           }
         })
       );
@@ -80,10 +81,10 @@ export class AccountService {
     let headers=new HttpHeaders();
     headers=headers.set('Authorization','Bearer '+ jwt);
 
-    return this.http.request<User>(link.method,link.href,{headers}).pipe(
-      map((user:User)=>{
+    return this.http.request<LinkCollection<User>>(link.method,link.href,{headers}).pipe(
+      map((user:LinkCollection<User>)=>{
         if(user){
-          this.setUser(user);
+          this.setUser(user.value);
         }
       })
     );
