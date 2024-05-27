@@ -1,5 +1,5 @@
 export interface Link{
-    href:string,
-    method:string,
-    rel:string,
+    Href:string,
+    Method:string,
+    Rel:string,
 }

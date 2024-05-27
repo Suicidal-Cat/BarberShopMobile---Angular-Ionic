@@ -17,20 +17,21 @@ export class AccountService {
   private loggedUser:User | null=null;
   private rootLinks!:Link[];
 
-  constructor(private http:HttpClient,private router:Router) { }
+  constructor(private http:HttpClient,private router:Router) {
+   }
 
   register(model:Register){
-    const link=this.rootLinks.find((link)=>link.rel=="register");
+    const link=this.rootLinks.find((link)=>link.Rel=="register");
     if(link!=undefined){
-      return this.http.request(link.method,link.href,{body:model});
+      return this.http.request(link.Method,link.Href,{body:model});
     }
     else return undefined;
   }
 
   login(model:Login){
-    const link=this.rootLinks.find((link)=>link.rel=="login");
+    const link=this.rootLinks.find((link)=>link.Rel=="login");
     if(link!=undefined){
-      return this.http.request<LinkCollection<User>>(link.method,link?.href,{body:model}).pipe(
+      return this.http.request<LinkCollection<User>>(link.Method,link?.Href,{body:model}).pipe(
         map((user:LinkCollection<User>)=>{
           if(user){
             this.setUser(user.value);
@@ -73,15 +74,14 @@ export class AccountService {
     }
 
     if(this.rootLinks==undefined){
-      console.log("da")
       return undefined;
     }
-    const link=this.rootLinks.find((link)=>link.rel=="refreshToken");
+    const link=this.rootLinks.find((link)=>link.Rel=="refreshToken");
     if(link==undefined)return undefined;
     let headers=new HttpHeaders();
     headers=headers.set('Authorization','Bearer '+ jwt);
 
-    return this.http.request<LinkCollection<User>>(link.method,link.href,{headers}).pipe(
+    return this.http.request<LinkCollection<User>>(link.Method,link.Href,{headers}).pipe(
       map((user:LinkCollection<User>)=>{
         if(user){
           this.setUser(user.value);
@@ -110,22 +110,22 @@ export class AccountService {
   }
 
   resendEmailConfirmation(email:string){
-    const link=this.rootLinks.find((link)=>link.rel=="resendEmail");
+    const link=this.rootLinks.find((link)=>link.Rel=="resendEmail");
     if(link==undefined)return undefined;
-    return this.http.request(link.method,`${link.href}/${email}`,{body:{}});
+    return this.http.request(link.Method,`${link.Href}/${email}`,{body:{}});
   }
 
   sendPasswordResetLink(email:string){
-    const link=this.rootLinks.find((link)=>link.rel=="forgotPassword");
+    const link=this.rootLinks.find((link)=>link.Rel=="forgotPassword");
     if(link==undefined)return undefined;
-    return this.http.request(link.method,`${link.href}/${email}`,{body:{}});
+    return this.http.request(link.Method,`${link.Href}/${email}`,{body:{}});
   }
 
   rootNavigation(){
     let headers=new HttpHeaders();
     headers=headers.set('Accept','application/vnd.barber.hateoas+json');
     this.http.get<LinkCollection<string>>(`${environment.appUrl}/mobile`,{headers}).subscribe({
-      next:(value:LinkCollection<string>)=>{this.rootLinks=value.links},
+      next:(value:LinkCollection<string>)=>{this.rootLinks=value.Links;},
       error:(error)=>console.log(error)
     })
   }

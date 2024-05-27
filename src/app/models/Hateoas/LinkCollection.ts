@@ -1,6 +1,6 @@
 import { Link } from "./Link";
 
 export interface LinkCollection<T>{
-    links:Link[],
+    Links:Link[],
     value:T,
 }
