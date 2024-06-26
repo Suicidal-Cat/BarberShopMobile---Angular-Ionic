@@ -112,13 +112,15 @@ export class AccountService {
   resendEmailConfirmation(email:string){
     const link=this.rootLinks.find((link)=>link.Rel=="resendEmail");
     if(link==undefined)return undefined;
-    return this.http.request(link.Method,`${link.Href}/${email}`,{body:{}});
+    const hrefMail=link.Href.replace("/email",`/${email}`);
+    return this.http.request(link.Method,hrefMail,{body:{}});
   }
 
   sendPasswordResetLink(email:string){
     const link=this.rootLinks.find((link)=>link.Rel=="forgotPassword");
     if(link==undefined)return undefined;
-    return this.http.request(link.Method,`${link.Href}/${email}`,{body:{}});
+    const hrefMail=link.Href.replace("/email",`/${email}`);
+    return this.http.request(link.Method,hrefMail,{body:{}});
   }
 
   rootNavigation(){
