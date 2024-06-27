@@ -11,7 +11,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.accountService.rootNavigation();
+    this.accountService.refreshService();
   }
 
   // private checkUser(){

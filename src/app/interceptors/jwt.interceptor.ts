@@ -19,7 +19,15 @@ export class JwtInterceptor implements HttpInterceptor {
     if(jwt){
       request=request.clone({
         setHeaders:{
-          Authorization: `Bearer ${jwt}`
+          Authorization: `Bearer ${jwt}`,
+          Accept: "application/vnd.barber.hateoas+json"
+        }
+      });
+    }
+    else {
+      request=request.clone({
+        setHeaders:{
+          Accept: "application/vnd.barber.hateoas+json"
         }
       });
     }

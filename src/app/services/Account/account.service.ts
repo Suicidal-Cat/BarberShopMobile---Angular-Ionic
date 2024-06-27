@@ -16,6 +16,7 @@ export class AccountService {
 
   private loggedUser:User | null=null;
   private rootLinks!:Link[];
+  private userLinks!:Link[];
 
   constructor(private http:HttpClient,private router:Router) {
    }
@@ -34,8 +35,9 @@ export class AccountService {
       return this.http.request<LinkCollection<User>>(link.Method,link?.Href,{body:model}).pipe(
         map((user:LinkCollection<User>)=>{
           if(user){
-            this.setUser(user.value);
-            console.log(user.value);
+            this.setUser(user.Value);
+            this.userLinks=user.Links;
+            localStorage.setItem("userLinks",JSON.stringify(this.userLinks));
           }
         })
       );
@@ -45,6 +47,7 @@ export class AccountService {
 
   logout(){
     localStorage.removeItem(environment.userKey);
+    localStorage.removeItem("userLinks");
     this.loggedUser=null;
     this.router.navigateByUrl('/login');
   }
@@ -76,15 +79,17 @@ export class AccountService {
     if(this.rootLinks==undefined){
       return undefined;
     }
+
     const link=this.rootLinks.find((link)=>link.Rel=="refreshToken");
     if(link==undefined)return undefined;
     let headers=new HttpHeaders();
     headers=headers.set('Authorization','Bearer '+ jwt);
-
     return this.http.request<LinkCollection<User>>(link.Method,link.Href,{headers}).pipe(
       map((user:LinkCollection<User>)=>{
         if(user){
-          this.setUser(user.value);
+          this.setUser(user.Value);
+          this.userLinks=user.Links;
+          console.log(this.userLinks)
         }
       })
     );
@@ -95,8 +100,8 @@ export class AccountService {
     const key=localStorage.getItem(environment.userKey);
     if(key){
       const user=JSON.parse(key);
-      return user.jwt;
-    }
+      return user.JWT;
+    } 
     else return null;
   }
 
@@ -104,6 +109,7 @@ export class AccountService {
     const key=localStorage.getItem(environment.userKey);
     if(key){
       const user:User=JSON.parse(key);
+      //moras date isto da uzmes u obzir
       if(user)return true;
     }
     return false;
@@ -127,8 +133,38 @@ export class AccountService {
     let headers=new HttpHeaders();
     headers=headers.set('Accept','application/vnd.barber.hateoas+json');
     this.http.get<LinkCollection<string>>(`${environment.appUrl}/mobile`,{headers}).subscribe({
-      next:(value:LinkCollection<string>)=>{this.rootLinks=value.Links;},
+      next:(value:LinkCollection<string>)=>{
+        this.rootLinks=value.Links;
+        localStorage.setItem("rootLinks",JSON.stringify(this.rootLinks));
+        console.log(this.rootLinks);
+      },
       error:(error)=>console.log(error)
     })
   }
+
+  getServicePaginationLink(){
+    const link=this.userLinks.find((link)=>link.Rel=="servicePagination");
+    if(link==undefined)return undefined;
+    else return link;
+  }
+
+  refreshService(){
+    const rLinks=localStorage.getItem("rootLinks");
+    if(rLinks)this.rootLinks=JSON.parse(rLinks);
+    else this.rootNavigation();
+
+    const key=localStorage.getItem(environment.userKey);
+    if(key){
+      const u:User=JSON.parse(key);
+      this.setUser(u);
+      this.loggedUser=u;
+    }else this.logout();
+
+    const userLinks=localStorage.getItem("userLinks");
+    if(userLinks)this.userLinks=JSON.parse(userLinks);
+    else this.logout();
+
+  }
+
+
 }

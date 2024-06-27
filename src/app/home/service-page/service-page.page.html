@@ -1,0 +1,30 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>service-page</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+
+<ion-content [fullscreen]="true">
+  <ion-input label="Service Name" labelPlacement="floating" placeholder="" type="text"
+  required ngModel name="serviceName" #serviceName="ngModel"></ion-input>
+
+  <ion-list *ngIf="serviceCategories.length>0">
+  <ion-item>
+    <ion-select label="Category" interface="popover" placeholder="Select category" [(ngModel)]="selectedCategory">
+      <ion-select-option [value]="">None</ion-select-option>
+      <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Name" >{{item.Name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  </ion-list>
+
+  <ion-button (click)="filterServices(serviceName.value,selectedCategory)">Filter</ion-button>
+  <ion-button>Create service</ion-button>
+
+
+  <app-service-cards [services]="services"></app-service-cards>
+  
+  <ion-button (click)="getPrevPage()" [disabled]="!prevPage"><<</ion-button>
+  <ion-button (click)="getNextPage()" [disabled]="!nextPage">>></ion-button>
+
+</ion-content>
