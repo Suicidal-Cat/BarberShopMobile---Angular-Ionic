@@ -9,17 +9,13 @@
   <ion-input label="Service Name" labelPlacement="floating" placeholder="" type="text"
   required ngModel name="serviceName" #serviceName="ngModel"></ion-input>
 
-  <ion-list *ngIf="serviceCategories.length>0">
-  <ion-item>
-    <ion-select label="Category" interface="popover" placeholder="Select category" [(ngModel)]="selectedCategory">
-      <ion-select-option [value]="">None</ion-select-option>
-      <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Name" >{{item.Name}}</ion-select-option>
-    </ion-select>
-  </ion-item>
-  </ion-list>
+  <ion-select label="Category" interface="popover" placeholder="Select category" [(ngModel)]="selectedCategory">
+    <ion-select-option [value]="">None</ion-select-option>
+    <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Name" >{{item.Name}}</ion-select-option>
+  </ion-select>
 
   <ion-button (click)="filterServices(serviceName.value,selectedCategory)">Filter</ion-button>
-  <ion-button>Create service</ion-button>
+  <ion-button routerLink="details/0">Create service</ion-button>
 
 
   <app-service-cards [services]="services"></app-service-cards>

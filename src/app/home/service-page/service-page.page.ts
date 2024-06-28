@@ -31,8 +31,6 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
       else this.prevPage=false;
       if(this.services.Links.find((link)=>link.Rel=="next")!=undefined)this.nextPage=true;
       else this.nextPage=false;
-      const link=services.Links.find((link)=>link.Rel=="serviceCategories");
-      if(link)this.serviceService.getServiceCategories(link).subscribe();
     })
     this.categoriesSub=this.serviceService.serviceCategories.subscribe((categories)=>{
       if(categories.length>0){
@@ -43,6 +41,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
 
   ionViewWillEnter(): void {
     this.serviceService.getServicesPagination()?.subscribe();
+    this.serviceService.getServiceCategories()?.subscribe();
   }
 
   getPrevPage(){
@@ -58,11 +57,11 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
     const link=this.services.Links.find((link)=>link.Rel=="curr");
     if(link){
       var href=link?.Href;
+      href=href.replace(/pageNumber=[^&]*/,"$pageNumber=1");
       if(href.includes("&search"))href=href.replace(/&search=[^&]*/,"");
       if(serviceName!="")href+=`&search=${serviceName}`;
       if(href.includes("&category"))href=href.replace(/&category=[^&]*/,"");
       if(category!="" && category!="None")href+=`&category=${category}`;
-      console.log(href)
       this.serviceService.getServicesPagination(href)?.subscribe();  
     }
 

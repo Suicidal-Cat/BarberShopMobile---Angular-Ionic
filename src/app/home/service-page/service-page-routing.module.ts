@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: ServicePagePage
+  },
+  {
+    path: 'details/:serviceId',
+    loadChildren: () => import('./service-details/service-details.module').then( m => m.ServiceDetailsPageModule)
   }
+
 ];
 
 @NgModule({

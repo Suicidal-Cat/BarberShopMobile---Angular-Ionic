@@ -29,8 +29,8 @@ export class ServiceService{
   getServicesPagination(linkHref:string=""){
     const link:Link | undefined=this.accountService.getServicePaginationLink();
     if(link){
-      if(linkHref!=="")link.Href=linkHref;
-      return this.http.request<LinkCollection<LinkCollection<Service>[]>>(link.Method,link.Href).pipe(
+      if(linkHref=="")linkHref=link.Href;
+      return this.http.request<LinkCollection<LinkCollection<Service>[]>>(link.Method,linkHref).pipe(
           tap((data:LinkCollection<LinkCollection<Service>[]>)=>{
             console.log(data)
             this._servicesPag.next(data);
@@ -52,11 +52,24 @@ export class ServiceService{
     )
   }
 
-  getServiceCategories(link:Link){
-    return this.http.request<LinkCollection<ServiceCategory[]>>(link.Method,link.Href).pipe(
-      tap((data:LinkCollection<ServiceCategory[]>)=>{
-        this._serviceCategories.next(data.Value);
-      }));
+  getServiceCategories(){
+    const link=this.accountService.getServiceCategoriesLink();
+    if(link){
+      return this.http.request<LinkCollection<ServiceCategory[]>>(link.Method,link.Href).pipe(
+        tap((data:LinkCollection<ServiceCategory[]>)=>{
+          this._serviceCategories.next(data.Value);
+        }));
+    }
+    else return undefined;
+    
+  }
+
+  addService(service:Service){
+    const link=this.accountService.getCreateServiceLink();
+    if(link){
+      return this.http.request(link.Method,link.Href,{body:service});
+    }
+    return undefined;
   }
 
 

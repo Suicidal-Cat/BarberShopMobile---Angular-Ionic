@@ -148,6 +148,18 @@ export class AccountService {
     else return link;
   }
 
+  getCreateServiceLink(){
+    const link=this.userLinks.find((link)=>link.Rel=="createService");
+    if(link==undefined)return undefined;
+    else return link;
+  }
+
+  getServiceCategoriesLink(){
+    const link=this.userLinks.find((link)=>link.Rel=="serviceCategories");
+    if(link==undefined)return undefined;
+    else return link;
+  }
+
   refreshService(){
     const rLinks=localStorage.getItem("rootLinks");
     if(rLinks)this.rootLinks=JSON.parse(rLinks);

@@ -1,0 +1,36 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>service-details</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+
+  <form #serviceForm="ngForm" (ngSubmit)="saveService(serviceForm)">
+    <ion-input label="Name" labelPlacement="floating" placeholder="" type="text" 
+    required minlength="2" ngModel name="Name"></ion-input>
+
+    <ion-input label="Price(RSD)" labelPlacement="floating" placeholder="" type="number" 
+    required min="1" ngModel name="Price"></ion-input>
+
+    <ion-input label="Duration(min)" labelPlacement="floating" placeholder="" type="number" 
+    required min="1" ngModel name="Duration"></ion-input>
+
+    <ion-select label="Category" interface="popover" placeholder="Select category" ngModel name="ServiceCategory">
+      <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Id" >{{item.Name}}</ion-select-option>
+    </ion-select>
+
+
+    <ion-button expand="block" type="submit" [disabled]="serviceForm.invalid">
+      <div *ngIf="showSpinner">
+        <ion-spinner></ion-spinner>
+      </div>
+      <div *ngIf="!showSpinner">
+        SAVE
+      </div>
+    </ion-button>
+  </form>
+
+
+  
+</ion-content>
