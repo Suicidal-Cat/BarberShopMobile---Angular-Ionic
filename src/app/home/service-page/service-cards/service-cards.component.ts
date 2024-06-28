@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Link } from 'src/app/models/Hateoas/Link';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { Service } from 'src/app/models/ServiceD/service';
@@ -13,7 +14,7 @@ export class ServiceCardsComponent  implements OnInit {
 
   @Input() services!:LinkCollection<LinkCollection<Service>[]>;
 
-  constructor(private serviceService:ServiceService) { }
+  constructor(private serviceService:ServiceService,private router:Router) { }
 
   ngOnInit() {}
 
@@ -24,6 +25,14 @@ export class ServiceCardsComponent  implements OnInit {
         console.log(err.error.message);
       }
     });
+  }
+
+  showServiceDetails(serviceId:number,links:Link[]) {
+    const link:Link | undefined=links.find((link)=>link.Rel=="get");
+    if(link){
+      this.serviceService.setServiceLink(link);
+      this.router.navigateByUrl(`/home/service/details/${serviceId}`)
+    };
   }
 
 }

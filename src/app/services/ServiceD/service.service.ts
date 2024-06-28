@@ -14,6 +14,7 @@ export class ServiceService{
 
   private _servicesPag=new BehaviorSubject<LinkCollection<LinkCollection<Service>[]>>({Value:[],Links:[]});
   private _serviceCategories=new BehaviorSubject<ServiceCategory[]>([]);
+  private getServiceIdLink!:Link | undefined;
 
   get servicesPag(): Observable<LinkCollection<LinkCollection<Service>[]>>{
     return this._servicesPag.asObservable();
@@ -72,6 +73,21 @@ export class ServiceService{
     return undefined;
   }
 
+  updateService(service:Service,link:Link){
+    return this.http.request(link.Method,link.Href,{body:service});
+  }
+
+  getService(link:Link){
+    return this.http.request<LinkCollection<Service>>(link.Method,link.Href);
+  }
+
+  setServiceLink(link:Link | undefined){
+    this.getServiceIdLink=link;
+  }
+
+  getServiceLink(){
+    return this.getServiceIdLink;
+  }
 
 
 }

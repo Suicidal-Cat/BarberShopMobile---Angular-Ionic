@@ -8,20 +8,20 @@
 
   <form #serviceForm="ngForm" (ngSubmit)="saveService(serviceForm)">
     <ion-input label="Name" labelPlacement="floating" placeholder="" type="text" 
-    required minlength="2" ngModel name="Name"></ion-input>
+    required minlength="2" [(ngModel)]="Name" name="Name"></ion-input>
 
     <ion-input label="Price(RSD)" labelPlacement="floating" placeholder="" type="number" 
-    required min="1" ngModel name="Price"></ion-input>
+    required min="1" [(ngModel)]="Price" name="Price"></ion-input>
 
     <ion-input label="Duration(min)" labelPlacement="floating" placeholder="" type="number" 
-    required min="1" ngModel name="Duration"></ion-input>
+    required min="1" [(ngModel)]="Duration" name="Duration"></ion-input>
 
-    <ion-select label="Category" interface="popover" placeholder="Select category" ngModel name="ServiceCategory">
+    <ion-select label="Category" interface="popover" placeholder="Select category" [(ngModel)]="ServiceCategory" name="ServiceCategory" >
       <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Id" >{{item.Name}}</ion-select-option>
     </ion-select>
 
 
-    <ion-button expand="block" type="submit" [disabled]="serviceForm.invalid">
+    <ion-button expand="block" type="submit" [disabled]="serviceForm.invalid || ServiceCategory==0">
       <div *ngIf="showSpinner">
         <ion-spinner></ion-spinner>
       </div>
