@@ -33,7 +33,6 @@ export class ServiceService{
       if(linkHref=="")linkHref=link.Href;
       return this.http.request<LinkCollection<LinkCollection<Service>[]>>(link.Method,linkHref).pipe(
           tap((data:LinkCollection<LinkCollection<Service>[]>)=>{
-            console.log(data)
             this._servicesPag.next(data);
           })
         )

@@ -160,6 +160,13 @@ export class AccountService {
     else return link;
   }
 
+  getBarberPaginationLink(){
+    const link=this.userLinks.find((link)=>link.Rel=="barberPagination");
+    if(link==undefined)return undefined;
+    else return link;
+  }
+
+
   refreshService(){
     const rLinks=localStorage.getItem("rootLinks");
     if(rLinks)this.rootLinks=JSON.parse(rLinks);

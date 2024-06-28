@@ -64,7 +64,6 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
       if(category!="" && category!="None")href+=`&category=${category}`;
       this.serviceService.getServicesPagination(href)?.subscribe();  
     }
-
   }
 
   ngOnDestroy(): void {

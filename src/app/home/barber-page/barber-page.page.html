@@ -1,0 +1,16 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>barber-page</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+  <ion-input label="Barber name" labelPlacement="floating" placeholder="" type="text"
+  ngModel name="barberName" #barberName="ngModel"></ion-input>
+  <ion-button (click)="filterServices(barberName.value)">Filter</ion-button>
+
+
+  <app-barber-cards [barbers]="barbers"></app-barber-cards>
+  <ion-button (click)="getPrevPage()" [disabled]="!prevPage"><<</ion-button>
+  <ion-button (click)="getNextPage()" [disabled]="!nextPage">>></ion-button>
+</ion-content>

@@ -6,8 +6,8 @@
 
 
 <ion-content [fullscreen]="true">
-  <ion-input label="Service Name" labelPlacement="floating" placeholder="" type="text"
-  required ngModel name="serviceName" #serviceName="ngModel"></ion-input>
+  <ion-input label="Service name" labelPlacement="floating" placeholder="" type="text"
+  ngModel name="serviceName" #serviceName="ngModel"></ion-input>
 
   <ion-select label="Category" interface="popover" placeholder="Select category" [(ngModel)]="selectedCategory">
     <ion-select-option [value]="">None</ion-select-option>
