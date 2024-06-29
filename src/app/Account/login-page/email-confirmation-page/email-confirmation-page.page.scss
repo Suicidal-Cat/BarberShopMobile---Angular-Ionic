@@ -1,3 +1,24 @@
 ion-content{
     --background: #f4f4f4;
 }
+
+ion-card{
+    width: 90%;
+    --background: #f4f4f4;
+}
+
+ion-input{
+    margin-bottom: 30px;
+    --background:white;
+    --border-radius:13px !important;
+    --border-width:0px;
+    font-size: 0.9rem;
+}
+
+.send-button{
+    height: 40px;
+    --color:white;
+    --border-radius:8px;
+    font-size: 1rem;
+    text-transform: initial;
+}
