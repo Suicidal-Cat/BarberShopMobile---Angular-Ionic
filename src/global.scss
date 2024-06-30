@@ -42,3 +42,11 @@
     align-items: center;
     height: 100%;
 }
+
+.classic-button{
+    --color:white;
+    text-transform: initial;
+    --border-radius:8px;
+    height: 45px;
+    font-size: 1rem
+}

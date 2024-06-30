@@ -1,12 +1,27 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-button expand="block" routerLink="service">Services</ion-button>
-  <ion-button expand="block" routerLink="barber">Barbers</ion-button>
+  <div class="container">
+    <app-toolbar></app-toolbar>
+    <div class="content">
+      <ion-button expand="block" routerLink="service" class="classic-button">View services</ion-button>
+      <ion-button expand="block" routerLink="barber" class="classic-button">View barbers</ion-button>
+    </div>
+  </div>
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+
+      <ion-tab-button tab="service">
+        <ion-img src="../../assets/images/serviceTab.png"></ion-img>
+      </ion-tab-button>
+
+      <ion-tab-button tab="barber">
+        <ion-img src="../../assets/images/barberTab.png"></ion-img>
+      </ion-tab-button>
+
+      <ion-tab-button tab="nothing">
+        <ion-img src="../../assets/images/appointmentTab.png"></ion-img>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
