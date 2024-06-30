@@ -1,0 +1,38 @@
+ion-content{
+    --background: #f4f4f4;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.card-content{
+    max-width: 100%;
+    margin: 0px 30px
+}
+
+ion-input{
+    margin-bottom: 15px;
+    --background:white;
+    --border-radius:13px !important;
+    --border-width:0px;
+    font-size: 0.9rem;
+}
+
+.register-button{
+    margin-top: 20px;
+    height: 45px;
+    --color:white;
+    --border-radius:8px;
+    font-size: 1rem;
+    text-transform: initial;
+}
+
+h1 {
+    margin-bottom: 15px;
+    font-weight: 600;
+}

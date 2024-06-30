@@ -1,62 +1,143 @@
 <ion-content [fullscreen]="true">
-  <div class="flex-center">
+  <div class="login-container">
+    <div calss="card">
 
-  <ion-alert
-  [isOpen]="isAlertOpen"
-  header="Your account has been created"
-  message="Confirmation link is sent. Please check your email."
-  [buttons]="['Ok']"
-  (didDismiss)="setAlertOpen(false)"
-  ></ion-alert>
-  
-  <ion-card class="ion-margin-top">
-    <ion-card-header>
-      <ion-card-title>Create a new account</ion-card-title>
-    </ion-card-header>
-  
-    <ion-card-content>
-      <form #registerForm="ngForm" (ngSubmit)="registerUser(registerForm)">
+    <div class="card-content">
+        <div style="margin-left: 15px;">
+        <h1>Register</h1>
+        <ion-alert
+        [isOpen]="isAlertOpen"
+        header="Your account has been created"
+        message="Confirmation link is sent. Please check your email."
+        [buttons]="['Ok']"
+        (didDismiss)="setAlertOpen(false)"></ion-alert>
+        </div>
+
+    <form #registerForm="ngForm" (ngSubmit)="registerUser(registerForm)">
       <ion-grid>
         <ion-row class="ion-justify-content-start">
           <ion-col>
-            <ion-input label="First name" labelPlacement="floating" placeholder="" type="text" required minlength="3" ngModel name="FirstName"></ion-input>
+
+            <ion-input
+              label="First name"
+              labelPlacement="floating"
+              fill="outline"
+              placeholder=""
+              type="text"
+              required
+              minlength="3"
+              ngModel
+              name="FirstName"></ion-input>
           </ion-col>
           <ion-col>
-            <ion-input label="Last name" labelPlacement="floating" placeholder="" type="text" required minlength="3" ngModel name="LastName"></ion-input>
+
+            <ion-input
+              label="Last name"
+              labelPlacement="floating"
+              fill="outline"
+              placeholder=""
+              type="text"
+              required
+              minlength="3"
+              ngModel
+              name="LastName"></ion-input>
           </ion-col>
         </ion-row>
-        <ion-row style="margin-left: 5px;">
-          <ion-input label="Email" labelPlacement="floating" placeholder="" type="email" 
-          required ngModel name="Email" pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"></ion-input>
-          <ion-text  *ngIf="emailExists" color="danger">Email is already taken.</ion-text>
+        <ion-row style="margin-left: 5px">
+
+          <ion-input
+            label="Email"
+            labelPlacement="floating"
+            fill="outline"
+            placeholder=""
+            type="email"
+            required
+            ngModel
+            name="Email"
+            pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"></ion-input>
+          <ion-text *ngIf="emailExists" color="danger"
+            >Email is already taken.</ion-text>
+
         </ion-row>
-        <ion-row style="margin-left: 5px;">
-          <ion-input label="Phone number" labelPlacement="floating" placeholder="+38XXXXXXXXXXX" type="text" 
-          required ngModel name="PhoneNumber" pattern="^\+(381|387|382|385)([1-9][0-9]{0,2})?([0-9]{6,7})$" #phoneE="ngModel"></ion-input>
-          <ion-text  *ngIf="phoneE.dirty && phoneE.errors?.['pattern']" color="danger">Format: +38XXXXXXXXXXX</ion-text>
+        <ion-row style="margin-left: 5px">
+
+          <ion-input
+            label="Phone number"
+            labelPlacement="floating"
+            fill="outline"
+            placeholder="+38XXXXXXXXXXX"
+            type="text"
+            required
+            ngModel
+            name="PhoneNumber"
+            pattern="^\+(381|387|382|385)([1-9][0-9]{0,2})?([0-9]{6,7})$"
+            #phoneE="ngModel"></ion-input>
+
+          <ion-text
+            *ngIf="phoneE.dirty && phoneE.errors?.['pattern']"
+            color="danger"
+            >Format: +38XXXXXXXXXXX</ion-text>
         </ion-row>
-        <ion-row style="margin-left: 5px;">
-          <ion-input label="Password" labelPlacement="floating" placeholder="" type="password" required minlength="8" ngModel name="Password" #passwordE="ngModel"></ion-input>
+        <ion-row style="margin-left: 5px">
+
+          <ion-input
+            label="Password"
+            labelPlacement="floating"
+            fill="outline"
+            placeholder=""
+            type="password"
+            required
+            minlength="8"
+            ngModel
+            name="Password"
+            #passwordE="ngModel"></ion-input>
+
         </ion-row>
-        <ion-row style="margin-left: 5px;">
-          <ion-input label="Confirm password" labelPlacement="floating" placeholder="" type="password" required minlength="8" ngModel name="ConfirmPassword" #passwordConfirmE="ngModel"></ion-input>
-          <ion-text  *ngIf="passwordConfirmE.dirty && passwordConfirmE.value!=passwordE.value" color="danger">Password doesn't match.</ion-text>
+        <ion-row style="margin-left: 5px">
+
+          <ion-input
+            label="Confirm password"
+            labelPlacement="floating"
+            fill="outline"
+            placeholder=""
+            type="password"
+            required
+            minlength="8"
+            ngModel
+            name="ConfirmPassword"
+            #passwordConfirmE="ngModel"></ion-input>
+          <ion-text
+            *ngIf="passwordConfirmE.dirty && passwordConfirmE.value!=passwordE.value"
+            color="danger"
+            >Password doesn't match.</ion-text>
+
         </ion-row>
       </ion-grid>
-      <ion-button expand="full" type="submit" style="text-transform: initial;" [disabled]="registerForm.invalid || (passwordConfirmE.value!=passwordE.value)">
+      <ion-button
+        expand="full"
+        type="submit"
+        style="text-transform: initial"
+        class="register-button"
+        [disabled]="registerForm.invalid || (passwordConfirmE.value!=passwordE.value)">
         <div *ngIf="showSpinner">
           <ion-spinner></ion-spinner>
         </div>
-        <div *ngIf="!showSpinner">
-          REGISTER
-        </div>
+        <div *ngIf="!showSpinner">Sign up</div>
       </ion-button>
-      </form>
-      <div *ngIf="showError">
-        <ion-text color="danger">There is a problem with your registration. Please try again later.</ion-text>
-      </div>
-    </ion-card-content>
-    <ion-button class="ion-float-left" fill="clear" expand="full" style="text-transform: initial;" routerLink="/login">Already have an account?</ion-button>
-  </ion-card>
+    </form>
+    <div style="text-align: center;margin-top: 20px;">
+      Already have an account?
+      <ion-router-link
+        class="signup-link"
+        routerLink="/login"
+      >Sign in</ion-router-link>
+    </div>
+  </div>
+    <div *ngIf="showError">
+      <ion-text color="danger"
+        >There is a problem with your registration. Please try again
+        later.</ion-text>
+    </div>
+    </div>
   </div>
 </ion-content>
