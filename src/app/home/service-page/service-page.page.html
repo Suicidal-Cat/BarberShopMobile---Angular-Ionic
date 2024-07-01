@@ -6,21 +6,24 @@
 
 
 <ion-content [fullscreen]="true">
-  <ion-input label="Service name" labelPlacement="floating" placeholder="" type="text"
-  ngModel name="serviceName" #serviceName="ngModel"></ion-input>
+  <div class="content"> 
 
   <ion-select label="Category" interface="popover" placeholder="Select category" [(ngModel)]="selectedCategory">
     <ion-select-option [value]="">None</ion-select-option>
     <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Name" >{{item.Name}}</ion-select-option>
   </ion-select>
-
-  <ion-button (click)="filterServices(serviceName.value,selectedCategory)">Filter</ion-button>
-  <ion-button routerLink="details/0">Create service</ion-button>
+  <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+    <ion-input label="Service name" labelPlacement="floating" placeholder="" type="text"
+    ngModel name="serviceName" #serviceName="ngModel"></ion-input>
+    <ion-button (click)="filterServices(serviceName.value,selectedCategory)" style="display: inline-block;">Filter</ion-button>
+  </div> 
 
 
   <app-service-cards [services]="services"></app-service-cards>
   
   <ion-button (click)="getPrevPage()" [disabled]="!prevPage"><<</ion-button>
   <ion-button (click)="getNextPage()" [disabled]="!nextPage">>></ion-button>
+  <ion-button routerLink="details/0" class="ion-float-right" style="font-size: larger;">+</ion-button>
+  </div>
 
 </ion-content>

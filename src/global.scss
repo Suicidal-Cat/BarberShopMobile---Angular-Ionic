@@ -37,10 +37,16 @@
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 .flex-center{
+    height: 100%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+}
+
+.flex-container{
+    width: 100%;
+    margin: 0 30px;
 }
 
 .classic-button{
@@ -49,4 +55,25 @@
     --border-radius:8px;
     height: 45px;
     font-size: 1rem
+}
+
+ion-content{
+    --background: #f4f4f4;
+}
+
+.ion-input-form{
+    margin-bottom: 15px;
+    --background:white !important;
+    --border-radius:13px !important;
+    --border-width:0px;
+    font-size: 0.9rem;
+}
+
+.ion-button-form{
+    margin-top: 20px;
+    height: 45px;
+    --color:white;
+    --border-radius:8px;
+    font-size: 1rem;
+    text-transform: initial;
 }

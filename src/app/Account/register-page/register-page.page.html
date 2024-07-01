@@ -27,7 +27,8 @@
               required
               minlength="3"
               ngModel
-              name="FirstName"></ion-input>
+              name="FirstName"
+              class="ion-input-form"></ion-input>
           </ion-col>
           <ion-col>
 
@@ -40,7 +41,7 @@
               required
               minlength="3"
               ngModel
-              name="LastName"></ion-input>
+              name="LastName" class="ion-input-form"></ion-input>
           </ion-col>
         </ion-row>
         <ion-row style="margin-left: 5px">
@@ -54,7 +55,7 @@
             required
             ngModel
             name="Email"
-            pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"></ion-input>
+            pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" class="ion-input-form"></ion-input>
           <ion-text *ngIf="emailExists" color="danger"
             >Email is already taken.</ion-text>
 
@@ -71,7 +72,7 @@
             ngModel
             name="PhoneNumber"
             pattern="^\+(381|387|382|385)([1-9][0-9]{0,2})?([0-9]{6,7})$"
-            #phoneE="ngModel"></ion-input>
+            #phoneE="ngModel" class="ion-input-form"></ion-input>
 
           <ion-text
             *ngIf="phoneE.dirty && phoneE.errors?.['pattern']"
@@ -90,7 +91,7 @@
             minlength="8"
             ngModel
             name="Password"
-            #passwordE="ngModel"></ion-input>
+            #passwordE="ngModel" class="ion-input-form"></ion-input>
 
         </ion-row>
         <ion-row style="margin-left: 5px">
@@ -105,7 +106,7 @@
             minlength="8"
             ngModel
             name="ConfirmPassword"
-            #passwordConfirmE="ngModel"></ion-input>
+            #passwordConfirmE="ngModel" class="ion-input-form"></ion-input>
           <ion-text
             *ngIf="passwordConfirmE.dirty && passwordConfirmE.value!=passwordE.value"
             color="danger"
@@ -114,10 +115,10 @@
         </ion-row>
       </ion-grid>
       <ion-button
-        expand="full"
+        expand="block"
         type="submit"
         style="text-transform: initial"
-        class="register-button"
+        class="ion-button-form"
         [disabled]="registerForm.invalid || (passwordConfirmE.value!=passwordE.value)">
         <div *ngIf="showSpinner">
           <ion-spinner></ion-spinner>

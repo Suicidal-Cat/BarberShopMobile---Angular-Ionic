@@ -29,6 +29,7 @@
             name="Email"
             #emailE="ngModel"
             pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+            class="ion-input-form"
           ></ion-input>
           <!-- </ion-item > -->
           <!-- <ion-text  *ngIf="emailE.dirty && emailE.errors?.['email']" color="danger">Invalid email address</ion-text> -->
@@ -44,6 +45,7 @@
             ngModel
             name="Password"
             #passwordE="ngModel"
+            class="ion-input-form"
           ></ion-input>
           <ion-text
             *ngIf="passwordE.dirty && passwordE.errors?.['minlength']"
@@ -57,6 +59,7 @@
             type="submit"
             class="login-button"
             [disabled]="loginForm.invalid"
+            class="ion-button-form"
           >
             <div *ngIf="showSpinner">
               <ion-spinner></ion-spinner>
