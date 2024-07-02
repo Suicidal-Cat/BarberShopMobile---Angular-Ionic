@@ -8,13 +8,15 @@ import { ServicePagePageRoutingModule } from './service-page-routing.module';
 
 import { ServicePagePage } from './service-page.page';
 import { ServiceCardsComponent } from './service-cards/service-cards.component';
+import { SharedModule } from '../util-components/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ServicePagePageRoutingModule
+    ServicePagePageRoutingModule,
+    SharedModule
   ],
   declarations: [ServicePagePage,ServiceCardsComponent]
 })

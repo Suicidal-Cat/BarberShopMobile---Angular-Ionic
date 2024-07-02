@@ -4,17 +4,24 @@ import { HomePage } from './home.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'tabs',
     component: HomePage,
+    children:[
+      {
+        path: 'service',
+        loadChildren: () => import('./service-page/service-page.module').then( m => m.ServicePagePageModule)
+      },
+      {
+        path: 'barber',
+        loadChildren: () => import('./barber-page/barber-page.module').then( m => m.BarberPagePageModule)
+      },
+    ]
+    
   },
   {
-    path: 'service',
-    loadChildren: () => import('./service-page/service-page.module').then( m => m.ServicePagePageModule)
-  },
-  {
-    path: 'barber',
-    loadChildren: () => import('./barber-page/barber-page.module').then( m => m.BarberPagePageModule)
-  },
+    path:"",
+    component:HomePage,
+  }
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 export enum Status{
-    Active,
-    Retired,
-    Left,
+    Active=0,
+    Retired=1,
+    Left=2,
 }

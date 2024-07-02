@@ -8,6 +8,7 @@ import { BarberPagePageRoutingModule } from './barber-page-routing.module';
 
 import { BarberPagePage } from './barber-page.page';
 import { BarberCardsComponent } from './barber-cards/barber-cards.component';
+import { SharedModule } from '../util-components/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { BarberCardsComponent } from './barber-cards/barber-cards.component';
     FormsModule,
     IonicModule,
     BarberPagePageRoutingModule,
+    SharedModule,
   ],
   declarations: [BarberPagePage,BarberCardsComponent]
 })

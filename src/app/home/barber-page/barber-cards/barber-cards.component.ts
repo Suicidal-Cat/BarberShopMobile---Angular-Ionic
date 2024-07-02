@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Barber } from 'src/app/models/Barber/barber';
+import { Status } from 'src/app/models/Barber/status';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { BarberService } from 'src/app/services/Barber/barber.service';
 
@@ -16,6 +17,8 @@ export class BarberCardsComponent  implements OnInit {
 
   ngOnInit() {}
 
-  
+  getStatusName(statusValue:number){
+    return Status[statusValue];
+  }
 
 }

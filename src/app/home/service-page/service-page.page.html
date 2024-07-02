@@ -6,16 +6,17 @@
 
 
 <ion-content [fullscreen]="true">
+  <app-toolbar></app-toolbar>
   <div class="content"> 
 
   <ion-select label="Category" interface="popover" placeholder="Select category" [(ngModel)]="selectedCategory">
     <ion-select-option [value]="">None</ion-select-option>
     <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Name" >{{item.Name}}</ion-select-option>
   </ion-select>
-  <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+  <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin-top: 5px;">
     <ion-input label="Service name" labelPlacement="floating" placeholder="" type="text"
-    ngModel name="serviceName" #serviceName="ngModel"></ion-input>
-    <ion-button (click)="filterServices(serviceName.value,selectedCategory)" style="display: inline-block;">Filter</ion-button>
+    ngModel name="serviceName" #serviceName="ngModel" fill="outline"></ion-input>
+    <ion-button (click)="filterServices(serviceName.value,selectedCategory)" style="font-size: 0.9rem;">Filter</ion-button>
   </div> 
 
 

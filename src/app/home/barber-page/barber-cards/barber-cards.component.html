@@ -1,6 +1,7 @@
 <ion-card *ngFor="let item of barbers.Value">
   <ion-card-header>
-    <ion-card-title>{{item.Value.FirstName}}</ion-card-title>
+    <ion-card-title>{{item.Value.FirstName}} {{item.Value.LastName}}</ion-card-title>
+    {{getStatusName(item.Value.Status)}}
   </ion-card-header>
 
   <ion-card-content>
