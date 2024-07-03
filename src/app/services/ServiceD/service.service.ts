@@ -80,6 +80,18 @@ export class ServiceService{
     return this.http.request<LinkCollection<Service>>(link.Method,link.Href);
   }
 
+  getServices(){
+    const link=this.accountService.getServicesLink();
+    if(link){
+      return this.http.request<LinkCollection<LinkCollection<Service>[]>>(link.Method,link.Href).pipe(
+        tap((data:LinkCollection<LinkCollection<Service>[]>)=>{
+            this._servicesPag.next(data);
+        })
+      );
+    }
+    return undefined;
+  }
+
   setServiceLink(link:Link | undefined){
     this.getServiceIdLink=link;
   }

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AccountService } from '../services/Account/account.service';
+import { Router } from '@angular/router';
+import { User } from '../models/Account/user';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +10,14 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  user!:User | null;
+  constructor(private accountService:AccountService,private router:Router) {
+    this.user=accountService.getUser();
+    if(this.user==null){
+      this.router.navigateByUrl("/login")
+    }
+  }
+
+
 
 }

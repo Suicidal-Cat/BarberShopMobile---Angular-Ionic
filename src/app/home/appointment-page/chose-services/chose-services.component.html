@@ -1,0 +1,43 @@
+<div *ngFor="let item of serviceCategories" style="margin-bottom: 5px;" #contentDiv>
+  <div>
+
+    <div class="category" (click)="getItems(contentDiv)">
+      <h5>{{item.Name}}</h5>
+      <ion-icon name="chevron-down-outline"></ion-icon>
+    </div>
+    
+    <div id="allItems" *ngIf="item.Name!='Other'">
+      <ion-radio-group value="" [allowEmptySelection]="true">
+      <div class="items" *ngFor="let service of services">
+        <div *ngIf="item.Id==service.Value.ServiceCategory.Id" class="service-select">
+          <div>
+            <h6 style="font-size: 1.1rem;">{{service.Value.Name}}</h6>
+            <h6>{{service.Value.Duration}} min</h6>
+          </div>
+          <div style="display: flex;justify-content: center;align-items: center;">
+            <h6 style="display: inline-block;">{{service.Value.Price}} RSD</h6>
+            <ion-radio [value]="service.Value.ServiceId"></ion-radio><br />
+          </div>
+        </div>
+      </div>
+      </ion-radio-group>
+    </div>
+
+    <div id="allItems" *ngIf="item.Name=='Other'">
+      <div class="items" *ngFor="let service of services">
+        <div *ngIf="item.Id==service.Value.ServiceCategory.Id" class="service-select">
+          <div>
+            <h6 style="font-size: 1.1rem;">{{service.Value.Name}}</h6>
+            <h6>{{service.Value.Duration}} min</h6>
+          </div>
+          <div style="display: flex;justify-content: center;align-items: center;">
+            <h6 style="display: inline-block;">{{service.Value.Price}} RSD</h6>
+            <ion-checkbox [value]="service.Value.ServiceId" (ionChange)="addOtherService($event)"></ion-checkbox><br />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

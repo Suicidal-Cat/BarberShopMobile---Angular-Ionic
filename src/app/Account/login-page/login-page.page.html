@@ -12,7 +12,7 @@
 
       <div class="card-content">
         <p>Sign in to your account</p>
-        <div *ngIf="showError">
+        <div *ngIf="showError" style="margin-bottom: 10px;text-align: center;">
           <ion-text color="danger">{{errorMessage}}</ion-text>
         </div>
         <form #loginForm="ngForm" (ngSubmit)="loginUser(loginForm)">

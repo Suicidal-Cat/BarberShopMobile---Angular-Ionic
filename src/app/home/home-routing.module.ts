@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path:"",
     component:HomePage,
+  },
+  {
+    path: 'appointment',
+    loadChildren: () => import('./appointment-page/appointment-page.module').then( m => m.AppointmentPagePageModule)
   }
 ];
 

@@ -2,10 +2,6 @@ ion-content{
     --background: #f4f4f4;
 }
 
-ion-button{
-    margin-top: 10px;
-}
-
 .container{
     height: 100%;
     max-width: 100%;
@@ -19,4 +15,8 @@ ion-button{
 ion-tab-bar{
     border-radius: 15px 15px 0px 0px;
     height: 80px;
+}
+
+h1{
+    font-weight: 600;
 }

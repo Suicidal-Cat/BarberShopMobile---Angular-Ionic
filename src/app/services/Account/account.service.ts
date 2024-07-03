@@ -155,6 +155,7 @@ export class AccountService {
   }
 
   getServiceCategoriesLink(){
+    console.log(this.userLinks)
     const link=this.userLinks.find((link)=>link.Rel=="serviceCategories");
     if(link==undefined)return undefined;
     else return link;
@@ -162,6 +163,12 @@ export class AccountService {
 
   getBarberPaginationLink(){
     const link=this.userLinks.find((link)=>link.Rel=="barberPagination");
+    if(link==undefined)return undefined;
+    else return link;
+  }
+
+  getServicesLink(){
+    const link=this.userLinks.find((link)=>link.Rel=="allServices");
     if(link==undefined)return undefined;
     else return link;
   }
@@ -183,6 +190,15 @@ export class AccountService {
     if(userLinks)this.userLinks=JSON.parse(userLinks);
     else this.logout();
 
+  }
+
+  getUser(){
+    const key=localStorage.getItem(environment.userKey);
+    if(key){
+      const user:User=JSON.parse(key);
+      return user;
+    }
+    else return null;
   }
 
 

@@ -2,23 +2,29 @@
   <div class="container">
     <app-toolbar></app-toolbar>
     <div class="content">
-      <ion-button expand="block" routerLink="service" class="classic-button">View services</ion-button>
-      <ion-button expand="block" routerLink="barber" class="classic-button">View barbers</ion-button>
+      <div *ngIf="user?.Role=='Admin'">
+        <h1>Welcome!</h1>
+      </div>
+      <div *ngIf="user?.Role!='Admin'" style="margin-top: 50px;">
+        <h1>Hello {{user?.FirstName}}!</h1>
+        <ion-button expand="block" routerLink="/home/appointment" class="ion-button-form">Make appointment</ion-button>
+      </div>
+
     </div>
   </div>
 
-  <ion-tabs>
+  <ion-tabs *ngIf="user?.Role=='Admin'">
     <ion-tab-bar slot="bottom">
 
       <ion-tab-button tab="tabs/service">
         <ion-img src="../../assets/images/serviceTab.png"></ion-img>
       </ion-tab-button>
 
-      <ion-tab-button tab="tabs/service">
+      <ion-tab-button tab="tabs/barber">
         <ion-img src="../../assets/images/barberTab.png"></ion-img>
       </ion-tab-button>
 
-      <ion-tab-button tab="tabs/service">
+      <ion-tab-button tab="tabs/nothing">
         <ion-img src="../../assets/images/appointmentTab.png"></ion-img>
       </ion-tab-button>
 
