@@ -33,6 +33,17 @@ export class BarberService {
     return undefined;
   }
 
+  getBarbers(){
+    const link=this.accountService.getBarberLink();
+    if(link){
+      return this.http.request<LinkCollection<LinkCollection<Barber>[]>>(link.Method,link.Href).pipe(
+        tap((data:LinkCollection<LinkCollection<Barber>[]>)=>{
+            this._barbersPag.next(data);
+        })
+      );
+    }
+    return undefined;
+  }
   
 
 

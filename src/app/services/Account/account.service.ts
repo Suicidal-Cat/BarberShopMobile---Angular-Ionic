@@ -173,6 +173,12 @@ export class AccountService {
     else return link;
   }
 
+  getBarberLink(){
+    const link=this.userLinks.find((link)=>link.Rel=="allBarbers");
+    if(link==undefined)return undefined;
+    else return link;
+  }
+
 
   refreshService(){
     const rLinks=localStorage.getItem("rootLinks");

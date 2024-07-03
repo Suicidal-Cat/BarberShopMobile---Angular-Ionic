@@ -6,11 +6,11 @@ import { ServiceCategory } from 'src/app/models/ServiceCategory/serviceCategory'
 import { Service } from 'src/app/models/ServiceD/service';
 
 @Component({
-  selector: 'app-chose-services',
-  templateUrl: './chose-services.component.html',
-  styleUrls: ['./chose-services.component.scss'],
+  selector: 'app-choose-services',
+  templateUrl: './choose-services.component.html',
+  styleUrls: ['./choose-services.component.scss'],
 })
-export class ChoseServicesComponent  implements OnInit,AfterViewInit{
+export class ChooseServicesComponent  implements OnInit,AfterViewInit{
 
   @Input() services!:LinkCollection<Service>[];
   @Input() serviceCategories!:ServiceCategory[];

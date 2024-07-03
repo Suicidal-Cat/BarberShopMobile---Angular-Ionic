@@ -8,7 +8,8 @@ import { AppointmentPagePageRoutingModule } from './appointment-page-routing.mod
 
 import { AppointmentPagePage } from './appointment-page.page';
 import { SharedModule } from '../util-components/shared/shared.module';
-import { ChoseServicesComponent } from './chose-services/chose-services.component';
+import { ChooseServicesComponent } from './choose-services/chose-services.component';
+import { ChooseBarberComponent } from './choose-barber/choose-barber.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { ChoseServicesComponent } from './chose-services/chose-services.componen
     AppointmentPagePageRoutingModule,
     SharedModule
   ],
-  declarations: [AppointmentPagePage,ChoseServicesComponent]
+  declarations: [AppointmentPagePage,ChooseServicesComponent,ChooseBarberComponent]
 })
 export class AppointmentPagePageModule {}
