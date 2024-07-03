@@ -15,12 +15,16 @@ import { ServiceService } from 'src/app/services/ServiceD/service.service';
   styleUrls: ['./appointment-page.page.scss'],
 })
 export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
+
   serviceCategories: ServiceCategory[] = [];
   barbers!: LinkCollection<Barber>[];
   services!: LinkCollection<LinkCollection<Service>[]>;
   categoriesSub!: Subscription;
   servicesSub!: Subscription;
   barbersSub!: Subscription;
+
+  barberId:number=0;
+  choosenServices:number[]=[];
 
   constructor(private serviceService: ServiceService,private barberService:BarberService) {}
 
@@ -36,6 +40,7 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
 
     this.barbersSub=this.barberService.barbersPag.subscribe((barbers)=>{
       this.barbers=barbers.Value.filter((barber)=>barber.Value.Status==Status.Active && barber.Value.StartWorkingHours!=null);
+      if(this.barbers.length>0)this.barberId=this.barbers[0].Value.BarberId;
     })
   }
 
@@ -43,6 +48,15 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
     this.serviceService.getServiceCategories()?.subscribe();
     this.serviceService.getServices()?.subscribe();
     this.barberService.getBarbers()?.subscribe();
+  }
+
+  setChoosenBarber(id:number){
+    this.barberId=id;
+  }
+
+  setChoosenServices(event: number[]) {
+    console.log(event)
+    this.choosenServices=event;
   }
 
   ngOnDestroy(): void {

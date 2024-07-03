@@ -7,7 +7,7 @@
     </div>
     
     <div id="allItems" *ngIf="item.Name!='Other'">
-      <ion-radio-group value="" [allowEmptySelection]="true">
+      <ion-radio-group value="" [allowEmptySelection]="true" (ionChange)="addChoosenService($event,item.Name)">
       <div class="items" *ngFor="let service of services">
         <div *ngIf="item.Id==service.Value.ServiceCategory.Id" class="service-select">
           <div>

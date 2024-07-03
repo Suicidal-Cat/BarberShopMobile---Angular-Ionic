@@ -1,8 +1,8 @@
 <ion-content [fullscreen]="true">
   <app-toolbar></app-toolbar>
   <div class="container">
-    <app-choose-barber [barbers]="barbers" [barber]="barbers[0]"></app-choose-barber>
-    <app-choose-services [services]="services.Value" [serviceCategories]="serviceCategories"></app-choose-services>
+    <app-choose-barber [barbers]="barbers" [barber]="barbers[0]" (barberId)="setChoosenBarber($event)"></app-choose-barber>
+    <app-choose-services [services]="services.Value" [serviceCategories]="serviceCategories" (choosenServices)="setChoosenServices($event)"></app-choose-services>
   </div>
 
 </ion-content>
