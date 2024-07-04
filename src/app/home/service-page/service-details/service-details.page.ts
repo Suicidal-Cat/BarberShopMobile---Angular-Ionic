@@ -28,7 +28,7 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
   UpdateLink!:Link | undefined;
 
 
-  constructor(private serviceService:ServiceService,private navCtr:NavController,
+  constructor(private serviceService:ServiceService,
     private navCotroller:NavController,private route:ActivatedRoute) { }
 
   ngOnInit() {
@@ -75,7 +75,7 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
       this.serviceService.updateService(serviceForm.value,this.UpdateLink).subscribe({
         next:()=>{
           this.showSpinner=false;
-          this.navCtr.navigateBack("/home/service")
+          this.navCotroller.navigateBack("/home/service")
         },
         error(err) {  
         }
@@ -86,7 +86,7 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
       this.serviceService.addService(serviceForm.value)?.subscribe({
         next:()=>{
           this.showSpinner=false;
-          this.navCtr.navigateBack("/home/service")
+          this.navCotroller.navigateBack("/home/service")
         },
         error(err) {  
         },

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
-import { CheckboxChangeEventDetail } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { CheckboxChangeEventDetail, IonRadioGroup } from '@ionic/angular';
 import { IonCheckboxCustomEvent, IonRadioGroupCustomEvent, RadioGroupChangeEventDetail } from '@ionic/core';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { ServiceCategory } from 'src/app/models/ServiceCategory/serviceCategory';
@@ -13,21 +14,34 @@ import { Service } from 'src/app/models/ServiceD/service';
 export class ChooseServicesComponent  implements OnInit,AfterViewInit{
 
   @Input() services!:LinkCollection<Service>[];
-  @Input() serviceCategories!:ServiceCategory[];
+  @Input() serviceCategories:ServiceCategory[]=[];
+
   servicesId:{category:string,id:number}[]=[];
   servicesOtherId:number[]=[];
+  choosenServicesQuery:number[]=[];
+  @ViewChildren('radioGroup', { read: ElementRef }) radioGroups!: QueryList<ElementRef>;
+  updatePageInit:boolean=true;
+
   @Output() choosenServices=new EventEmitter<number[]>();
 
-  constructor() { }
+  constructor(private route:ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.queryParamMap.subscribe(paramMap=>{
+      const choosenServicesStr = paramMap.get('choosenServices');
+      this.choosenServicesQuery = choosenServicesStr ? choosenServicesStr.split(',').map(Number) : [];
+    })
   }
 
   ngAfterViewInit(): void {
-    
   }
 
   getItems(contentDiv: HTMLDivElement) {
+    if(this.updatePageInit){
+      this.updatePage();
+      this.updatePageInit=false;
+    }
+
     const items=contentDiv.querySelector("#allItems");
     items?.classList.toggle('show-items');
   }
@@ -63,6 +77,30 @@ export class ChooseServicesComponent  implements OnInit,AfterViewInit{
     const mergedArray = servicesIdValues.concat(this.servicesOtherId);
     
     this.choosenServices.emit(mergedArray);
+  }
+
+  updatePage(){
+    this.radioGroups.forEach((radioGroup: ElementRef) => {
+      const radioButtons = radioGroup.nativeElement.querySelectorAll('ion-radio');
+      let found = false;
+
+      radioButtons.forEach((button: any) => {
+        if(this.choosenServicesQuery.includes(button.value)){
+          radioGroup.nativeElement.value=button.value;
+          this.servicesId[this.servicesId.length]={category:radioGroup.nativeElement.name,id:button.value};
+          return;
+        }
+      });
+
+      const otherCategory=document.querySelectorAll('ion-checkbox');
+      otherCategory.forEach((checkBox:any)=>{
+        if(this.choosenServicesQuery.includes(checkBox.value)){
+          this.servicesOtherId[this.servicesOtherId.length]=checkBox.value;
+          checkBox.checked=true;
+        }
+      })
+
+    });
   }
 
 }

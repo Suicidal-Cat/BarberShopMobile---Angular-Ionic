@@ -8,6 +8,11 @@ const routes: Routes = [
     path: '',
     component: AppointmentPagePage
   },
+  {
+    path: 'appointment-date',
+    loadChildren: () => import('./appointment-date-page/appointment-date-page.module').then(m => m.AppointmentDatePagePageModule)
+  } 
+
 
 ];
 

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Barber } from 'src/app/models/Barber/barber';
@@ -25,10 +26,20 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
 
   barberId:number=0;
   choosenServices:number[]=[];
+  selectedBarber!:LinkCollection<Barber>;
 
-  constructor(private serviceService: ServiceService,private barberService:BarberService) {}
+  constructor(private serviceService: ServiceService,private barberService:BarberService,
+    private router:Router,private route:ActivatedRoute) {}
 
   ngOnInit() {
+    this.route.queryParamMap.subscribe(paramMap=>{
+      if(paramMap.has('barberId')){
+        const barber=paramMap.get('barberId');
+        if(barber)this.barberId = parseInt(barber);
+        const choosenServicesStr = paramMap.get('choosenServices');
+        this.choosenServices = choosenServicesStr ? choosenServicesStr.split(',').map(Number) : [];
+      }
+    })
 
     this.categoriesSub = this.serviceService.serviceCategories.subscribe((data) => {
         this.serviceCategories = data;}
@@ -40,7 +51,16 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
 
     this.barbersSub=this.barberService.barbersPag.subscribe((barbers)=>{
       this.barbers=barbers.Value.filter((barber)=>barber.Value.Status==Status.Active && barber.Value.StartWorkingHours!=null);
-      if(this.barbers.length>0)this.barberId=this.barbers[0].Value.BarberId;
+      if(this.barbers.length>0){
+        if(this.barberId==0){
+          this.barberId=this.barbers[0].Value.BarberId;
+          this.selectedBarber=this.barbers[0];
+        }
+        else {
+          const temp=this.barbers.find((value)=>value.Value.BarberId==this.barberId);
+          if(temp)this.selectedBarber=temp;  
+        }
+      }
     })
   }
 
@@ -52,11 +72,32 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
 
   setChoosenBarber(id:number){
     this.barberId=id;
+    this.updateQueryParameters();
   }
 
   setChoosenServices(event: number[]) {
-    console.log(event)
     this.choosenServices=event;
+    this.updateQueryParameters();
+  }
+
+  navigateToAppointmentDate(){
+    this.router.navigate(['home/appointment/appointment-date'], {
+      queryParams: {
+          barberId: this.barberId,
+          choosenServices: this.choosenServices.join(',')
+      }
+    });
+  }
+
+  updateQueryParameters(){
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+          barberId: this.barberId,
+          choosenServices: this.choosenServices.join(',')
+      },
+      queryParamsHandling: 'merge' // Opcija za spajanje sa postojećim query parametrima
+  });
   }
 
   ngOnDestroy(): void {

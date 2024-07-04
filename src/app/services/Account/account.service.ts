@@ -155,7 +155,6 @@ export class AccountService {
   }
 
   getServiceCategoriesLink(){
-    console.log(this.userLinks)
     const link=this.userLinks.find((link)=>link.Rel=="serviceCategories");
     if(link==undefined)return undefined;
     else return link;
