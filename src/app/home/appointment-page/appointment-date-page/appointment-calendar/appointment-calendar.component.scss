@@ -12,8 +12,18 @@ ion-col{
     box-shadow: 0 0 0.5px 0.5px var(--ion-color-tertiary);
 }
 
-.dayCol{
+.dayAvaiable{
     box-shadow: 0 0 0.5px 0.5px var(--ion-color-tertiary);
+    background-color:white;
+}
+
+.dayUnavaiable{
+    box-shadow: 0 0 0.5px 0.5px var(--ion-color-tertiary);
+    background-color: lightgray;
+}
+
+.startDay{
+    color: firebrick;
 }
 
 .dayHeader{

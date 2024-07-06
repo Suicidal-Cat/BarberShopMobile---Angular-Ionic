@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { Login } from 'src/app/models/Account/login';
 import { Register } from 'src/app/models/Account/register';
 import { User } from 'src/app/models/Account/user';
@@ -33,7 +33,7 @@ export class AccountService {
     const link=this.rootLinks.find((link)=>link.Rel=="login");
     if(link!=undefined){
       return this.http.request<LinkCollection<User>>(link.Method,link?.Href,{body:model}).pipe(
-        map((user:LinkCollection<User>)=>{
+        tap((user:LinkCollection<User>)=>{
           if(user){
             this.setUser(user.Value);
             this.userLinks=user.Links;

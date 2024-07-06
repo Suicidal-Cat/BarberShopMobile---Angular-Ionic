@@ -2,11 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AvaiableDatesApp } from 'src/app/models/Appointment/AvaiableDatesApp';
 import { Barber } from 'src/app/models/Barber/barber';
 import { Status } from 'src/app/models/Barber/status';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { ServiceCategory } from 'src/app/models/ServiceCategory/serviceCategory';
 import { Service } from 'src/app/models/ServiceD/service';
+import { AppointmentService } from 'src/app/services/Appointment/appointment.service';
 import { BarberService } from 'src/app/services/Barber/barber.service';
 import { ServiceService } from 'src/app/services/ServiceD/service.service';
 
@@ -28,8 +30,9 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
   choosenServices:number[]=[];
   selectedBarber!:LinkCollection<Barber>;
 
+
   constructor(private serviceService: ServiceService,private barberService:BarberService,
-    private router:Router,private route:ActivatedRoute) {}
+    private router:Router,private route:ActivatedRoute,private appointmentService:AppointmentService) {}
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(paramMap=>{
@@ -81,12 +84,17 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
   }
 
   navigateToAppointmentDate(){
-    this.router.navigate(['home/appointment/appointment-date'], {
-      queryParams: {
-          barberId: this.barberId,
-          choosenServices: this.choosenServices.join(',')
-      }
-    });
+    const barberApp=this.barbers.find((b)=>b.Value.BarberId==this.barberId)
+    if(barberApp && this.barberId!=0 && this.choosenServices.length!=0){
+      this.appointmentService.barberApp=barberApp;
+      this.router.navigate(['home/appointment/appointment-date'], {
+        queryParams: {
+            barberId: this.barberId,
+            choosenServices: this.choosenServices.join(',')
+        }
+      });
+    }
+    
   }
 
   updateQueryParameters(){
@@ -105,4 +113,5 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
     if (this.categoriesSub) this.categoriesSub.unsubscribe();
     if (this.barbersSub) this.barbersSub.unsubscribe();
   }
+
 }
