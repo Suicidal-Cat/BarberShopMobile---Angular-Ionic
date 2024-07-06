@@ -44,6 +44,10 @@ export class BarberService {
     }
     return undefined;
   }
+
+  getBarber(link:Link){
+    return this.http.request<LinkCollection<Barber>>(link.Method,link.Href);
+  }
   
 
 

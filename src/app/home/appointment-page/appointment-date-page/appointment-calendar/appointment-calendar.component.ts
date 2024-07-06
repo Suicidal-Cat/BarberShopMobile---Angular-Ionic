@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AvaiableDatesApp } from 'src/app/models/Appointment/AvaiableDatesApp';
 import { AppointmentService } from 'src/app/services/Appointment/appointment.service';
 
@@ -36,8 +36,6 @@ export class AppointmentCalendarComponent  implements OnInit {
     const start = this.startOfMonth(date);
     const end = this.endOfMonth(date);
     this.getAvaiableDates(this.formatDate(start),this.formatDate(end));
-    console.log(this.formatDate(start))
-    console.log(this.formatDate(end))
     this.daysInMonth = this.splitIntoWeeks(start,end);
     console.log(this.daysInMonth)
   }
@@ -91,10 +89,6 @@ export class AppointmentCalendarComponent  implements OnInit {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0);
   }
 
-  calcHeightWeek(){
-    return `calc(100% / ${this.daysInMonth.length})`;
-  }
-
   formatDate(date: Date): string {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -102,5 +96,28 @@ export class AppointmentCalendarComponent  implements OnInit {
 
     return `${year}-${month}-${day}`;
   }
+
+  calcHeightWeek(){
+    return `calc(100% / ${this.daysInMonth.length})`;
+  }
+
+  addAvailabilityClass(day:number):string{
+    const currentDate=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day);
+    const formatedDate=this.formatDate(currentDate);
+    
+    const dateApp=this.avaiableDates.find((date)=>date.date==formatedDate);
+    if(dateApp){
+      if(dateApp.count>=3 && dateApp.count<=6)return "daySemiBusyIndicator";
+      else if(dateApp.count>6)return "dayBusyIndicator";
+    }
+
+    return "";
+
+  }
+
+  // getNumberOfHours(startTime:string,endTime:string){
+
+  // }
+
 
 }

@@ -4,6 +4,7 @@
       <div style="margin: 0rem 1.3rem;">{{currentMonth | date: 'MMMM yyyy'}}</div>
       <ion-icon name="caret-forward-outline" color="secondary" (click)="nextMonth()"></ion-icon>
   </ion-row>
+  
 
   <ion-row>
     <ion-col *ngFor="let weekday of weekDays" class="weekDays">
@@ -16,7 +17,16 @@
       <div *ngIf="day!=0" [class]="day==startDay?'dayHeader startDay':'dayHeader'">
         {{day}}
       </div>
+      <div *ngIf="day!=0 && day>startDay" [ngClass]="addAvailabilityClass(day)">
+
+      </div>
+
     </ion-col>
   </ion-row>
+
+  <div class="legend">
+    <div class="legendItem">Busy <ion-icon name="remove-outline" color="warning"></ion-icon></div>
+    <div class="legendItem">Little left <ion-icon name="remove-outline" color="danger"></ion-icon></div>
+  </div>
 
 </ion-grid>
