@@ -4,8 +4,10 @@ import { NavController } from '@ionic/angular';
 import { AvaiableDatesApp } from 'src/app/models/Appointment/AvaiableDatesApp';
 import { Barber } from 'src/app/models/Barber/barber';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
+import { Service } from 'src/app/models/ServiceD/service';
 import { AppointmentService } from 'src/app/services/Appointment/appointment.service';
 import { BarberService } from 'src/app/services/Barber/barber.service';
+import { ServiceService } from 'src/app/services/ServiceD/service.service';
 
 @Component({
   selector: 'app-appointment-date-page',
@@ -17,8 +19,13 @@ export class AppointmentDatePagePage implements OnInit {
   barberId:number=0;
   choosenServices:number[]=[];
 
+  totalPrice:number=0;
+  appDuration:number=0;
+
+  services!:LinkCollection<LinkCollection<Service>[]>;
+
   constructor(private route:ActivatedRoute,private navCtr:NavController,
-    private appointmentService:AppointmentService,private barberSrevice:BarberService) { }
+    private appointmentService:AppointmentService,private barberSrevice:BarberService,private serviceService:ServiceService) { }
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(paramMap=>{
@@ -34,7 +41,23 @@ export class AppointmentDatePagePage implements OnInit {
     if(!barber || this.barberId==0 || this.choosenServices.length==0){
       this.navCtr.navigateBack("/home/appointment")
     }
-    
+
+    this.serviceService.getServices()?.subscribe((data)=>{
+      this.services=data;
+      this.calculatePriceAndDuration(this.services);
+      });
+
+  }
+
+  calculatePriceAndDuration(services:LinkCollection<LinkCollection<Service>[]>){
+    this.totalPrice=0;
+    this.appDuration=0;
+    for(let service of services.Value){
+      if(this.choosenServices.find((cs)=>cs==service.Value.ServiceId)){
+        this.totalPrice+=service.Value.Price;
+        this.appDuration+=service.Value.Duration;
+      }
+    }
   }
 
 

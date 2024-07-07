@@ -33,6 +33,10 @@ ion-col{
     background-color:white;
 }
 
+.dayAvaiable:hover{
+    background-color:var(--ion-color-secondary);
+}
+
 .dayUnavaiable{
     box-shadow: 0 0 0.5px 0.5px var(--ion-color-tertiary);
     background-color: lightgray;
@@ -57,4 +61,47 @@ ion-col{
 
 .dayHeader{
     padding-top: 10px;
+}
+
+ion-modal {
+    --height: 53%;
+    --border-radius: 16px;
+    --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+  
+ion-modal::part(backdrop) {
+    background: rgba(209, 213, 219);
+    opacity: 1;
+}
+  
+ion-modal ion-toolbar {
+    --background: var(--ion-color-primary);
+    --color: white;
+}
+
+.times{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap:5px
+}
+
+.timeItem{
+    width: 22%;
+    padding: 1rem;
+    border: 1px solid var(--ion-color-secondary);
+    text-align: center;
+    margin-top: 5px;
+}
+
+.timeItem.selected{
+    background-color: var(--ion-color-secondary);
+    color: white;
+}
+
+ion-toast {
+    --background: #f4f4fa;
+    --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+    --color: #4b4a50;
 }
