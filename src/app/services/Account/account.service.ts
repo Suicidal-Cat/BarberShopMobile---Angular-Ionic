@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs';
 import { Login } from 'src/app/models/Account/login';
 import { Register } from 'src/app/models/Account/register';
 import { User } from 'src/app/models/Account/user';
+import { Appointment } from 'src/app/models/Appointment/Appointment';
 import { Link } from 'src/app/models/Hateoas/Link';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { environment } from 'src/environments/environment';
@@ -113,6 +114,12 @@ export class AccountService {
       if(user)return true;
     }
     return false;
+  }
+
+  getLatestAppointmentLink(){
+    const link=this.userLinks.find((link)=>link.Rel=="latestAppointment");
+    if(link==undefined)return undefined;
+    else return link;
   }
 
   resendEmailConfirmation(email:string){

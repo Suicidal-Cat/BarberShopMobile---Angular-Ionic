@@ -1,0 +1,36 @@
+
+.message{
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    font-size: 18px;
+}
+
+.card{
+    max-width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    background-color: var(--ion-color-secondary);
+    gap: 1rem;
+    border-radius: 8px;
+    margin: 0rem 10px;
+}
+
+.card-image ion-img{
+    height: 70px;
+    width: 70px;
+    margin-left: 1rem;
+}
+
+.card-image ion-img::part(image){
+    border-radius: 50%;
+}
+
+.card-body{
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.card-body p{
+    margin: 4px;
+}

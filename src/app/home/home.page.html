@@ -5,9 +5,11 @@
       <div *ngIf="user?.Role=='Admin'">
         <h1>Welcome!</h1>
       </div>
+
       <div *ngIf="user?.Role!='Admin'" style="margin-top: 50px;">
-        <h1>Hello {{user?.FirstName}}!</h1>
-        <ion-button expand="block" routerLink="/home/appointment" class="ion-button-form">Make appointment</ion-button>
+        <h1 style="font-size: 32px;">Hello {{user?.FirstName}}!</h1>
+        <app-latest-appointment></app-latest-appointment>
+        <ion-button expand="block" routerLink="/home/appointment" class="ion-button-form" style="margin: 20px 10px;">Make appointment</ion-button>
       </div>
 
     </div>
