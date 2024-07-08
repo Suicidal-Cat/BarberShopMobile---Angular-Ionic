@@ -3,7 +3,7 @@
   <div class="container">
     <app-choose-barber [barbers]="barbers" [barber]="selectedBarber" (barberId)="setChoosenBarber($event)"></app-choose-barber>
     <app-choose-services [services]="services.Value" [serviceCategories]="serviceCategories" (choosenServices)="setChoosenServices($event)"></app-choose-services>
-    <ion-button expand="block" class="ion-button-form" (click)="navigateToAppointmentDate()">Choose date and time</ion-button>
+    <ion-button expand="block" class="ion-button-form" (click)="navigateToAppointmentDate()" style="margin-bottom: 2rem;">Choose date and time</ion-button>
   </div>
 
 </ion-content>

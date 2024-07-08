@@ -15,8 +15,8 @@
 
   <div class="card-body">
     <h1>{{latestAppointment.Date | date: 'd MMMM yyyy'}}</h1>
-    <p>Time: {{latestAppointment.StartTime}}</p>
-    <p>Barber: {{latestAppointment.Barber.FirstName}} {{latestAppointment.Barber.FirstName}}</p>
+    <p style="font-weight: 600;">Time: {{getFormattedTime(latestAppointment.StartTime) | date: 'h:mm a'}} </p>
+    <p><b>Barber:</b> {{latestAppointment.Barber.FirstName}} {{latestAppointment.Barber.LastName}}</p>
   </div>
   
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/services/Account/account.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,12 +9,16 @@ import { Router } from '@angular/router';
 })
 export class ToolbarComponent  implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private accountSerive:AccountService) { }
 
   ngOnInit() {}
 
   navigateToHome(){
-    this.router.navigate(['/home']);
+    if(this.accountSerive.getUser()?.Role!='Admin')this.router.navigateByUrl('home');
+  }
+
+  logout(){
+    this.accountSerive.logout();
   }
 
 }

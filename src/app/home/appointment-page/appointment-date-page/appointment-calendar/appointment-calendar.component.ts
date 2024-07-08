@@ -175,8 +175,8 @@ export class AppointmentCalendarComponent  implements OnInit {
     
     const dateApp=this.availableDates.find((date)=>date.date==formatedDate);
     if(dateApp){
-      if(dateApp.count>=3 && dateApp.count<=6)return "daySemiBusyIndicator";
-      else if(dateApp.count>6)return "dayBusyIndicator";
+      if(dateApp.count>=4 && dateApp.count<=7)return "daySemiBusyIndicator";
+      else if(dateApp.count>7)return "dayBusyIndicator";
     }
 
     return "";

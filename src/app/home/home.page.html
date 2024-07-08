@@ -1,6 +1,7 @@
+
 <ion-content [fullscreen]="true">
+  <app-toolbar></app-toolbar>
   <div class="container">
-    <app-toolbar></app-toolbar>
     <div class="content">
       <div *ngIf="user?.Role=='Admin'">
         <h1>Welcome!</h1>
@@ -15,21 +16,22 @@
     </div>
   </div>
 
-  <ion-tabs *ngIf="user?.Role=='Admin'">
-    <ion-tab-bar slot="bottom">
+ </ion-content>
 
-      <ion-tab-button tab="tabs/service">
-        <ion-img src="../../assets/images/serviceTab.png"></ion-img>
-      </ion-tab-button>
+ <ion-tabs *ngIf="user?.Role=='Admin'">
+  <ion-tab-bar slot="bottom">
 
-      <ion-tab-button tab="tabs/barber">
-        <ion-img src="../../assets/images/barberTab.png"></ion-img>
-      </ion-tab-button>
+    <ion-tab-button tab="service">
+      <ion-img src="../../assets/images/serviceTab.png"></ion-img>
+    </ion-tab-button>
 
-      <ion-tab-button tab="tabs/nothing">
-        <ion-img src="../../assets/images/appointmentTab.png"></ion-img>
-      </ion-tab-button>
+    <ion-tab-button tab="barber">
+      <ion-img src="../../assets/images/barberTab.png"></ion-img>
+    </ion-tab-button>
 
-    </ion-tab-bar>
-  </ion-tabs>
-</ion-content>
+    <ion-tab-button tab="reservations">
+      <ion-img src="../../assets/images/appointmentTab.png"></ion-img>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>

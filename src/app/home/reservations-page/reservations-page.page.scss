@@ -1,0 +1,48 @@
+
+.container{
+    margin: 0px 30px;
+}
+
+.date-picker{
+    margin-top: 1rem;
+}
+
+ion-datetime-button{
+    margin-top: 5px;
+}
+
+ion-datetime-button::part(native){
+    color:white;
+    background-color: var(--ion-color-primary);
+    width: 80%;
+}
+
+.card{
+    max-width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background-color: #dea93e;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    gap: 1rem;
+    border-radius: 8px;
+    margin: 6px 10px;
+}
+
+.card-image ion-img{
+    height: 60px;
+    width: 60px;
+    margin-left: 1rem;
+}
+
+.card-image ion-img::part(image){
+    border-radius: 50%;
+}
+
+.card-body{
+    color: white;
+}
+
+.card-body p{
+    margin: 4px;
+}

@@ -31,8 +31,10 @@ export class LoginPagePage implements OnInit {
     else {
       login.subscribe({
         next:(response)=>{
-          this.router.navigateByUrl("/home");
           this.showSpinner=false;
+          if(response.Value.Role=='Admin')this.router.navigateByUrl("/home/tabs/reservations");
+          else this.router.navigateByUrl("/home");
+          
         },
         error:(error)=>{
           if(error.status==0 || error.status==500)this.errorMessage="There is something wrong. Please try again later."

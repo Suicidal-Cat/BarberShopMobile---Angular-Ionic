@@ -71,4 +71,12 @@ export class AppointmentService {
     return undefined;
   }
 
+  getAllAppointments(date:string){
+    const link=this.accountService.getAllAppointmentsLink(date);
+    if(link){
+      return this.http.request<LinkCollection<LinkCollection<Appointment>[]>>(link.Method,link.Href);
+    }
+    else return undefined;
+  }
+
 }

@@ -15,17 +15,22 @@ const routes: Routes = [
         path: 'barber',
         loadChildren: () => import('./barber-page/barber-page.module').then( m => m.BarberPagePageModule)
       },
+      {
+        path: 'reservations',
+        loadChildren: () => import('./reservations-page/reservations-page.module').then( m => m.ReservationsPagePageModule)
+      },
     ]
     
   },
-  {
-    path:"",
-    component:HomePage,
-  },
+  // {
+  //   path:"",
+  //   component:HomePage,
+  // },
   {
     path: 'appointment',
     loadChildren: () => import('./appointment-page/appointment-page.module').then( m => m.AppointmentPagePageModule)
-  }
+  },
+
 ];
 
 @NgModule({

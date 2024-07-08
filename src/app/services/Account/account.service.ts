@@ -122,6 +122,14 @@ export class AccountService {
     else return link;
   }
 
+  getAllAppointmentsLink(date:string){
+    const link=this.userLinks.find((link)=>link.Rel=="getAllAppointments");
+    if(link==undefined)return undefined;
+    const href=link.Href.replace("date",date);
+    const newLink:Link={Href:href,Method:link.Method,Rel:link.Rel}
+    return newLink;
+  }
+
   resendEmailConfirmation(email:string){
     const link=this.rootLinks.find((link)=>link.Rel=="resendEmail");
     if(link==undefined)return undefined;

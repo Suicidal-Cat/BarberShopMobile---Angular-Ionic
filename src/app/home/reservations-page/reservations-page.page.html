@@ -1,0 +1,37 @@
+<ion-content [fullscreen]="true">
+  <app-toolbar></app-toolbar>
+  <div class="container">
+
+    <div class="date-picker">
+      <h2 style="text-align: center;margin-bottom: 5px;">Choose date</h2>
+      <ion-datetime-button datetime="datetime" class="ion-button-form"></ion-datetime-button>
+    </div>
+
+    <div *ngIf="empty" style="font-weight: 600;margin-top: 2rem;">
+      <h1>There is no appointments for selected date</h1>
+    </div>
+
+    <div class="app-cont">
+      <ng-container *ngFor="let app of appointments">
+        <div class="card">
+          <div class="card-image">
+            <ion-img src="../../../../assets/images/maleBarber.jpg" alt="barber image"></ion-img>
+          </div>
+        
+          <div class="card-body">
+            <p style="font-weight: 600;">Time: {{getFormattedTime(app.Value.StartTime) | date: 'h:mm a'}} </p>
+            <p><b>Barber:</b> {{app.Value.Barber.FirstName}} {{app.Value.Barber.LastName}}</p>
+            <p><b>Price:</b> {{app.Value.Price}} RSD</p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-modal #modal [keepContentsMounted]="true">
+  <ng-template>
+    <ion-datetime id="datetime" presentation="date" (ionChange)="onChange($event)"></ion-datetime>
+  </ng-template>
+</ion-modal>

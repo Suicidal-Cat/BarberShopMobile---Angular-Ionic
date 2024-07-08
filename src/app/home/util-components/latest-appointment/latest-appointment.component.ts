@@ -26,6 +26,12 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit{
     this.appointmentService.getLatestAppointment()?.subscribe();
   }
 
+  getFormattedTime(time: string): Date {
+    const [hours, minutes] = time.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, 0);
+    return date;
+  }
 
 
 }
