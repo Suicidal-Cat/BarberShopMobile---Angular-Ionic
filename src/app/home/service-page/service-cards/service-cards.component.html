@@ -1,13 +1,13 @@
 
 <ion-card *ngFor="let item of services.Value">
   <ion-card-header style="margin-bottom: 0px;">
-    <ion-card-title>{{item.Value.Name}}</ion-card-title>
+    <ion-card-title style="color:white;font-weight: 600px;">{{item.Value.Name}}</ion-card-title>
     {{item.Value.ServiceCategory.Name}}
   </ion-card-header>
 
   <!-- <ion-card-content>
   </ion-card-content> -->
   
-  <ion-button fill="clear" (click)="showServiceDetails(item.Value.ServiceId,item.Links)">Details</ion-button>
-  <ion-button fill="clear" (click)="deleteService(item.Links,item.Value.ServiceId)">Delete</ion-button>
+  <ion-button fill="clear" (click)="showServiceDetails(item.Value.ServiceId,item.Links)" style="color:white;">Details</ion-button>
+  <ion-button fill="clear" (click)="deleteService(item.Links,item.Value.ServiceId)" style="color:white;">Delete</ion-button>
 </ion-card>
