@@ -63,7 +63,6 @@ export class AppointmentService {
     if(link){
       return this.http.request<LinkCollection<Appointment>>(link.Method,link.Href).pipe(
         tap((data)=>{
-          console.log(data);
           this._latestAppointment.next(data);
         })
       );

@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePage } from './home.page';
+import { adminAuthorizationGuard } from '../guards/admin-authorization.guard';
 
 const routes: Routes = [
   {
     path: 'tabs',
     component: HomePage,
+    canMatch:[adminAuthorizationGuard],
     children:[
       {
         path: 'service',
