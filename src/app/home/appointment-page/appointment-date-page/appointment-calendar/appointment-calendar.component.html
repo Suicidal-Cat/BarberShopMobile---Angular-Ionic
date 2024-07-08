@@ -1,5 +1,5 @@
 
-<ion-modal #modal [isOpen]="isModalOpen">
+<ion-modal #modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
   <ng-template>
     <ion-content>
 
@@ -24,10 +24,10 @@
       </div>
 
       <div style="display: flex;justify-content: center;">
-        <div *ngIf="showSpinner" style="margin-top: 2rem;">
+        <div *ngIf="showSpinner" style="margin-top: 1.6rem;position: absolute;bottom: 10px;">
           <ion-spinner color="blue"></ion-spinner>
         </div>
-        <ion-button *ngIf="!showSpinner" expand="block" class="ion-button-form" style="width: 80%;margin-top: 2rem;" (click)="createAppointment()">
+        <ion-button *ngIf="!showSpinner" expand="block" class="ion-button-form" style="width: 80%;margin-top: 1.6rem;position: absolute;bottom: 10px;" (click)="createAppointment()">
           Make appointment
         </ion-button>
       </div>
@@ -52,7 +52,7 @@
 
   <ion-row *ngFor="let week of daysInMonth" [style.height]="calcHeightWeek()">
     <ion-col *ngFor="let day of week" [class]="day==0 || day<=startDay?'dayUnavaiable':'dayAvaiable'" (click)="showModal(day)">
-      <div *ngIf="day!=0" [class]="day==startDay?'dayHeader startDay':'dayHeader'">
+      <div *ngIf="day!=0" [class]="day==startDay && startDay==currentMonth.getDate()?'dayHeader startDay':'dayHeader'">
         {{day}}
       </div>
       <div *ngIf="day!=0 && day>startDay" [ngClass]="addAvailabilityClass(day)">

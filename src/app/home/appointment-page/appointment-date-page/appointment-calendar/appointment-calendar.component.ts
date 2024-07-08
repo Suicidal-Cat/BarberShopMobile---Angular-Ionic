@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonModal, NavController } from '@ionic/angular';
+import { IonModalCustomEvent,OverlayEventDetail } from '@ionic/core';
 import { Appointment } from 'src/app/models/Appointment/Appointment';
 import { AvaiableDatesApp } from 'src/app/models/Appointment/AvaiableDatesApp';
 import { Service } from 'src/app/models/ServiceD/service';
@@ -14,7 +15,7 @@ import { AppointmentService } from 'src/app/services/Appointment/appointment.ser
 export class AppointmentCalendarComponent  implements OnInit {
 
   startMonth:Date=new Date();
-  startDay:number=new Date().getDay();
+  startDay:number=new Date().getDate();
 
   currentMonth!:Date;
   daysInMonth: number[][]=[];
@@ -109,11 +110,13 @@ export class AppointmentCalendarComponent  implements OnInit {
   }
 
   nextMonth(){
+    if(this.startMonth.getMonth()+2<this.currentMonth.getMonth())return;
     this.currentMonth = new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth()+1);
     this.generateCalendar(this.currentMonth);
   }
 
   prevMonth(){
+    if(this.startMonth.getMonth()==this.currentMonth.getMonth())return;
     this.currentMonth = new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth()-1);
     this.generateCalendar(this.currentMonth);
   }
@@ -187,5 +190,10 @@ export class AppointmentCalendarComponent  implements OnInit {
     this.isToastOpen = isOpen;
   }
 
+
+  onWillDismiss($event: IonModalCustomEvent<OverlayEventDetail<any>>) {
+    this.isModalOpen=false;
+    this.selectedTimeIndex=null;
+  }
 
 }
