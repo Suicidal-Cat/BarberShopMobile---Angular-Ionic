@@ -44,6 +44,11 @@ export class ChooseServicesComponent  implements OnInit,AfterViewInit{
 
     const items=contentDiv.querySelector("#allItems");
     items?.classList.toggle('show-items');
+
+    const arrow=contentDiv.querySelector(".category ion-icon");
+    if(arrow?.getAttribute("name")=="chevron-down-outline")arrow?.setAttribute("name","chevron-up-outline");
+    else arrow?.setAttribute("name","chevron-down-outline");
+
   }
 
   addChoosenService(event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail<any>>,category:string) {

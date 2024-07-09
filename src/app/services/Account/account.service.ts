@@ -90,7 +90,6 @@ export class AccountService {
         if(user){
           this.setUser(user.Value);
           this.userLinks=user.Links;
-          console.log(this.userLinks)
         }
       })
     );

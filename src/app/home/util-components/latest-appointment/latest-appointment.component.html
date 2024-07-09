@@ -16,7 +16,7 @@
   <div class="card-body">
     <h6 class="cancel" (click)="cancelAppointment()">X</h6>
     <h1 style="margin-top: 10px;">{{latestAppointment.Date | date: 'd MMMM yyyy'}}</h1> 
-    <p style="font-weight: 600;">Time: {{getFormattedTime(latestAppointment.StartTime) | date: 'h:mm a'}} </p>
+    <p><b>Time:</b> {{getFormattedTime(latestAppointment.StartTime) | date: 'h:mm a'}} </p>
     <p><b>Barber:</b> {{latestAppointment.Barber.FirstName}} {{latestAppointment.Barber.LastName}}</p>
   </div>
   

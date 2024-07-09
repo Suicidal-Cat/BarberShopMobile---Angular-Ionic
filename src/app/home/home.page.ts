@@ -2,15 +2,18 @@ import { Component } from '@angular/core';
 import { AccountService } from '../services/Account/account.service';
 import { Router } from '@angular/router';
 import { User } from '../models/Account/user';
+import { ViewWillEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements ViewWillEnter{
 
   user!:User | null;
+  selectedTab!:HTMLElement | null;
+
   constructor(private accountService:AccountService,private router:Router) {
     this.user=accountService.getUser();
     if(this.user==null){
@@ -18,6 +21,27 @@ export class HomePage {
     }
   }
 
+  ionViewWillEnter(): void {
+    this.selectedTab=document.querySelector(".default");
+  }
 
+  changeIcon(event: MouseEvent) {
+    const image=event.target as HTMLElement;
+    const path=image.getAttribute("src");
+
+    if(path){
+      if(path?.includes("US"))image.setAttribute("src",path.replace("US",""));
+      else image.setAttribute("src", path.replace(".png", "US.png"));
+    };
+
+    if(this.selectedTab){
+      const pathSelected=this.selectedTab.getAttribute("src");
+      console.log(pathSelected)
+      if(pathSelected)this.selectedTab.setAttribute("src",pathSelected.replace(".png", "US.png"));
+      this.selectedTab=image;
+    }
+
+
+  }
 
 }

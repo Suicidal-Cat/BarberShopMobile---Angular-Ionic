@@ -25,7 +25,6 @@ export class BarberService {
       if(linkHref=="")linkHref=link.Href;
       return this.http.request<LinkCollection<LinkCollection<Barber>[]>>(link.Method,linkHref).pipe(
           tap((data:LinkCollection<LinkCollection<Barber>[]>)=>{
-            console.log(data)
             this._barbersPag.next(data);
           })
         )

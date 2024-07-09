@@ -20,8 +20,10 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit{
 
   ngOnInit() {
     this.appSub=this.appointmentService.latestAppointment.subscribe((data)=>{
-      this.latestAppointment=data.Value;
-      this.links=data.Links;
+      if(data){
+        this.latestAppointment=data.Value;
+        this.links=data.Links;
+      }
     })
   }
 

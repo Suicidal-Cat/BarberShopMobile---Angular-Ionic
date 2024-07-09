@@ -29,6 +29,7 @@
 .card-body{
     color: white;
     margin-bottom: 1.8rem;
+    padding-right: 10px;
 }
 
 .card-body p{
@@ -37,7 +38,7 @@
 
 .cancel{
     position: relative;
-    left: 91%;
-    top:3px;
+    right: -95%;
+    top:5px;
     color: white;
 }

@@ -31,7 +31,7 @@ export class ServiceCardsComponent  implements OnInit {
     const link:Link | undefined=links.find((link)=>link.Rel=="get");
     if(link){
       this.serviceService.setServiceLink(link);
-      this.router.navigateByUrl(`/home/service/details/${serviceId}`)
+      this.router.navigateByUrl(`/home/tabs/service/details/${serviceId}`)
     };
   }
 

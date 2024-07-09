@@ -4,7 +4,6 @@ const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
   appName: 'BarberShopMobile',
   webDir: 'www',
-  bundledWebRuntime: false,
   server: {
     url: 'http://192.168.0.29:8100',
     cleartext: true
