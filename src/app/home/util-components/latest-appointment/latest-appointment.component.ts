@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Appointment } from 'src/app/models/Appointment/Appointment';
+import { Link } from 'src/app/models/Hateoas/Link';
 import { AppointmentService } from 'src/app/services/Appointment/appointment.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { AppointmentService } from 'src/app/services/Appointment/appointment.ser
 export class LatestAppointmentComponent  implements OnInit,AfterViewInit{
 
   latestAppointment!:Appointment;
+  links:Link[]=[];
 
   appSub!:Subscription;
 
@@ -19,6 +21,7 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit{
   ngOnInit() {
     this.appSub=this.appointmentService.latestAppointment.subscribe((data)=>{
       this.latestAppointment=data.Value;
+      this.links=data.Links;
     })
   }
 
@@ -32,6 +35,18 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit{
     date.setHours(hours, minutes, 0);
     return date;
   }
+
+  cancelAppointment(){
+    const link=this.links.find((li)=>li.Rel=="cancelAppointment");
+    if(link){
+      this.appointmentService.cancelAppointment(link).subscribe({
+        next:(value)=>{
+          this.appointmentService.getLatestAppointment()?.subscribe();
+        },
+      })
+    }
+  }
+  
 
 
 }

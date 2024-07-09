@@ -6,6 +6,7 @@ import { AvaiableDatesApp } from 'src/app/models/Appointment/AvaiableDatesApp';
 import { Barber } from 'src/app/models/Barber/barber';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { AccountService } from '../Account/account.service';
+import { Link } from 'src/app/models/Hateoas/Link';
 
 @Injectable({
   providedIn: 'root'
@@ -76,6 +77,10 @@ export class AppointmentService {
       return this.http.request<LinkCollection<LinkCollection<Appointment>[]>>(link.Method,link.Href);
     }
     else return undefined;
+  }
+
+  cancelAppointment(link:Link){
+    return this.http.request(link.Method,link.Href,{body:{}});
   }
 
 }

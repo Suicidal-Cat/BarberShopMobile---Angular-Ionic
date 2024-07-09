@@ -28,9 +28,16 @@
 
 .card-body{
     color: white;
-    margin-bottom: 2rem;
+    margin-bottom: 1.8rem;
 }
 
 .card-body p{
     margin: 4px;
+}
+
+.cancel{
+    position: relative;
+    left: 91%;
+    top:3px;
+    color: white;
 }
