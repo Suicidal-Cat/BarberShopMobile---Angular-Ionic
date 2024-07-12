@@ -1,20 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { IonModal } from '@ionic/angular';
+import { IonModalCustomEvent,OverlayEventDetail } from '@ionic/core';
 import { AccountService } from 'src/app/services/Account/account.service';
 
 @Component({
-  selector: 'app-email-confirmation-page',
-  templateUrl: './email-confirmation-page.page.html',
-  styleUrls: ['./email-confirmation-page.page.scss'],
+  selector: 'app-email-confirm-modal',
+  templateUrl: './email-confirm-modal.component.html',
+  styleUrls: ['./email-confirm-modal.component.scss'],
 })
-export class EmailConfirmationPagePage implements OnInit {
+export class EmailConfirmModalComponent  implements OnInit {
 
-  constructor(private accountService:AccountService) { }
-
+  @Input() isOpen:boolean=false;
+  @Output() closeModal=new EventEmitter<Boolean>();
+  @ViewChild(IonModal) modal!:IonModal;
   showError:boolean=false;
   responseMessage:string='';
 
-  ngOnInit() {
+  constructor(private accountService:AccountService) { }
+
+  ngOnInit() {}
+
+  onWillDismiss($event: IonModalCustomEvent<OverlayEventDetail<any>>) {
+    this.closeModal.emit(false);
+    this.showError=false;
+    this.responseMessage='';
   }
 
   sendLinkEmail(emailForm: NgForm) {
@@ -26,7 +36,6 @@ export class EmailConfirmationPagePage implements OnInit {
     }
     resendEmail.subscribe({
       next: (data:any)=>{
-        console.log(data);
         this.showError=false;
         this.responseMessage=data.message as string;
       },

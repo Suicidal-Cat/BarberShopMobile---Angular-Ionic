@@ -53,7 +53,6 @@ export class ReservationsPagePage implements OnInit,ViewWillEnter {
     this.appointmnetServce.getAllAppointments(this.formatDate(date))?.subscribe(
       (data)=>{
         this.appointments=data.Value;
-        console.log(this.appointments)
         if(this.appointments!=undefined && this.appointments.length>0)this.empty=false;
         else this.empty=true;
       }

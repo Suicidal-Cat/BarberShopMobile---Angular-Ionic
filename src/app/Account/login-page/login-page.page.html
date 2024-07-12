@@ -79,7 +79,7 @@
         class="ion-float-left"
         fill="clear"
         style="text-transform: initial;margin: 0;width: 100%;text-align: center;margin-bottom: 40px;"
-        routerLink="/login/email-confirmation-page"
+        (click)="showEmailModal()"
         >Resend confirmation link</ion-button
         >
         <div style="text-align: center;">
@@ -93,3 +93,6 @@
     </div>
   </div>
 </ion-content>
+
+<app-email-confirm-modal [isOpen]="emailModal" (closeModal)="closeEmailModal()"></app-email-confirm-modal>
+

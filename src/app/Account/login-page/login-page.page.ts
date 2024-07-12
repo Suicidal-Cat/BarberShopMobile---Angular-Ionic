@@ -14,6 +14,8 @@ export class LoginPagePage implements OnInit {
   showError=false;
   errorMessage!:string;
 
+  emailModal:boolean=false;
+
   constructor(private accountService:AccountService,private router:Router) { }
 
   ngOnInit() {
@@ -44,6 +46,14 @@ export class LoginPagePage implements OnInit {
         }
       })
     }
+  }
+
+  showEmailModal(){
+    this.emailModal=true;
+  }
+
+  closeEmailModal() {
+    this.emailModal=false;
   }
 
 }

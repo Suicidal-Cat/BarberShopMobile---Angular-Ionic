@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  appUrl:"http://192.168.0.29:7251",
+  appUrl:"http://localhost:7251",
   userKey:"identityUser"
 };
 

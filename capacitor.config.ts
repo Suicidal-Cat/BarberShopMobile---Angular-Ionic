@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'BarberShopMobile',
   webDir: 'www',
   server: {
-    url: 'http://192.168.0.29:8100',
+    url: 'http://localhost:8100',
     cleartext: true
   }
 };
