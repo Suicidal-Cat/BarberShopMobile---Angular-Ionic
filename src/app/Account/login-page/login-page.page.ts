@@ -15,6 +15,7 @@ export class LoginPagePage implements OnInit {
   errorMessage!:string;
 
   emailModal:boolean=false;
+  passwordModal:boolean=false;
 
   constructor(private accountService:AccountService,private router:Router) { }
 
@@ -54,6 +55,14 @@ export class LoginPagePage implements OnInit {
 
   closeEmailModal() {
     this.emailModal=false;
+  }
+
+  showPasswordModal(){
+    this.passwordModal=true;
+  }
+
+  closePasswordModal() {
+    this.passwordModal=false;
   }
 
 }

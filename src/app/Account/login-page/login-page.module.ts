@@ -8,6 +8,7 @@ import { LoginPagePageRoutingModule } from './login-page-routing.module';
 
 import { LoginPagePage } from './login-page.page';
 import { EmailConfirmModalComponent } from './email-confirm-modal/email-confirm-modal.component';
+import { PasswordResetModalComponent } from './password-reset-modal/password-reset-modal.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { EmailConfirmModalComponent } from './email-confirm-modal/email-confirm-
     IonicModule,
     LoginPagePageRoutingModule
   ],
-  declarations: [LoginPagePage,EmailConfirmModalComponent]
+  declarations: [LoginPagePage,EmailConfirmModalComponent,PasswordResetModalComponent]
 })
 export class LoginPagePageModule {}

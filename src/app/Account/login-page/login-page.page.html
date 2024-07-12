@@ -84,10 +84,9 @@
         >
         <div style="text-align: center;">
           Don't have an account?
-          <ion-router-link
-            class="signup-link"
-            routerLink="/register"
-          >Sign up</ion-router-link>
+          <div (click)="showPasswordModal()" style="color: var(--ion-color-primary);cursor: pointer;display: inline-block;">
+            Sign Up
+          </div>
         </div>
       </div>
     </div>
@@ -95,4 +94,5 @@
 </ion-content>
 
 <app-email-confirm-modal [isOpen]="emailModal" (closeModal)="closeEmailModal()"></app-email-confirm-modal>
+<app-password-reset-modal [isOpen]="passwordModal" (closeModal)="closePasswordModal()"></app-password-reset-modal>
 
