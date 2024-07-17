@@ -19,6 +19,9 @@ export class HomePage implements ViewWillEnter{
     if(this.user==null){
       this.router.navigateByUrl("/login")
     }
+
+    if(accountService.getUser()?.Role=='Admin')this.router.navigateByUrl("/home/tabs/reservations")
+
   }
 
   ionViewWillEnter(): void {
@@ -27,6 +30,7 @@ export class HomePage implements ViewWillEnter{
 
   changeIcon(event: MouseEvent) {
     const image=event.target as HTMLElement;
+    if(image==this.selectedTab)return;
     const path=image.getAttribute("src");
 
     if(path){

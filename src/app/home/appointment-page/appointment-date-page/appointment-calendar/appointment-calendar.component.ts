@@ -48,6 +48,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   }
 
   showModal(day:number){
+    if(day<=this.startDay)return;
     if(day!=0){
       const formatedDate:string=this.formatDate(new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day));
     this.appointmentService.getAvailableTimes(formatedDate,this.appDuration)?.subscribe((data)=>{
@@ -70,8 +71,8 @@ export class AppointmentCalendarComponent  implements OnInit {
     for(let i of this.serviceIds){
       services.push({ServiceId:i,Duration:1,Name:"none",Price:1,ServiceCategory:{Id:0,Name:"none"}});
     }
-
-    if(this.selectedTimeIndex){
+    console.log(this.selectedTimeIndex)
+    if(this.selectedTimeIndex!=null){
 
       const app:Appointment={
         AppDuration:this.appDuration,
@@ -118,6 +119,8 @@ export class AppointmentCalendarComponent  implements OnInit {
   prevMonth(){
     if(this.startMonth.getMonth()==this.currentMonth.getMonth())return;
     this.currentMonth = new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth()-1);
+    if(this.startMonth.getMonth()==this.currentMonth.getMonth())
+      this.currentMonth = new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),this.startDay);
     this.generateCalendar(this.currentMonth);
   }
 

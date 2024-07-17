@@ -51,7 +51,7 @@
   </ion-row>
 
   <ion-row *ngFor="let week of daysInMonth" [style.height]="calcHeightWeek()">
-    <ion-col *ngFor="let day of week" [class]="day==0 || day<=startDay?'dayUnavaiable':'dayAvaiable'" (click)="showModal(day)">
+    <ion-col *ngFor="let day of week" [class]="day==0 || (day<=startDay && currentMonth.getMonth()==startMonth.getMonth())?'dayUnavaiable':'dayAvaiable'" (click)="showModal(day)">
       <div *ngIf="day!=0" [class]="day==startDay && startDay==currentMonth.getDate()?'dayHeader startDay':'dayHeader'">
         {{day}}
       </div>

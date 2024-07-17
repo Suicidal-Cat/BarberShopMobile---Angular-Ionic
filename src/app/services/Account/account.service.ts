@@ -109,7 +109,6 @@ export class AccountService {
     const key=localStorage.getItem(environment.userKey);
     if(key){
       const user:User=JSON.parse(key);
-      //moras date isto da uzmes u obzir
       if(user)return true;
     }
     return false;
