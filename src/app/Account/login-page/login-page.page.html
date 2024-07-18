@@ -71,7 +71,7 @@
           class="ion-float-left"
           fill="clear"
           style="text-transform: initial;margin: 0;width: 100%;text-align: center;"
-          routerLink="/login/password-reset-page"
+          (click)="showPasswordModal()"
           >Forgot your password?</ion-button
         >
         
@@ -84,7 +84,7 @@
         >
         <div style="text-align: center;">
           Don't have an account?
-          <div (click)="showPasswordModal()" style="color: var(--ion-color-primary);cursor: pointer;display: inline-block;">
+          <div  style="color: var(--ion-color-primary);cursor: pointer;display: inline-block;" routerLink="/register">
             Sign Up
           </div>
         </div>
