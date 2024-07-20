@@ -7,17 +7,44 @@
   <b>Your upcoming appointment</b>
 </div>
 
-<div *ngIf="latestAppointment" class="card">
+<div *ngIf="latestAppointment" class="card" (click)="showModalApp()">
 
   <div class="card-image">
     <ion-img src="../../../../assets/images/maleBarber.jpg" alt="barber image"></ion-img>
   </div>
 
   <div class="card-body">
-    <h6 class="cancel" (click)="cancelAppointment()">X</h6>
     <h1 style="margin-top: 10px;">{{latestAppointment.Date | date: 'd MMMM yyyy'}}</h1> 
     <p><b>Time:</b> {{getFormattedTime(latestAppointment.StartTime) | date: 'h:mm a'}} </p>
     <p><b>Barber:</b> {{latestAppointment.Barber.FirstName}} {{latestAppointment.Barber.LastName}}</p>
   </div>
   
 </div>
+
+
+
+<ion-modal #modal [isOpen]="isOpen" (willDismiss)="onWillDismiss($event)">
+
+  <ng-template>
+    <ion-content>
+      <ion-toolbar>
+        <ion-title>Appointment</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="light" (click)="modal.dismiss()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+      <div style="margin: 0px 10px;">
+        <ion-button expand="block" class="ion-form-button" style="color: white;margin-top: 1rem;">Edit appointment</ion-button>
+        <ion-button expand="block" class="ion-form-button" style="color: white;margin-top: 1rem;" id="present-alert">Cancel appointment</ion-button>
+      </div>
+
+      <ion-alert
+      trigger="present-alert"
+      header="Are you sure you want to cancel the appointment?"
+      [buttons]="alertButtons"
+      ></ion-alert>
+      
+    </ion-content>
+  </ng-template>
+</ion-modal>

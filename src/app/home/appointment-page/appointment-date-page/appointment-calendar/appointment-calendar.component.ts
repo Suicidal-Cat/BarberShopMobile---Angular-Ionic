@@ -88,7 +88,8 @@ export class AppointmentCalendarComponent  implements OnInit {
           next:()=>{
             this.showSpinner=false;
             this.modal.dismiss(null,'cancel');
-            this.navCtr.navigateBack("/home");
+            this.appointmentService.getLatestAppointment()?.subscribe();
+            this.navCtr.navigateRoot("/home");
           },
           error:()=> {
             this.showSpinner=false;
