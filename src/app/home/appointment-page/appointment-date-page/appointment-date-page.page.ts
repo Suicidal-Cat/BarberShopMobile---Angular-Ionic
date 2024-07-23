@@ -18,6 +18,7 @@ export class AppointmentDatePagePage implements OnInit {
 
   barberId:number=0;
   choosenServices:number[]=[];
+  appointmentId:number=0;
 
   totalPrice:number=0;
   appDuration:number=0;
@@ -34,6 +35,11 @@ export class AppointmentDatePagePage implements OnInit {
         if(barber)this.barberId = parseInt(barber);
         const choosenServicesStr = paramMap.get('choosenServices');
         this.choosenServices = choosenServicesStr ? choosenServicesStr.split(',').map(Number) : [];
+
+        if(paramMap.has('appointment')){
+          const id=paramMap.get('appointment')
+          if(id)this.appointmentId=parseInt(id);
+        }
       }
     })
 

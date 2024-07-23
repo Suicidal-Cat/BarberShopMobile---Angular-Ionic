@@ -99,13 +99,15 @@ export class ChooseServicesComponent  implements OnInit,AfterViewInit{
 
       const otherCategory=document.querySelectorAll('ion-checkbox');
       otherCategory.forEach((checkBox:any)=>{
-        if(this.choosenServicesQuery.includes(checkBox.value)){
+        if(this.choosenServicesQuery.includes(checkBox.value) && checkBox.checked==false){
           this.servicesOtherId[this.servicesOtherId.length]=checkBox.value;
           checkBox.checked=true;
         }
       })
 
     });
+    console.log(this.servicesId)
+    console.log(this.servicesOtherId)
   }
 
 }

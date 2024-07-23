@@ -29,6 +29,7 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
   barberId:number=0;
   choosenServices:number[]=[];
   selectedBarber!:LinkCollection<Barber>;
+  appointmentId:number=0;
 
 
   constructor(private serviceService: ServiceService,private barberService:BarberService,
@@ -41,6 +42,11 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
         if(barber)this.barberId = parseInt(barber);
         const choosenServicesStr = paramMap.get('choosenServices');
         this.choosenServices = choosenServicesStr ? choosenServicesStr.split(',').map(Number) : [];
+
+        if(paramMap.has('appointment')){
+          const id=paramMap.get('appointment')
+          if(id)this.appointmentId=parseInt(id);
+        }
       }
     })
 
@@ -90,7 +96,8 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
       this.router.navigate(['home/appointment/appointment-date'], {
         queryParams: {
             barberId: this.barberId,
-            choosenServices: this.choosenServices.join(',')
+            choosenServices: this.choosenServices.join(','),
+            appointment: this.appointmentId
         }
       });
     }

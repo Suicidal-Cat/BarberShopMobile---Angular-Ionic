@@ -16,6 +16,7 @@ export class AppointmentService {
   private barber!:LinkCollection<Barber>;
 
   private _latestAppointment=new Subject<LinkCollection<Appointment>>();
+  private links:Link[]=[];
 
   get latestAppointment(){
     return this._latestAppointment.asObservable();
@@ -64,6 +65,7 @@ export class AppointmentService {
     if(link){
       return this.http.request<LinkCollection<Appointment>>(link.Method,link.Href).pipe(
         tap((data)=>{
+          this.links=data.Links;
           this._latestAppointment.next(data);
         })
       );
@@ -81,6 +83,14 @@ export class AppointmentService {
 
   cancelAppointment(link:Link){
     return this.http.request(link.Method,link.Href,{body:{}});
+  }
+
+  updateAppointment(app:Appointment){
+    const link=this.links.find((l)=>l.Rel=="updateAppointment");
+    if(link){
+      return this.http.request(link.Method,link.Href,{body:app});
+    }
+    else return undefined;
   }
 
 }

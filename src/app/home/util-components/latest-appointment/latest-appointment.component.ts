@@ -1,4 +1,6 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { IonModal } from '@ionic/angular';
 import { IonModalCustomEvent,OverlayEventDetail } from '@ionic/core';
 import { Subscription } from 'rxjs';
 import { Appointment } from 'src/app/models/Appointment/Appointment';
@@ -12,7 +14,7 @@ import { AppointmentService } from 'src/app/services/Appointment/appointment.ser
 })
 export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestroy{
 
-
+  @ViewChild(IonModal) modal!:IonModal;
   isOpen:boolean=false;
 
   latestAppointment!:Appointment | null;
@@ -20,7 +22,7 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
 
   appSub!:Subscription;
 
-  constructor(private appointmentService:AppointmentService) { }
+  constructor(private appointmentService:AppointmentService,private router:Router) { }
 
   ngOnDestroy(): void {
     if(this.appSub)this.appSub.unsubscribe();
@@ -52,7 +54,7 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
       this.appointmentService.cancelAppointment(link).subscribe({
         next:(value)=>{
           this.latestAppointment=null;
-          this.isOpen=false;
+          this.modal.dismiss();
           this.appointmentService.getLatestAppointment()?.subscribe();
         },
       })
@@ -83,7 +85,26 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
     },
   ];
 
+  editAppointment(){
+    if(this.latestAppointment){
+      this.isOpen=false;
+      let barberId:number=0;
+      let choosenServices:number[]=[];
 
+      this.latestAppointment?.Services.forEach(service => {
+        choosenServices.push(service.ServiceId);
+      });
+      barberId=this.latestAppointment?.Barber.BarberId;
+      this.modal.dismiss();
+      this.router.navigate(['home/appointment'], {
+        queryParams: {
+            barberId: barberId,
+            choosenServices: choosenServices.join(','),
+            appointment: this.latestAppointment.AppointmentId
+        }
+      });
+    }
+  }
 
 
 }

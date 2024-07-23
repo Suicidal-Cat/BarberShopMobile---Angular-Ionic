@@ -26,6 +26,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   @Input() totalPrice!:number;
   @Input() appDuration!:number;
   @Input() serviceIds!:number[];
+  @Input() appointmentId:number=0;;
   availableTimes!:string[];
   selectedTimeIndex:number | null=null;
   selectedDate!:string;
@@ -71,7 +72,6 @@ export class AppointmentCalendarComponent  implements OnInit {
     for(let i of this.serviceIds){
       services.push({ServiceId:i,Duration:1,Name:"none",Price:1,ServiceCategory:{Id:0,Name:"none"}});
     }
-    console.log(this.selectedTimeIndex)
     if(this.selectedTimeIndex!=null){
 
       const app:Appointment={
@@ -80,21 +80,37 @@ export class AppointmentCalendarComponent  implements OnInit {
         Date:this.selectedDate,
         IsCanceled:false,
         Price:this.totalPrice,
-        Services:services,
         StartTime:this.availableTimes[this.selectedTimeIndex],
+        Services:services,
         };
         console.log(app)
-        this.appointmentService.createAppointment(app)?.subscribe({
-          next:()=>{
-            this.showSpinner=false;
-            this.modal.dismiss(null,'cancel');
-            this.appointmentService.getLatestAppointment()?.subscribe();
-            this.navCtr.navigateRoot("/home");
-          },
-          error:()=> {
-            this.showSpinner=false;
-          },
-        });
+        if(this.appointmentId==0){
+          this.appointmentService.createAppointment(app)?.subscribe({
+            next:()=>{
+              this.showSpinner=false;
+              this.modal.dismiss(null,'cancel');
+              this.appointmentService.getLatestAppointment()?.subscribe();
+              this.navCtr.navigateRoot("/home");
+            },
+            error:()=> {
+              this.showSpinner=false;
+            },
+          });
+        }
+        else{
+          this.appointmentService.updateAppointment(app)?.subscribe({
+            next:()=>{
+              this.showSpinner=false;
+              this.modal.dismiss(null,'cancel');
+              this.appointmentService.getLatestAppointment()?.subscribe();
+              this.navCtr.navigateRoot("/home");
+            },
+            error:()=> {
+              this.showSpinner=false;
+            },
+          })
+        }
+        
       }
   }
    
