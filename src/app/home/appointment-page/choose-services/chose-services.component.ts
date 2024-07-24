@@ -106,8 +106,6 @@ export class ChooseServicesComponent  implements OnInit,AfterViewInit{
       })
 
     });
-    console.log(this.servicesId)
-    console.log(this.servicesOtherId)
   }
 
 }

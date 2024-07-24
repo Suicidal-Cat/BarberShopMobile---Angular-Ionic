@@ -1,4 +1,4 @@
-<ion-card *ngFor="let item of barbers.Value">
+<!-- <ion-card *ngFor="let item of barbers.Value">
   <ion-card-header style="padding-bottom: 6px;">
     <ion-card-title style="color: white;">{{item.Value.FirstName}} {{item.Value.LastName}}</ion-card-title>
     {{getStatusName(item.Value.Status)}}
@@ -9,4 +9,21 @@
   </ion-card-content>
 
   <ion-button fill="clear" style="color:white;">Details</ion-button>
-</ion-card>
+</ion-card> -->
+
+<div class="barber-card" *ngFor="let item of barbers.Value">
+  <div style="height: 120px;width: 120px;">
+    <img src="../../../../assets/images/maleBarber.jpg" style="height: 120px;width: 120px;">
+    <div class="status-image">
+      <img [src]="getStatusName(item.Value.Status)=='Active'?'../../../../assets/images/activeBarber.png':'../../../../assets/images/inActiveBarber.png'">
+    </div>
+  </div>
+
+  <div class="barber-content">
+    <div class="info">
+      <p style="font-weight: 600;font-size: 20px;">{{item.Value.FirstName}} {{item.Value.LastName}}</p>
+      <p style="font-size: 16px;">Phone: {{item.Value.PhoneNumber}}</p>
+      <p fill="clear" style="color:var(--ion-color-primary);margin-top: 1rem;">Details ></p>
+    </div>
+  </div>
+</div>

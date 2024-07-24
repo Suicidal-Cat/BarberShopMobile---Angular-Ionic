@@ -83,7 +83,6 @@ export class AppointmentCalendarComponent  implements OnInit {
         StartTime:this.availableTimes[this.selectedTimeIndex],
         Services:services,
         };
-        console.log(app)
         if(this.appointmentId==0){
           this.appointmentService.createAppointment(app)?.subscribe({
             next:()=>{

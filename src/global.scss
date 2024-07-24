@@ -50,7 +50,7 @@
 }
 
 ion-content{
-    --background: #f4f4f4;
+    --background: #EDE9E7;
 }
 
 .ion-input-form{
@@ -59,6 +59,7 @@ ion-content{
     --border-radius:13px !important;
     --border-width:0px;
     font-size: 0.9rem;
+    --highlight-color-valid:var(--ion-color-primary);
 }
 
 .ion-button-form{
@@ -68,4 +69,9 @@ ion-content{
     --border-radius:8px;
     font-size: 1rem;
     text-transform: initial;
+}
+
+h1{
+    font-size: 32px;
+    font-weight: 700 !important;
 }

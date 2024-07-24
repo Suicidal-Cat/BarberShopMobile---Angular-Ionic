@@ -7,10 +7,16 @@
 <ion-content [fullscreen]="true">
   <app-toolbar></app-toolbar>
   <div class="container">
-    <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin-top: 5px;">
-      <ion-input label="Barber name" labelPlacement="floating" placeholder="" type="text"
-      ngModel name="barberName" #barberName="ngModel" fill="outline"></ion-input>
-      <ion-button (click)="filterServices(barberName.value)" style="font-size: 0.9rem;">Filter</ion-button>
+    <h1>Barbers</h1>
+    <div style="width: 100%;margin-top: 5px;">
+      <div style="padding: 0px 14px;margin-top: 1.2rem;margin-bottom: 2rem;">
+        <ion-input placeholder="Find a barber" type="text"
+        ngModel name="barberName" #barberName="ngModel" fill="outline" class="ion-input-form">
+            <ion-icon slot="start" name="search-outline" aria-hidden="true" style="font-size: 1.5rem;"
+              (click)="filterServices(barberName.value)">
+            </ion-icon>
+        </ion-input>
+      </div>
     </div>
 
 
@@ -19,3 +25,6 @@
     <ion-button (click)="getNextPage()" [disabled]="!nextPage">>></ion-button>
   </div>
 </ion-content>
+<div class="add-barber">
+  <ion-icon name="add-circle" style="font-size: 56px;color:var(--ion-color-primary)"></ion-icon>
+</div>

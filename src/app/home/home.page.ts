@@ -40,7 +40,6 @@ export class HomePage implements ViewWillEnter{
 
     if(this.selectedTab){
       const pathSelected=this.selectedTab.getAttribute("src");
-      console.log(pathSelected)
       if(pathSelected)this.selectedTab.setAttribute("src",pathSelected.replace(".png", "US.png"));
       this.selectedTab=image;
     }
