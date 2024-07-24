@@ -17,12 +17,15 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
 
   nextPage:boolean=true;
   prevPage:boolean=false;
+  noBarbersMessage:boolean=false;
 
   constructor(private barberService:BarberService) { }
 
   ngOnInit() {
     this.barberSub=this.barberService.barbersPag.subscribe(
       (barbers)=>{
+        if(barbers.Value.length==0)this.noBarbersMessage=true;
+        else this.noBarbersMessage=false;
         this.barbers=barbers;
         if(this.barbers.Links.find((link)=>link.Rel=="prev")!=undefined)this.prevPage=true;
         else this.prevPage=false;
@@ -44,7 +47,7 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
     this.barberService.getBarbersPagination(link?.Href)?.subscribe();
   }
 
-  filterServices(barberName:string=""){
+  filterBarbers(barberName:string=""){
     const link=this.barbers.Links.find((link)=>link.Rel=="curr");
     if(link){
       var href=link?.Href;
@@ -55,7 +58,13 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
     }
   }
 
+  onInput(event: Event) {
+    this.noBarbersMessage=false;
+  }
 
+  onEnter(event: Event,barberName:string) {
+    this.filterBarbers(barberName);
+  }
 
   ngOnDestroy(): void {
     if(this.barberSub)this.barberSub.unsubscribe();

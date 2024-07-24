@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
+import { IonInputCustomEvent,InputInputEventDetail } from '@ionic/core';
 import { Subscription } from 'rxjs';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { ServiceCategory } from 'src/app/models/ServiceCategory/serviceCategory';
@@ -21,11 +23,14 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   nextPage:boolean=true;
   prevPage:boolean=false;
   selectedCategory!:string;
+  noServicesMessage:boolean=false;
 
-  constructor(private serviceService:ServiceService) { }
+  constructor(private serviceService:ServiceService,private router:Router) { }
 
   ngOnInit() {
     this.servicesSub=this.serviceService.servicesPag.subscribe((services)=>{
+      if(services.Value.length==0)this.noServicesMessage=true;
+      else this.noServicesMessage=false;
       this.services=services;
       if(this.services.Links.find((link)=>link.Rel=="prev")!=undefined)this.prevPage=true;
       else this.prevPage=false;
@@ -66,9 +71,21 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
     }
   }
 
+  showAddBarber(){
+    this.router.navigateByUrl("/home/tabs/service/details/0");
+  }
+
   ngOnDestroy(): void {
     if(this.servicesSub)this.servicesSub.unsubscribe();
     if(this.categoriesSub)this.categoriesSub.unsubscribe();
+  }
+
+  onEnter($event: Event,serviceName: string,category: string) {
+    this.filterServices(serviceName,category);
+  }
+    
+  onInput($event: IonInputCustomEvent<InputInputEventDetail>) {
+    this.noServicesMessage=false;
   }
 
 }
