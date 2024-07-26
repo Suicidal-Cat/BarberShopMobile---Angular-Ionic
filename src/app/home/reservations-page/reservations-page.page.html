@@ -3,12 +3,12 @@
   <div class="container">
 
     <div class="date-picker">
-      <h2 style="text-align: center;margin-bottom: 5px;">Choose date</h2>
-      <ion-datetime-button datetime="datetime" class="ion-button-form"></ion-datetime-button>
+      <h1 style="margin-bottom: 5px;">Appointments</h1>
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
     </div>
 
     <div *ngIf="empty" style="font-weight: 600;margin-top: 2rem;">
-      <h1>There is no appointments for selected date</h1>
+      <h1 style="color:gray;font-size: 20px;">There is no appointments for selected date</h1>
     </div>
 
     <div class="app-cont">
