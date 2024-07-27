@@ -22,10 +22,22 @@
     </div>
   </div>
 
-  <ion-select label="Category" interface="popover" placeholder="Select category" [(ngModel)]="selectedCategory">
-    <ion-select-option [value]="">None</ion-select-option>
+  <ion-select label="Categories" placeholder="See All" [(ngModel)]="selectedCategory" 
+  (ionChange)="filterServices(serviceName.value,selectedCategory)">
+    <ion-select-option value="all">All</ion-select-option>
     <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Name" >{{item.Name}}</ion-select-option>
   </ion-select>
+
+  <div class="category-container">
+    <div [ngClass]="selectedCategory == 'all' ? 'category-block selected' : 'category-block'"
+    (click)="changeCategory(serviceName.value,'all')">
+      All
+    </div>
+    <div [ngClass]="selectedCategory == category.Name ? 'category-block selected' : 'category-block'" 
+    *ngFor="let category of serviceCategories" (click)="changeCategory(serviceName.value,category.Name)">
+      {{category.Name}}
+    </div>
+  </div>
 
   <p *ngIf="noServicesMessage==true" style="color:gray;font-size: 20px;">There is no service named {{serviceName.value}}</p>
   <app-service-cards [services]="services"></app-service-cards>

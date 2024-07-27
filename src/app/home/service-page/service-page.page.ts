@@ -22,7 +22,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
 
   nextPage:boolean=true;
   prevPage:boolean=false;
-  selectedCategory!:string;
+  selectedCategory:string='all';
   noServicesMessage:boolean=false;
 
   constructor(private serviceService:ServiceService,private router:Router) { }
@@ -66,7 +66,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
       if(href.includes("&search"))href=href.replace(/&search=[^&]*/,"");
       if(serviceName!="")href+=`&search=${serviceName}`;
       if(href.includes("&category"))href=href.replace(/&category=[^&]*/,"");
-      if(category!="" && category!="None")href+=`&category=${category}`;
+      if(category!="" && category!="all")href+=`&category=${category}`;
       this.serviceService.getServicesPagination(href)?.subscribe();  
     }
   }
@@ -86,6 +86,11 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
     
   onInput($event: IonInputCustomEvent<InputInputEventDetail>) {
     this.noServicesMessage=false;
+  }
+
+  changeCategory(serviceName: string,category: string) {
+    this.selectedCategory=category;
+    this.filterServices(serviceName,category);
   }
 
 }
