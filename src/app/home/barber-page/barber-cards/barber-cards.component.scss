@@ -8,8 +8,9 @@ ion-card{
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    gap:1.3rem;
+    gap:1rem;
     margin-bottom: 1rem;
+    margin-left: 8px;
 }
 
 .barber-card p{
@@ -17,13 +18,15 @@ ion-card{
 }
 
 .barber-content{
-    height: 110px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .status-image{
+    height: 23px;
+    width: 23px;
     position: relative;
-    bottom: 50px;
+    bottom: 35px;
 }

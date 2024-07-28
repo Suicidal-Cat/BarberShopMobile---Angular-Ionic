@@ -21,7 +21,7 @@
  <ion-tabs *ngIf="user?.Role=='Admin'">
   <ion-tab-bar slot="bottom">
 
-    <ion-tab-button tab="service">
+    <ion-tab-button tab="service" style="margin-left: 1rem;">
       <ion-img src="../../assets/images/serviceTabUS.png" (click)="changeIcon($event)"></ion-img>
     </ion-tab-button>
 
@@ -29,7 +29,7 @@
       <ion-img src="../../assets/images/barberTabUS.png" (click)="changeIcon($event)"></ion-img>
     </ion-tab-button>
 
-    <ion-tab-button tab="reservations">
+    <ion-tab-button tab="reservations" style="margin-right: 1rem;">
       <ion-img src="../../assets/images/appointmentTab.png" (click)="changeIcon($event)" class="default"></ion-img>
     </ion-tab-button>
 

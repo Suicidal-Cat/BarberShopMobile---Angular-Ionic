@@ -7,45 +7,46 @@
 
 <ion-content [fullscreen]="true">
   <app-toolbar></app-toolbar>
-  <div class="content"> 
 
-  <h1>Services</h1>
+  <h1 style="margin-left: 35px;">Services</h1>
   <div style="width: 100%;margin-top: 5px;">
-    <div style="padding: 0px 14px;margin-top: 1.2rem;margin-bottom: 1rem;">
+    <div style="margin-top: 1.2rem;margin-bottom: 1.2rem;margin-left: 1rem;margin-right: 1rem;">
       <ion-input placeholder="Find a service" type="text"
       ngModel name="serviceName" #serviceName="ngModel" fill="outline" (ionInput)="onInput($event)"
-      (keyup.enter)="onEnter($event,serviceName.value,selectedCategory)" class="ion-input-form">
-        <ion-icon slot="start" name="search-outline" aria-hidden="true" style="font-size: 1.5rem;"
+      (keyup.enter)="onEnter($event,serviceName.value,selectedCategory)" class="ion-input-form search-input">
+        <ion-icon slot="end" name="search-outline" aria-hidden="true" class="search-icon"
         (click)="filterServices(serviceName.value,selectedCategory)">
         </ion-icon>
       </ion-input>
     </div>
   </div>
 
-  <ion-select label="Categories" placeholder="See All" [(ngModel)]="selectedCategory" 
-  (ionChange)="filterServices(serviceName.value,selectedCategory)">
-    <ion-select-option value="all">All</ion-select-option>
-    <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Name" >{{item.Name}}</ion-select-option>
-  </ion-select>
+  <div class="content"> 
 
-  <div class="category-container">
-    <div [ngClass]="selectedCategory == 'all' ? 'category-block selected' : 'category-block'"
-    (click)="changeCategory(serviceName.value,'all')">
-      All
-    </div>
-    <div [ngClass]="selectedCategory == category.Name ? 'category-block selected' : 'category-block'" 
-    *ngFor="let category of serviceCategories" (click)="changeCategory(serviceName.value,category.Name)">
-      {{category.Name}}
-    </div>
-  </div>
+    <ion-select label="Categories" placeholder="See All" [(ngModel)]="selectedCategory" 
+    (ionChange)="filterServices(serviceName.value,selectedCategory)">
+      <ion-select-option value="all">All</ion-select-option>
+      <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Name" >{{item.Name}}</ion-select-option>
+    </ion-select>
 
-  <p *ngIf="noServicesMessage==true" style="color:gray;font-size: 20px;">There is no service named {{serviceName.value}}</p>
-  <app-service-cards [services]="services"></app-service-cards>
-  
-  <ng-container *ngIf="services.Value.length>1">
-    <ion-button (click)="getPrevPage()" [disabled]="!prevPage"><<</ion-button>
-    <ion-button (click)="getNextPage()" [disabled]="!nextPage">>></ion-button>
-  </ng-container>
+    <div class="category-container">
+      <div [ngClass]="selectedCategory == 'all' ? 'category-block selected' : 'category-block'"
+      (click)="changeCategory(serviceName.value,'all')">
+        All
+      </div>
+      <div [ngClass]="selectedCategory == category.Name ? 'category-block selected' : 'category-block'" 
+      *ngFor="let category of serviceCategories" (click)="changeCategory(serviceName.value,category.Name)">
+        {{category.Name}}
+      </div>
+    </div>
+
+    <p *ngIf="noServicesMessage==true" style="color:gray;font-size: 20px;">There is no service named {{serviceName.value}}</p>
+    <app-service-cards [services]="services"></app-service-cards>
+    
+    <ng-container *ngIf="services.Value.length>1">
+      <ion-button (click)="getPrevPage()" [disabled]="!prevPage"><<</ion-button>
+      <ion-button (click)="getNextPage()" [disabled]="!nextPage">>></ion-button>
+    </ng-container>
   </div>
 
 </ion-content>

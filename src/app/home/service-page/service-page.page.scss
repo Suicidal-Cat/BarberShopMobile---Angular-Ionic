@@ -8,7 +8,7 @@ input{
 
 .content{
     max-width: 100%;
-    margin: 0px 35px;
+    margin: 0px 1rem;
 }
 
 .add-service{
@@ -19,7 +19,7 @@ input{
 
 .category-container{
     display: flex;
-    gap:5px;
+    gap:10px;
     margin-bottom: 1.5rem;
 }
 
@@ -43,6 +43,7 @@ input{
 ion-select::part(label){
     font-weight: 600;
     font-size: 20px;
+    --padding-start: 0px;
 }
 
 ion-select::part(icon) {
@@ -53,7 +54,16 @@ ion-select::part(placeholder) {
     color: var(--ion-color-primary);
 }
 
+ion-select::part(text) {
+    color: var(--ion-color-primary);
+    display: none;
+}
+
 ion-select{
     --highlight-color: none;
-    padding-left: 6px;
+}
+
+ion-input{
+    --border-radius:8px !important;
+    --padding-start: 1.4rem !important;
 }

@@ -74,4 +74,20 @@ ion-content{
 h1{
     font-size: 32px;
     font-weight: 700 !important;
+    margin-top: 1rem;
+}
+
+.search-icon{
+    font-size: 2.5rem;
+    --ionicon-stroke-width: 3rem;
+    color: white;
+    background-color: var(--ion-color-primary);
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.ion-input-form.search-input{
+    --border-radius: 24px !important;
 }

@@ -1,6 +1,6 @@
 .container{
     max-width: 100%;
-    margin: 0px 35px;
+    margin: 0px 25px;
 }
 
 ion-button{
@@ -19,4 +19,5 @@ input{
 
 ion-input{
     --border-radius:8px !important;
+    --padding-start: 1.4rem !important;
 }

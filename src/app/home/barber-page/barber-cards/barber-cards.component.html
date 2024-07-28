@@ -12,8 +12,8 @@
 </ion-card> -->
 
 <div class="barber-card" *ngFor="let item of barbers.Value">
-  <div style="height: 120px;width: 120px;">
-    <img src="../../../../assets/images/maleBarber.jpg" style="height: 120px;width: 120px;">
+  <div style="height: 81px;width: 81px;">
+    <img src="../../../../assets/images/maleBarber.jpg" style="height: 81px;width: 81px;border-radius: 16px;">
     <div class="status-image">
       <img [src]="getStatusName(item.Value.Status)=='Active'?'../../../../assets/images/activeBarber.png':'../../../../assets/images/inActiveBarber.png'">
     </div>
@@ -21,9 +21,9 @@
 
   <div class="barber-content">
     <div class="info">
-      <p style="font-weight: 600;font-size: 20px;">{{item.Value.FirstName}} {{item.Value.LastName}}</p>
-      <p style="font-size: 16px;">Phone: {{item.Value.PhoneNumber}}</p>
-      <p fill="clear" style="color:var(--ion-color-primary);margin-top: 1rem;">Details ></p>
+      <p style="font-weight: 600;font-size: 16px;">{{item.Value.FirstName}} {{item.Value.LastName}}</p>
+      <p style="font-size: 14px;">Phone: {{item.Value.PhoneNumber}}</p>
+      <p fill="clear" style="color:var(--ion-color-primary);margin-top: 1rem;font-size: 14px;">Details ></p>
     </div>
   </div>
 </div>

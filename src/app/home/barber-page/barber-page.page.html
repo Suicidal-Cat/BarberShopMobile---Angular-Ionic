@@ -6,22 +6,22 @@
 
 <ion-content [fullscreen]="true">
   <app-toolbar></app-toolbar>
-  <div class="container">
-    <h1>Barbers</h1>
-    <div style="width: 100%;margin-top: 5px;">
-      <div style="padding: 0px 14px;margin-top: 1.2rem;margin-bottom: 2rem;">
+  <h1 style="margin-left: 35px;">Barbers</h1>
+  <div style="width: 100%;margin-top: 5px;">
+      <div style="margin-top: 1.2rem;margin-bottom: 2rem;margin-left: 1rem;margin-right: 1rem;">
         <ion-input placeholder="Find a barber" type="text"
-        ngModel name="barberName" #barberName="ngModel" fill="outline" class="ion-input-form" (ionInput)="onInput($event)"
+        ngModel name="barberName" #barberName="ngModel" fill="outline" class="ion-input-form search-input" (ionInput)="onInput($event)"
         (keyup.enter)="onEnter($event,barberName.value)">
-            <ion-icon slot="start" name="search-outline" aria-hidden="true" style="font-size: 1.5rem;"
+            <ion-icon slot="end" name="search-outline" aria-hidden="true" class="search-icon"
               (click)="filterBarbers(barberName.value)">
             </ion-icon>
         </ion-input>
       </div>
-    </div>
+  </div>
 
+  <div class="container">
     <p *ngIf="noBarbersMessage==true" style="color:gray;font-size: 20px;">There is no barber named {{barberName.value}}</p>
-
+    
     <app-barber-cards [barbers]="barbers"></app-barber-cards>
     <ng-container *ngIf="barbers.Value.length>1">
       <ion-button (click)="getPrevPage()" [disabled]="!prevPage"><<</ion-button>
