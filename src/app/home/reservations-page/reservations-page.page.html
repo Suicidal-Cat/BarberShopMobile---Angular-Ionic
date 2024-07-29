@@ -1,12 +1,18 @@
 <ion-content [fullscreen]="true">
   <app-toolbar></app-toolbar>
-  <div class="container">
+  
 
     <div class="date-picker">
-      <h1 style="margin-bottom: 5px;">Appointments</h1>
-      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <h1 style="margin-bottom: 1rem;margin-left: 35px;">Appointments</h1>
+      <!-- <ion-datetime-button datetime="datetime"></ion-datetime-button> -->
+    </div>
+    <div style="margin-top: 2rem;">
+      <div class="divider" style="margin-bottom: 1rem;"></div>
+      <div style="margin: 0px 1rem;"><app-reservation-calendar></app-reservation-calendar></div>
+      <div class="divider" style="margin-top: 1rem;"></div>
     </div>
 
+  <div class="container">
     <div *ngIf="empty" style="font-weight: 600;margin-top: 2rem;">
       <h1 style="color:gray;font-size: 20px;">There is no appointments for selected date</h1>
     </div>

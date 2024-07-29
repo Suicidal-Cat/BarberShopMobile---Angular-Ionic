@@ -8,6 +8,7 @@ import { ReservationsPagePageRoutingModule } from './reservations-page-routing.m
 
 import { ReservationsPagePage } from './reservations-page.page';
 import { SharedModule } from '../util-components/shared/shared.module';
+import { ReservationCalendarComponent } from './reservation-calendar/reservation-calendar.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { SharedModule } from '../util-components/shared/shared.module';
     ReservationsPagePageRoutingModule,
     SharedModule
   ],
-  declarations: [ReservationsPagePage]
+  declarations: [ReservationsPagePage,ReservationCalendarComponent]
 })
 export class ReservationsPagePageModule {}

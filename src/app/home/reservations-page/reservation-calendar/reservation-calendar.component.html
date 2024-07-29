@@ -1,0 +1,38 @@
+<ion-grid class="ion-no-padding">
+
+  <ion-row class="ion-justify-content-between ion-align-items-center">
+      <div style="font-size: 16px;font-weight: 700;">{{currentMonth | date: 'MMMM yyyy'}}</div>
+      <div style="display: flex;align-items: center;gap:1.2rem">
+        <div class="monthIconContainer">
+          <ion-icon name="chevron-back-outline" (click)="prevMonth()" class="changeMonthIcon" style="padding-left: 3px;"></ion-icon>
+          <div class="divider"></div>
+          <ion-icon name="chevron-forward-outline" (click)="nextMonth()" class="changeMonthIcon" style="padding-right: 3px;"></ion-icon>
+        </div>
+        <div>
+         <ion-icon name="ellipsis-horizontal-outline" class="expandIcon"></ion-icon>
+        </div>
+      </div>
+  </ion-row>
+
+  <div style="margin-top: 1.2rem">
+
+    <ion-row class="daysContainer">
+      <ion-col *ngFor="let weekday of weekDays" class="weekDays">
+        {{weekday}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let week of daysInMonth" class="daysContainer">    
+      <ion-col *ngFor="let day of week" class="days">
+        <div *ngIf="day!=0" [class]="day==selectedDay?'day selectedDay':'day'">
+          {{day}}
+        </div>  
+      </ion-col>
+    </ion-row>
+
+  </div>
+
+
+
+
+</ion-grid>
