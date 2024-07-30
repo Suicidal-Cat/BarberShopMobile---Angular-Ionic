@@ -27,12 +27,6 @@ export class ReservationsPagePage implements OnInit,ViewWillEnter {
     this.getAppointments(this.formatDate(new Date()));
   }
 
-  onChange(event: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) {
-    console.log()
-    this.modal.dismiss();
-    this.getAppointments(this.formatDate(event.detail.value));
-  }
-
   formatDate(date:any): string {
     const d=new Date(date);
     const year = d.getFullYear();
@@ -47,6 +41,10 @@ export class ReservationsPagePage implements OnInit,ViewWillEnter {
     const date = new Date();
     date.setHours(hours, minutes, 0);
     return date;
+  }
+
+  selectedDateUser(date:string){
+    this.getAppointments(date);
   }
 
   getAppointments(date:string){

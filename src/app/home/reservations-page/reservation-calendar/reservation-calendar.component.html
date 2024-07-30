@@ -9,7 +9,7 @@
           <ion-icon name="chevron-forward-outline" (click)="nextMonth()" class="changeMonthIcon" style="padding-right: 3px;"></ion-icon>
         </div>
         <div>
-         <ion-icon name="ellipsis-horizontal-outline" class="expandIcon"></ion-icon>
+         <ion-icon name="ellipsis-horizontal-outline" class="expandIcon" (click)="showHideCal()"></ion-icon>
         </div>
       </div>
   </ion-row>
@@ -22,13 +22,26 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngFor="let week of daysInMonth" class="daysContainer">    
-      <ion-col *ngFor="let day of week" class="days">
-        <div *ngIf="day!=0" [class]="day==selectedDay?'day selectedDay':'day'">
-          {{day}}
-        </div>  
-      </ion-col>
-    </ion-row>
+    <ng-container *ngIf="showSelectedWeek">
+      <ion-row class="daysContainer">    
+        <ion-col *ngFor="let day of daysInMonth[selectedWeek]" class="days">
+          <div *ngIf="day!=0" [class]="day==selectedDay?'day selectedDay':'day'" (click)="getAppointments(day)">
+            {{day}}
+          </div>  
+        </ion-col>
+      </ion-row>
+    </ng-container>
+
+
+    <ng-container *ngIf="showSelectedWeek==false">
+      <ion-row *ngFor="let week of daysInMonth" class="daysContainer">    
+        <ion-col *ngFor="let day of week" class="days">
+          <div *ngIf="day!=0" [class]="day==selectedDay?'day selectedDay':'day'" (click)="getAppointments(day)">
+            {{day}}
+          </div>  
+        </ion-col>
+      </ion-row>
+    </ng-container>
 
   </div>
 

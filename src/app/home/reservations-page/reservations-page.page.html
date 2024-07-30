@@ -1,14 +1,11 @@
 <ion-content [fullscreen]="true">
   <app-toolbar></app-toolbar>
   
+    <h1 style="margin-bottom: 1rem;margin-left: 35px;">Appointments</h1>
 
-    <div class="date-picker">
-      <h1 style="margin-bottom: 1rem;margin-left: 35px;">Appointments</h1>
-      <!-- <ion-datetime-button datetime="datetime"></ion-datetime-button> -->
-    </div>
     <div style="margin-top: 2rem;">
       <div class="divider" style="margin-bottom: 1rem;"></div>
-      <div style="margin: 0px 1rem;"><app-reservation-calendar></app-reservation-calendar></div>
+      <div style="margin: 0px 1rem;"><app-reservation-calendar (selectedDateUser)="selectedDateUser($event)"></app-reservation-calendar></div>
       <div class="divider" style="margin-top: 1rem;"></div>
     </div>
 
@@ -35,9 +32,3 @@
 
   </div>
 </ion-content>
-
-<ion-modal #modal [keepContentsMounted]="true">
-  <ng-template>
-    <ion-datetime id="datetime" presentation="date" (ionChange)="onChange($event)"></ion-datetime>
-  </ng-template>
-</ion-modal>

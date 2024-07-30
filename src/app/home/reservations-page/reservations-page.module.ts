@@ -16,7 +16,7 @@ import { ReservationCalendarComponent } from './reservation-calendar/reservation
     FormsModule,
     IonicModule,
     ReservationsPagePageRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [ReservationsPagePage,ReservationCalendarComponent]
 })

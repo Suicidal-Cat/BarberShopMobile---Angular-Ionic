@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-reservation-calendar',
@@ -11,10 +11,13 @@ export class ReservationCalendarComponent  implements OnInit {
   startDay:number=new Date().getDate();
   selectedDay:number=this.startDay;
   selectedWeek!:number;
+  showSelectedWeek:boolean=true;
 
   currentMonth!:Date;
   daysInMonth: number[][]=[];
   weekDays:String[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  @Output() selectedDateUser:EventEmitter<string>=new EventEmitter();
 
   constructor() { }
 
@@ -29,11 +32,20 @@ export class ReservationCalendarComponent  implements OnInit {
     this.daysInMonth = this.splitIntoWeeks(start,end);
   }
 
+  getAppointments(day:number){
+    const date=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day);
+    this.selectedDay=day;
+    this.selectedDateUser.emit(this.formatDate(date));
+  }
+
   nextMonth(){
     this.currentMonth = new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth()+1);
-    if(this.startMonth.getMonth()==this.currentMonth.getMonth())this.selectedDay=this.startDay;
+    if(this.startMonth.getMonth()==this.currentMonth.getMonth()){
+      this.selectedDay=this.startDay;
+      this.selectedDateUser.emit(this.formatDate(this.startMonth))
+    }
     else {
-      this.selectedDay=1;
+      this.selectedDay=-1;
       this.selectedWeek=0;
     }
     this.generateCalendar(this.currentMonth);
@@ -44,9 +56,10 @@ export class ReservationCalendarComponent  implements OnInit {
     if(this.startMonth.getMonth()==this.currentMonth.getMonth()){
       this.currentMonth = new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),this.startDay);
       this.selectedDay=this.startDay;
+      this.selectedDateUser.emit(this.formatDate(this.startMonth))
     }
     else {
-      this.selectedDay=1;
+      this.selectedDay=-1;
       this.selectedWeek=0;
     }
     this.generateCalendar(this.currentMonth);
@@ -78,6 +91,7 @@ export class ReservationCalendarComponent  implements OnInit {
     let currentDay=1;
 
     daysInMonth[0]=[];
+
     for(let i=0;i<startDayOfTheWeek;i++)daysInMonth[0][i]=0;
     for(let i=startDayOfTheWeek;i<7;i++){
       daysInMonth[0][i]=currentDay;
@@ -104,6 +118,10 @@ export class ReservationCalendarComponent  implements OnInit {
           break;
       }
     return daysInMonth;
+  }
+
+  showHideCal(){
+    this.showSelectedWeek=!this.showSelectedWeek;
   }
 
 }

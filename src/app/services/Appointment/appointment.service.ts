@@ -65,8 +65,11 @@ export class AppointmentService {
     if(link){
       return this.http.request<LinkCollection<Appointment>>(link.Method,link.Href).pipe(
         tap((data)=>{
-          this.links=data.Links;
-          this._latestAppointment.next(data);
+          if(data){
+            this.links=data.Links;
+            this._latestAppointment.next(data);
+          }
+          
         })
       );
     }
