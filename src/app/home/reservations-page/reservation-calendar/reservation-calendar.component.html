@@ -24,8 +24,8 @@
 
     <ng-container *ngIf="showSelectedWeek">
       <ion-row class="daysContainer">    
-        <ion-col *ngFor="let day of daysInMonth[selectedWeek]" class="days">
-          <div *ngIf="day!=0" [class]="day==selectedDay?'day selectedDay':'day'" (click)="getAppointments(day)">
+        <ion-col *ngFor="let day of daysInMonth[selectedWeek];let j=index" class="days">
+          <div *ngIf="day!=0" [class]="startDayClass(day,selectedWeek,j) ?'day selectedDay':'day'" (click)="getAppointments(day)">
             {{day}}
           </div>  
         </ion-col>
@@ -34,9 +34,9 @@
 
 
     <ng-container *ngIf="showSelectedWeek==false">
-      <ion-row *ngFor="let week of daysInMonth" class="daysContainer">    
-        <ion-col *ngFor="let day of week" class="days">
-          <div *ngIf="day!=0" [class]="day==selectedDay?'day selectedDay':'day'" (click)="getAppointments(day)">
+      <ion-row *ngFor="let week of daysInMonth;let i=index" class="daysContainer">    
+        <ion-col *ngFor="let day of week;let j=index" class="days">
+          <div *ngIf="day!=0" [class]="startDayClass(day,i,j) ?'day selectedDay':'day'" (click)="getAppointments(day)">
             {{day}}
           </div>  
         </ion-col>
