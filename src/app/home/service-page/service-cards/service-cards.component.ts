@@ -35,4 +35,10 @@ export class ServiceCardsComponent  implements OnInit {
     };
   }
 
+
+  getImagePath(name:string){
+    if(name=="Haircuts")return '../../../../assets/images/Haircut.png';
+    else if(name=='Beard')return '../../../../assets/images/Beard.png';
+    else return '../../../../assets/images/Other.png';
+  }
 }

@@ -35,8 +35,20 @@ export class ReservationCalendarComponent  implements OnInit {
     this.daysInMonth = this.splitIntoWeeks(start,end);
   }
 
-  getAppointments(day:number){
-    const date=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day);
+  getAppointments(day:number,row:number,column:number){
+
+    let date=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day);
+    if(row==0 && column<this.startColumnOfMonth){
+      console.log("PRETHODNI");
+      date=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth()-1,day);
+      this.prevMonth();
+    }
+    if(row==this.daysInMonth.length-1 && column>this.endColumnOfMonth){
+      console.log("SLEDECI");
+      date=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth()+1,day);
+      this.nextMonth();
+    }
+
     this.selectedDay=day;
     this.selectedMonthForDay=date;
     this.selectedDateUser.emit(this.formatDate(date));
@@ -148,14 +160,7 @@ export class ReservationCalendarComponent  implements OnInit {
 
   startDayClass(day:number,i:number,j:number):boolean{
     let t= day==this.selectedDay && this.selectedMonthForDay.getMonth()==this.currentMonth.getMonth() 
-    && !((i==1 && j<this.startColumnOfMonth) || (i==this.daysInMonth.length-1 && j>this.endColumnOfMonth));
-
-    if(t){
-      // console.log(day,i,j,'PRESEK',this.startColumnOfMonth,this.endColumnOfMonth)
-      // console.log(this.selectedMonthForDay.getMonth()==this.currentMonth.getMonth())
-      // console.log(!((i==1 && j<this.startColumnOfMonth) || (i==this.daysInMonth.length-1 && j>this.endColumnOfMonth)))
-    }
-
+    && !((i==0 && j<this.startColumnOfMonth) || (i==this.daysInMonth.length-1 && j>this.endColumnOfMonth));
     return t;
   }
 

@@ -1,5 +1,4 @@
-<ion-grid class="ion-no-padding">
-
+<ion-grid class="ion-no-padding">  
   <ion-row class="ion-justify-content-between ion-align-items-center">
       <div style="font-size: 16px;font-weight: 700;">{{currentMonth | date: 'MMMM yyyy'}}</div>
       <div style="display: flex;align-items: center;gap:1.2rem">
@@ -25,7 +24,7 @@
     <ng-container *ngIf="showSelectedWeek">
       <ion-row class="daysContainer">    
         <ion-col *ngFor="let day of daysInMonth[selectedWeek];let j=index" class="days">
-          <div *ngIf="day!=0" [class]="startDayClass(day,selectedWeek,j) ?'day selectedDay':'day'" (click)="getAppointments(day)">
+          <div *ngIf="day!=0" [class]="startDayClass(day,selectedWeek,j) ?'day selectedDay':'day'" (click)="getAppointments(day,selectedWeek,j)">
             {{day}}
           </div>  
         </ion-col>
@@ -36,7 +35,7 @@
     <ng-container *ngIf="showSelectedWeek==false">
       <ion-row *ngFor="let week of daysInMonth;let i=index" class="daysContainer">    
         <ion-col *ngFor="let day of week;let j=index" class="days">
-          <div *ngIf="day!=0" [class]="startDayClass(day,i,j) ?'day selectedDay':'day'" (click)="getAppointments(day)">
+          <div *ngIf="day!=0" [class]="startDayClass(day,i,j) ?'day selectedDay':'day'" (click)="getAppointments(day,i,j)">
             {{day}}
           </div>  
         </ion-col>

@@ -1,13 +1,17 @@
-
-<ion-card *ngFor="let item of services.Value">
-  <ion-card-header style="margin-bottom: 0px;">
-    <ion-card-title style="color:white;font-weight: 600px;">{{item.Value.Name}}</ion-card-title>
-    {{item.Value.ServiceCategory.Name}}
-  </ion-card-header>
-
-  <!-- <ion-card-content>
-  </ion-card-content> -->
-  
-  <ion-button fill="clear" (click)="showServiceDetails(item.Value.ServiceId,item.Links)" style="color:white;">Details</ion-button>
-  <ion-button fill="clear" (click)="deleteService(item.Links,item.Value.ServiceId)" style="color:white;">Delete</ion-button>
-</ion-card>
+<div class="service-card" *ngFor="let item of services.Value" (click)="showServiceDetails(item.Value.ServiceId,item.Links)">
+  <div class="service-info">
+    <div class="pic">
+      <img [src]="getImagePath(item.Value.ServiceCategory.Name)">
+    </div>
+    <div class="info">
+      <p style="margin-bottom: 5px;font-size: 16px;font-weight: 700;">{{item.Value.Name}}</p>
+      <div style="font-size: 14px;color: #A1A1A1;">
+        <p>{{item.Value.ServiceCategory.Name}}</p>
+        <p>{{item.Value.Duration}} min</p>
+      </div>
+    </div>
+  </div>
+  <div class="service-price">
+    <p style="font-size: 14px;font-weight: 700;">{{item.Value.Price}} RSD</p>
+  </div>
+</div>

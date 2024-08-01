@@ -40,7 +40,13 @@
       </div>
     </div>
 
-    <p *ngIf="noServicesMessage==true" style="color:gray;font-size: 20px;">There is no service named {{serviceName.value}}</p>
+    <div *ngIf="noServicesMessage==true" style="margin-top: 2rem;display: flex;flex-direction: column;align-items: center;">
+      <h1 style="color:gray;font-size: 18px;text-align-last: center;font-weight: 600">
+        There is no service named {{serviceName.value}}
+      </h1>
+      <img src="../../../assets/images/Nothing Found.png" style="width: 100px;height: 100px;">
+    </div>
+
     <app-service-cards [services]="services"></app-service-cards>
     
     <ng-container *ngIf="services.Value.length>1">
