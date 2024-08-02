@@ -20,12 +20,15 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
   categoriesSub!:Subscription
 
   showSpinner:boolean=false;
+  showDeleteSpinner:boolean=false;
   ServiceId!:string | null;
   Name:string="";
   Price:number=1;
   Duration:number=1;
   ServiceCategory:number=0;
   UpdateLink!:Link | undefined;
+  DeleteLink!:Link | undefined;
+  title:string="Create service";
 
 
   constructor(private serviceService:ServiceService,
@@ -34,13 +37,18 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap=>{
       this.ServiceId=paramMap.get("serviceId");
-      if(this.ServiceId=="0")return;
-      const link=this.serviceService.getServiceLink();
-      if(!paramMap.has("serviceId") || link==undefined){
-        this.navCotroller.navigateBack("/home/service")
+      if(this.ServiceId=="0"){
+        this.title="Create service";
         return;
       }
+      else this.title="Update service";
 
+      const link=this.serviceService.getServiceLink();
+      if(!paramMap.has("serviceId") || link==undefined){
+        this.navCotroller.navigateBack("/home/tabs/service")
+        return;
+      }
+      
       if(link!=undefined)this.serviceService.getService(link).subscribe(
         (data)=>{
           this.Name=data.Value.Name;
@@ -49,6 +57,7 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
           this.ServiceCategory=data.Value.ServiceCategory.Id;
           this.serviceService.setServiceLink(undefined);
           this.UpdateLink=data.Links.find((link)=>link.Rel=="update");
+          this.DeleteLink=data.Links.find((link)=>link.Rel=="delete");
         }
       )
 
@@ -75,9 +84,9 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
       this.serviceService.updateService(serviceForm.value,this.UpdateLink).subscribe({
         next:()=>{
           this.showSpinner=false;
-          this.navCotroller.navigateBack("/home/service")
+          this.navCotroller.navigateBack("/home/tabs/service")
         },
-        error(err) {  
+        error(err) {
         }
         })
     }
@@ -86,13 +95,31 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
       this.serviceService.addService(serviceForm.value)?.subscribe({
         next:()=>{
           this.showSpinner=false;
-          this.navCotroller.navigateBack("/home/service")
+          this.navCotroller.navigateBack("/home/tabs/service")
         },
         error(err) {  
         },
       })
     }
 
+  }
+
+  deleteService(){
+    if(this.ServiceId){
+      this.showDeleteSpinner=true;
+      const id=parseInt(this.ServiceId);
+  
+      if(this.DeleteLink)this.serviceService.deleteService(this.DeleteLink,id).subscribe({
+        next:()=>{
+          this.showDeleteSpinner=false;
+          this.navCotroller.navigateBack("/home/tabs/service")
+        },
+        error:()=>{
+          this.showDeleteSpinner=false;
+          this.navCotroller.navigateBack("/home/tabs/service")
+        }
+      });
+    }
   }
 
 

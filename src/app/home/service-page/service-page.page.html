@@ -10,7 +10,7 @@
 
   <h1 style="margin-left: 35px;">Services</h1>
   <div style="width: 100%;margin-top: 5px;">
-    <div style="margin-top: 1.2rem;margin-bottom: 1.2rem;margin-left: 1rem;margin-right: 1rem;">
+    <div style="margin-top: 1.2rem;margin-left: 1rem;margin-right: 1rem;">
       <ion-input placeholder="Find a service" type="text"
       ngModel name="serviceName" #serviceName="ngModel" fill="outline" (ionInput)="onInput($event)"
       (keyup.enter)="onEnter($event,serviceName.value,selectedCategory)" class="ion-input-form search-input">
@@ -24,7 +24,7 @@
   <div class="content"> 
 
     <ion-select label="Categories" placeholder="See All" [(ngModel)]="selectedCategory" 
-    (ionChange)="filterServices(serviceName.value,selectedCategory)">
+    (ionChange)="filterServices(serviceName.value,selectedCategory)" style="margin-top: -10px;">
       <ion-select-option value="all">All</ion-select-option>
       <ion-select-option *ngFor="let item of serviceCategories" [value]="item.Name" >{{item.Name}}</ion-select-option>
     </ion-select>

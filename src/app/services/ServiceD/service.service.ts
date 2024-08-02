@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AccountService } from '../Account/account.service';
-import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, take, tap } from 'rxjs';
 import { Service } from 'src/app/models/ServiceD/service';
 import { HttpClient } from '@angular/common/http';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
@@ -45,10 +45,12 @@ export class ServiceService{
       switchMap(()=>{
         return this.servicesPag;
       }),
+      take(1),
       tap((data:LinkCollection<LinkCollection<Service>[]>)=>{
         data.Value=data.Value.filter(s=>s.Value.ServiceId!=id);
         this._servicesPag.next(data);
-      })
+        console.log(data.Value)
+      }),
     )
   }
 

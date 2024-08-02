@@ -7,7 +7,7 @@
 <ion-content [fullscreen]="true">
   <div class="flex-center">
     <div class="flex-container">
-      <h1>Service</h1>
+      <h1>{{title}}</h1>
 
       <form #serviceForm="ngForm" (ngSubmit)="saveService(serviceForm)">
         <ion-input label="Name" labelPlacement="floating" fill="outline" placeholder="" type="text" 
@@ -29,9 +29,20 @@
             <ion-spinner></ion-spinner>
           </div>
           <div *ngIf="!showSpinner">
-            Save
+            {{title.split(" ")[0]}}
           </div>
         </ion-button>
+
+        <ion-button expand="block" [disabled]="serviceForm.invalid || ServiceCategory==0" class="ion-button-form"
+        *ngIf="DeleteLink" style="--background: var(--ion-color-danger);" (click)="deleteService()">
+          <div *ngIf="showDeleteSpinner">
+            <ion-spinner></ion-spinner>
+          </div>
+          <div *ngIf="!showDeleteSpinner">
+            Delete
+          </div>
+        </ion-button>
+
       </form>
     </div>
   </div>
