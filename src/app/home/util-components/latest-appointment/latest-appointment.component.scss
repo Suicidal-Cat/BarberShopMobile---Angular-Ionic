@@ -5,38 +5,6 @@
     font-size: 18px;
 }
 
-.card{
-    max-width: 100%;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    background-color: var(--ion-color-secondary);
-    gap: 1rem;
-    border-radius: 8px;
-    margin: 0rem 10px;
-}
-
-.card-image ion-img{
-    height: 70px;
-    width: 70px;
-    margin-left: 1rem;
-}
-
-.card-image ion-img::part(image){
-    border-radius: 50%;
-}
-
-.card-body{
-    color: white;
-    margin-top: 1rem;
-    margin-bottom: 1.8rem;
-    padding-right: 10px;
-}
-
-.card-body p{
-    margin: 4px;
-}
-
 .cancel{
     position: relative;
     right: -95%;
@@ -50,12 +18,50 @@ ion-modal {
     --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
   
-  ion-modal::part(backdrop) {
+ion-modal::part(backdrop) {
     background: rgba(209, 213, 219);
     opacity: 1;
   }
   
-  ion-modal ion-toolbar {
+ion-modal ion-toolbar {
     --background: var(--ion-color-primary);
     --color: white;
   }
+
+.app-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding:10px 1rem;
+    width: 100%;
+}
+
+.app-info{
+    display: flex;
+    align-items: center;
+    gap:1rem;
+}
+
+.pic{
+    min-height: 57px;
+    min-width: 57px;
+}
+
+.pic img{
+    height: 57px;
+    width: 57px;
+    border-radius: 50%;
+}
+
+.service-price{
+    text-align: right;
+    width: 25%;
+}
+
+
+p{
+    margin: 0;
+}

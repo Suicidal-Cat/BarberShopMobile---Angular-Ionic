@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { IonicModule } from '@ionic/angular';
 import { LatestAppointmentComponent } from '../latest-appointment/latest-appointment.component';
+import { AppointmentCardComponent } from '../appointment-card/appointment-card.component';
 
 
 
 @NgModule({
-  declarations: [ToolbarComponent,LatestAppointmentComponent],
+  declarations: [ToolbarComponent,LatestAppointmentComponent,AppointmentCardComponent],
   imports: [
     CommonModule,
     IonicModule
   ],
-  exports:[ToolbarComponent,LatestAppointmentComponent]
+  exports:[ToolbarComponent,LatestAppointmentComponent,AppointmentCardComponent]
 })
 export class SharedModule { }

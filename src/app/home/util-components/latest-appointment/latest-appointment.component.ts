@@ -106,5 +106,17 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
     }
   }
 
+  formatDate(date:any): string {
+    const d=new Date(date);
+    const days = d.getDate();
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+    const month = months[d.getMonth()];
+
+    return `${month} ${days}`;
+  }
+
 
 }

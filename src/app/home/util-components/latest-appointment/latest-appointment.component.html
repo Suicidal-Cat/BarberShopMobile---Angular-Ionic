@@ -7,18 +7,29 @@
   <b>Your upcoming appointment</b>
 </div>
 
-<div *ngIf="latestAppointment" class="card" (click)="showModalApp()">
-
-  <div class="card-image">
-    <ion-img src="../../../../assets/images/maleBarber.jpg" alt="barber image"></ion-img>
+<div class="app-card" *ngIf="latestAppointment" (click)="showModalApp()">
+  <div class="app-info">
+    <div class="pic">
+      <img src="../../../../assets/images/maleBarber.jpg">
+    </div>
+    <div class="info">
+      <p style="margin-bottom: 5px;font-size: 16px;font-weight: 700;">
+        {{formatDate(latestAppointment.Date)}},
+        {{getFormattedTime(latestAppointment.StartTime) | date: 'h:mm a'}}
+      </p>
+      <div style="font-size: 13px;color: #A1A1A1;margin-top: 5px;">
+        <p>{{latestAppointment.Barber.FirstName}} {{latestAppointment.Barber.LastName}}</p>
+        <p style="margin-top: 2px;">
+          <ng-container *ngFor="let service of latestAppointment.Services;let j=index">
+            {{j==latestAppointment.Services.length-1?service.Name:service.Name+', '}}
+          </ng-container>
+        </p>
+      </div>
+    </div>
   </div>
-
-  <div class="card-body">
-    <h1 style="margin-top: 10px;">{{latestAppointment.Date | date: 'd MMMM yyyy'}}</h1> 
-    <p><b>Time:</b> {{getFormattedTime(latestAppointment.StartTime) | date: 'h:mm a'}} </p>
-    <p><b>Barber:</b> {{latestAppointment.Barber.FirstName}} {{latestAppointment.Barber.LastName}}</p>
+  <div class="service-price">
+    <p style="font-size: 14px;font-weight: 700;">{{latestAppointment.Price}} RSD</p>
   </div>
-  
 </div>
 
 

@@ -1,0 +1,37 @@
+.app-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding:10px 1rem;
+    width: 100%;
+}
+
+.app-info{
+    display: flex;
+    align-items: center;
+    gap:1rem;
+}
+
+.pic{
+    min-height: 57px;
+    min-width: 57px;
+}
+
+.pic img{
+    height: 57px;
+    width: 57px;
+    border-radius: 50%;
+}
+
+.service-price{
+    text-align: right;
+    width: 25%;
+}
+
+
+p{
+    margin: 0;
+}
