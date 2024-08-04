@@ -8,6 +8,11 @@ const routes: Routes = [
     path: '',
     component: BarberPagePage
   },
+  {
+    path: 'details/:barberId',
+    loadChildren: () => import('./barber-details/barber-details.module').then( m => m.BarberDetailsPageModule)
+  },
+
 ];
 
 @NgModule({

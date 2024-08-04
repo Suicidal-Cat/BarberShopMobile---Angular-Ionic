@@ -1,8 +1,3 @@
-<!-- <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>service-details</ion-title>
-  </ion-toolbar>
-</ion-header> -->
 
 <ion-content [fullscreen]="true">
   <div class="flex-center">
@@ -34,7 +29,7 @@
         </ion-button>
 
         <ion-button expand="block" [disabled]="serviceForm.invalid || ServiceCategory==0" class="ion-button-form"
-        *ngIf="DeleteLink" style="--background: var(--ion-color-danger);" (click)="deleteService()">
+        *ngIf="DeleteLink" style="--background: #DE4040;" (click)="deleteService()">
           <div *ngIf="showDeleteSpinner">
             <ion-spinner></ion-spinner>
           </div>

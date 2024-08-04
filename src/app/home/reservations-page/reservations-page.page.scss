@@ -33,36 +33,11 @@ ion-datetime-button::part(native){
     }
 }
 
-.card{
-    max-width: 100%;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    background-color: #dea93e;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    gap: 1rem;
-    border-radius: 8px;
-    margin: 6px 10px;
-}
-
-.card-image ion-img{
-    height: 60px;
-    width: 60px;
-    margin-left: 1rem;
-}
-
-.card-image ion-img::part(image){
-    border-radius: 50%;
-}
-
-.card-body{
-    color: white;
-}
-
-.card-body p{
-    margin: 4px;
-}
 
 .divider{
     border-bottom: 1px solid #C3C1C0;
+}
+
+.app-cont{
+    margin-top: 1rem;
 }

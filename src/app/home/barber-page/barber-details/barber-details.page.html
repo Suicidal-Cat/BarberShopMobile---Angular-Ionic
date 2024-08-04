@@ -1,0 +1,11 @@
+<ion-content [fullscreen]="true">
+  <h1>HI</h1>
+
+  <ion-button class="upload">
+    <ion-img src="../../../../assets/images/imgFile.png" slot="end"></ion-img>
+    <input type="file" (change)="loadImageFromDevice($event)" id="file-input"
+      accept="image/png, image/jpeg">
+  </ion-button>
+
+
+</ion-content>

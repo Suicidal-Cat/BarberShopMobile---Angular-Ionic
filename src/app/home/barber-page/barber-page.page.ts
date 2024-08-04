@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
+import { IonInfiniteScrollCustomEvent } from '@ionic/core';
 import { Subscription } from 'rxjs';
 import { Barber } from 'src/app/models/Barber/barber';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
@@ -19,7 +21,7 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
   prevPage:boolean=false;
   noBarbersMessage:boolean=false;
 
-  constructor(private barberService:BarberService) { }
+  constructor(private barberService:BarberService,private router:Router) { }
 
   ngOnInit() {
     this.barberSub=this.barberService.barbersPag.subscribe(
@@ -68,6 +70,10 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
 
   ngOnDestroy(): void {
     if(this.barberSub)this.barberSub.unsubscribe();
+  }
+
+  createBarberPage(){
+    this.router.navigateByUrl("home/tabs/barber/details/0")
   }
 
 }
