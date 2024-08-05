@@ -32,16 +32,16 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
 
 
   constructor(private serviceService:ServiceService,
-    private navCotroller:NavController,private route:ActivatedRoute) { }
+    private navCotroller:NavController,private route:ActivatedRoute,private navCtr:NavController) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap=>{
       this.ServiceId=paramMap.get("serviceId");
       if(this.ServiceId=="0"){
-        this.title="Create service";
+        this.title="Create a service";
         return;
       }
-      else this.title="Update service";
+      else this.title="Update a service";
 
       const link=this.serviceService.getServiceLink();
       if(!paramMap.has("serviceId") || link==undefined){
@@ -125,6 +125,10 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
 
   ngOnDestroy(): void {
     if(this.categoriesSub)this.categoriesSub.unsubscribe();
+  }
+
+  navigateBack(){
+    this.navCtr.navigateBack("home/tabs/service");
   }
 
 }

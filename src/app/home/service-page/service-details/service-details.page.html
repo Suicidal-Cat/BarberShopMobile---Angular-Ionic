@@ -1,7 +1,9 @@
 
 <ion-content [fullscreen]="true">
-  <div class="flex-center">
-    <div class="flex-container">
+
+  <ion-img src="../../../../assets/images/Left.png" class="back" (click)="navigateBack()"></ion-img>
+
+  <div class="container">
       <h1>{{title}}</h1>
 
       <form #serviceForm="ngForm" (ngSubmit)="saveService(serviceForm)">
@@ -39,7 +41,6 @@
         </ion-button>
 
       </form>
-    </div>
   </div>
 
   

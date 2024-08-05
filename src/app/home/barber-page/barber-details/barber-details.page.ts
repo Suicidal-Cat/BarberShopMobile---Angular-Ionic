@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { NavController } from '@ionic/angular';
+import { Status } from 'src/app/models/Barber/status';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -9,13 +12,43 @@ import { environment } from 'src/environments/environment';
 })
 export class BarberDetailsPage implements OnInit {
 
-  constructor(private http:HttpClient) { }
+  title:string="Create a barber";
+  showSpinner:boolean=false;
+  selectedStatus:number=0;
+  inputFileText:string="No chosen file";
+  workingHours:string[]=[];
+  endHours:string="";
+  startHours:string="";
+
+  fileChoosen:boolean=false;
+
+  statusOptions = [
+    { value: Status.Active, label: 'Active' },
+    { value: Status.Retired, label: 'Retired' },
+    { value: Status.Left, label: 'Left' },
+  ];
+
+  constructor(private http:HttpClient,private navCtr:NavController) { }
 
   ngOnInit() {
+    for(let i=8;i<=20;i++){
+      const time1:string=i+":00";
+      this.workingHours.push(time1);
+      const time2:string=i+":30";
+      this.workingHours.push(time2);
+    }
   }
 
+  navigateBack(){
+    this.navCtr.navigateBack("home/tabs/barber");
+  }
+
+  saveBarberPic(form:NgForm){
+
+  }
+
+
   loadImageFromDevice(event: any) {
-    return;
     const file = event.target.files[0];
     if(file){
       const reader = new FileReader();
@@ -23,21 +56,22 @@ export class BarberDetailsPage implements OnInit {
 
       reader.readAsArrayBuffer(file);
 
+      this.inputFileText="1 file chosen"
+      this.fileChoosen=true;
+
       reader.onload = () => {
 
         // get the blob of the image:
         let blob: Blob = new Blob([new Uint8Array((reader.result as ArrayBuffer))]);
 
-        // create blobURL, such that we could use it in an image element:
-        console.log(blob)
-        this.http.post(`${environment.appUrl}/Drive/upload/${name}`,blob).subscribe({
-          next(value:any) {
-            console.log(value.path)
-          },
-          error(err) {
-            console.log(err)
-          },
-        });
+        // this.http.post(`${environment.appUrl}/Drive/upload/${name}`,blob).subscribe({
+        //   next(value:any) {
+        //     console.log(value.path)
+        //   },
+        //   error(err) {
+        //     console.log(err)
+        //   },
+        // });
 
       };
 
@@ -47,6 +81,10 @@ export class BarberDetailsPage implements OnInit {
         console.log(error)
 
       };
+    }
+    else {
+      this.fileChoosen=false;
+      this.inputFileText="No chosen file";
     }
 
     
