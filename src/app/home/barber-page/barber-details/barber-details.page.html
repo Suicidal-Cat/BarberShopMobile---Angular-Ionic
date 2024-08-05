@@ -13,7 +13,8 @@
               label="First name"
               labelPlacement="floating" fill="outline"
               placeholder="" type="text" required minlength="3"
-              ngModel name="FirstName" class="ion-input-form">
+              ngModel name="FirstName" class="ion-input-form"
+              [(ngModel)]="FirstName">
             </ion-input>
         </ion-row>
 
@@ -22,7 +23,8 @@
             label="First name"
             labelPlacement="floating" fill="outline"
             placeholder="" type="text" required minlength="3"
-            ngModel name="LastName" class="ion-input-form">
+            ngModel name="LastName" class="ion-input-form"
+            [(ngModel)]="LastName">
           </ion-input>
         </ion-row>
 
@@ -52,7 +54,7 @@
             label="Phone number" labelPlacement="floating"
             fill="outline" placeholder="+38XXXXXXXXXXX"
             type="text" required ngModel
-            name="PhoneNumber"
+            name="PhoneNumber" [(ngModel)]="PhoneNumber"
             pattern="^\+(381|387|382|385)([1-9][0-9]{0,2})?([0-9]{6,7})$"
             #phoneE="ngModel" class="ion-input-form">
           </ion-input>
@@ -90,16 +92,16 @@
       <ion-button
         expand="block" type="submit" style="text-transform: initial"
         class="ion-button-form" style="margin-left: 10px;"
-        [disabled]="saveBarber.invalid || fileChoosen==false || (selectedStatus==0 && (endHours=='' || startHours=='')) || startHours>=endHours">
+        [disabled]="saveBarber.invalid || (update==false && fileChoosen==false) || (selectedStatus==0 && (endHours=='' || startHours=='')) || compareTimes(startHours,endHours)"
+        >
         <div *ngIf="showSpinner">
           <ion-spinner></ion-spinner>
         </div>
-        <div *ngIf="!showSpinner">Sign up</div>
+        <div *ngIf="!showSpinner">{{buttonText}}</div>
       </ion-button>
 
     </form>
 
   </div>
-
 
 </ion-content>

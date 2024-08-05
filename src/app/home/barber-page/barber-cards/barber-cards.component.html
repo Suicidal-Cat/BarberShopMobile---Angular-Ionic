@@ -23,7 +23,7 @@
     <div class="info">
       <p style="font-weight: 600;font-size: 16px;margin-top: 10px;">{{item.Value.FirstName}} {{item.Value.LastName}}</p>
       <p style="font-size: 14px;">Phone: {{item.Value.PhoneNumber}}</p>
-      <p fill="clear" style="color:var(--ion-color-primary);margin-top: 10px;font-size: 14px;">Details ></p>
+      <p fill="clear" style="color:var(--ion-color-primary);margin-top: 10px;font-size: 14px;" (click)="showDetails(item.Value.BarberId,item.Links)">Details ></p>
     </div>
   </div>
 </div>

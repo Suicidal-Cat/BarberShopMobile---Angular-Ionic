@@ -17,6 +17,8 @@ export class BarberService {
     return this._barbersPag.asObservable();
   }
 
+  getBarberIdLink:Link | undefined=undefined;
+
   constructor(private http: HttpClient,private accountService:AccountService) { }
 
   getBarbersPagination(linkHref:string=""){
@@ -46,6 +48,26 @@ export class BarberService {
 
   getBarber(link:Link){
     return this.http.request<LinkCollection<Barber>>(link.Method,link.Href);
+  }
+
+  addBarber(barber:Barber){
+    const link=this.accountService.getCreateBarberLink();
+    if(link){
+      return this.http.request(link.Method,link.Href,{body:barber});
+    }
+    return undefined;
+  }
+
+  setBarberLink(link:Link | undefined){
+    this.getBarberIdLink=link;
+  }
+
+  getBarberLink(){
+    return this.getBarberIdLink;
+  }
+
+  updateBarber(barber:Barber,link:Link){
+    return this.http.request(link.Method,link.Href,{body:barber});
   }
   
 

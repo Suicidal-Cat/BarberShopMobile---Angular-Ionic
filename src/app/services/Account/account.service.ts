@@ -191,6 +191,12 @@ export class AccountService {
     else return link;
   }
 
+  getCreateBarberLink(){
+    const link=this.userLinks.find((link)=>link.Rel=="createBarber");
+    if(link==undefined)return undefined;
+    else return link;
+  }
+
 
   refreshService(){
     const rLinks=localStorage.getItem("rootLinks");

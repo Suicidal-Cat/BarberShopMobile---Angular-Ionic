@@ -32,7 +32,7 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
 
 
   constructor(private serviceService:ServiceService,
-    private navCotroller:NavController,private route:ActivatedRoute,private navCtr:NavController) { }
+    private navCotroller:NavController,private route:ActivatedRoute) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap=>{
@@ -128,7 +128,7 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
   }
 
   navigateBack(){
-    this.navCtr.navigateBack("home/tabs/service");
+    this.navCotroller.navigateBack("home/tabs/service");
   }
 
 }
