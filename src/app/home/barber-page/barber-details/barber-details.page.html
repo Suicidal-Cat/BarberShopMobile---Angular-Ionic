@@ -70,6 +70,7 @@
           <ion-col style="padding: 0px;" class="hours">
             <div style="font-size: 12px;color: #5C5959;margin-bottom: 5px;">Start working hours</div>
             <ion-select label="Time" [(ngModel)]="startHours" name="startHours" interface="popover" class="hoursSelect" toggleIcon="chevron-down">
+              <ion-select-option [value]=""></ion-select-option>
                 <ion-select-option *ngFor="let option of workingHours" [value]="option">
                   {{option }}
                 </ion-select-option>
@@ -79,6 +80,7 @@
           <ion-col style="padding: 0px;padding-left: 2%;" class="hours">
             <div style="font-size: 12px;color: #5C5959;margin-bottom: 5px;">End working hours</div>
             <ion-select label="Time" [(ngModel)]="endHours" name="endHours" interface="popover" class="hoursSelect" toggleIcon="chevron-down">
+              <ion-select-option [value]=""></ion-select-option>
               <ion-select-option *ngFor="let option of workingHours" [value]="option">
                 {{ option }}
               </ion-select-option>

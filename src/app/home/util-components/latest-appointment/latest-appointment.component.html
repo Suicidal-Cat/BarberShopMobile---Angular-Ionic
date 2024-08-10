@@ -3,6 +3,7 @@
   <b>You don’t have upcoming appointments</b>
 </div>
 
+<ng-container *ngIf="showContent">
 <div *ngIf="latestAppointment" class="message">
   <b>Your upcoming appointment</b>
 </div>
@@ -10,7 +11,7 @@
 <div class="app-card" *ngIf="latestAppointment" (click)="showModalApp()">
   <div class="app-info">
     <div class="pic">
-      <img src="../../../../assets/images/maleBarber.jpg">
+      <img [src]="latestAppointment.Barber.ImageUrl">
     </div>
     <div class="info">
       <p style="margin-bottom: 5px;font-size: 16px;font-weight: 700;">
@@ -31,7 +32,7 @@
     <p style="font-size: 14px;font-weight: 700;">{{latestAppointment.Price}} RSD</p>
   </div>
 </div>
-
+</ng-container>
 
 
 <ion-modal #modal [isOpen]="isOpen" (willDismiss)="onWillDismiss($event)">

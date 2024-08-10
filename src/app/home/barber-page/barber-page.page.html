@@ -38,3 +38,21 @@
 <div class="add-barber">
   <ion-icon name="add-circle" style="font-size: 56px;color:var(--ion-color-primary)" (click)="createBarberPage()"></ion-icon>
 </div>
+
+<div class="pagination-cont">
+  <ion-icon name="chevron-back-outline" (click)="getPrevPage()"></ion-icon>
+  <div class="page-numbers">
+    <ng-container *ngFor="let i of [].constructor(maxPages); let index = index">
+      <div [ngClass]="index+1==selectedPage?'page selected':'page'" *ngIf="index<3" (click)="changePage(index+1)">
+        {{index+1}}
+      </div>
+      <div  *ngIf="index==3">
+         ... 
+      </div>
+      <div [ngClass]="index+1==selectedPage?'page selected':'page'" *ngIf="maxPages>3 && index+1==maxPages">
+        {{index+1}}
+      </div>
+    </ng-container>
+  </div>
+  <ion-icon name="chevron-forward-outline" (click)="getNextPage()"></ion-icon>
+</div>

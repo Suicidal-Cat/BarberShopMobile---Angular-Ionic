@@ -24,6 +24,8 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   prevPage:boolean=false;
   selectedCategory:string='all';
   noServicesMessage:boolean=false;
+  maxPages:number=0;
+  selectedPage:number=1;
 
   constructor(private serviceService:ServiceService,private router:Router) { }
 
@@ -36,6 +38,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
       else this.prevPage=false;
       if(this.services.Links.find((link)=>link.Rel=="next")!=undefined)this.nextPage=true;
       else this.nextPage=false;
+      if(this.serviceService.MaxPages!=0)this.maxPages=this.serviceService.MaxPages;
     })
     this.categoriesSub=this.serviceService.serviceCategories.subscribe((categories)=>{
       if(categories.length>0){
@@ -52,17 +55,20 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   getPrevPage(){
     const link=this.services.Links.find((link)=>link.Rel=="prev");
     this.serviceService.getServicesPagination(link?.Href)?.subscribe();
+    this.selectedPage=this.selectedPage-1;
   }
+
   getNextPage(){
     const link=this.services.Links.find((link)=>link.Rel=="next");
     this.serviceService.getServicesPagination(link?.Href)?.subscribe();
+    this.selectedPage=this.selectedPage+1;
   }
 
   filterServices(serviceName:string="",category:string=""){
     const link=this.services.Links.find((link)=>link.Rel=="curr");
     if(link){
       var href=link?.Href;
-      href=href.replace(/pageNumber=[^&]*/,"$pageNumber=1");
+      href=href.replace(/pageNumber=[^&]*/,"pageNumber=1");
       if(href.includes("&search"))href=href.replace(/&search=[^&]*/,"");
       if(serviceName!="")href+=`&search=${serviceName}`;
       if(href.includes("&category"))href=href.replace(/&category=[^&]*/,"");
@@ -91,6 +97,17 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   changeCategory(serviceName: string,category: string) {
     this.selectedCategory=category;
     this.filterServices(serviceName,category);
+    this.selectedPage=1;
+  }
+
+  changePage(page:number){
+    const link=this.services.Links.find((link)=>link.Rel=="curr");
+    if(link){
+      var href=link?.Href;
+      href=href.replace(/pageNumber=[^&]*/,"pageNumber="+page);
+      this.serviceService.getServicesPagination(href)?.subscribe();
+      this.selectedPage=page;
+    }
   }
 
 }

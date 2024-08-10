@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Barber } from 'src/app/models/Barber/barber';
@@ -18,18 +18,39 @@ export class BarberService {
   }
 
   getBarberIdLink:Link | undefined=undefined;
+  maxPagesPagination!:number;
 
   constructor(private http: HttpClient,private accountService:AccountService) { }
 
-  getBarbersPagination(linkHref:string=""){
+  // getBarbersPagination(linkHref:string=""){
+  //   const link:Link | undefined=this.accountService.getBarberPaginationLink();
+  //   if(link){
+  //     if(linkHref=="")linkHref=link.Href;
+  //     return this.http.request<LinkCollection<LinkCollection<Barber>[]>>(link.Method,linkHref).pipe(
+  //         tap((data:LinkCollection<LinkCollection<Barber>[]>)=>{
+  //           this._barbersPag.next(data);
+  //         })
+  //       )
+  //   }
+  //   return undefined;
+  // }
+
+  getBarbersPagination(linkHref: string = "") {
     const link:Link | undefined=this.accountService.getBarberPaginationLink();
-    if(link){
-      if(linkHref=="")linkHref=link.Href;
-      return this.http.request<LinkCollection<LinkCollection<Barber>[]>>(link.Method,linkHref).pipe(
-          tap((data:LinkCollection<LinkCollection<Barber>[]>)=>{
-            this._barbersPag.next(data);
+    if (link) {
+      if (linkHref == "") linkHref = link.Href;
+      return this.http.request<LinkCollection<LinkCollection<Barber>[]>>(link.Method, linkHref, { observe: 'response' })
+        .pipe(
+          tap((response: HttpEvent<any>) => {
+            if (response instanceof HttpResponse) {
+              const maxPages = response.headers.get('maxPages');
+              if (maxPages) {
+                this.maxPagesPagination=parseInt(maxPages);
+                this._barbersPag.next(response.body as LinkCollection<LinkCollection<Barber>[]>);
+              }
+            }
           })
-        )
+        );
     }
     return undefined;
   }
@@ -70,6 +91,8 @@ export class BarberService {
     return this.http.request(link.Method,link.Href,{body:barber});
   }
   
-
+  get MaxPages():number{
+    return this.maxPagesPagination;
+  }
 
 }

@@ -11,19 +11,21 @@
   <ion-button fill="clear" style="color:white;">Details</ion-button>
 </ion-card> -->
 
-<div class="barber-card" *ngFor="let item of barbers.Value">
-  <div style="height: 81px;width: 81px;">
-    <img src="../../../../assets/images/maleBarber.jpg" style="height: 81px;width: 81px;border-radius: 16px;">
-    <div class="status-image">
-      <img [src]="getStatusName(item.Value.Status)=='Active'?'../../../../assets/images/activeBarber.png':'../../../../assets/images/inActiveBarber.png'">
+<ng-container *ngIf="loadedPic">
+  <div class="barber-card" *ngFor="let item of barbers.Value">
+    <div style="height: 81px;width: 81px;">
+      <img [src]="item.Value.ImageUrl" style="height: 81px;width: 81px;border-radius: 16px;">
+      <div class="status-image">
+        <img [src]="getStatusName(item.Value.Status)=='Active'?'../../../../assets/images/activeBarber.png':'../../../../assets/images/inActiveBarber.png'">
+      </div>
     </div>
-  </div>
 
-  <div class="barber-content">
-    <div class="info">
-      <p style="font-weight: 600;font-size: 16px;margin-top: 10px;">{{item.Value.FirstName}} {{item.Value.LastName}}</p>
-      <p style="font-size: 14px;">Phone: {{item.Value.PhoneNumber}}</p>
-      <p fill="clear" style="color:var(--ion-color-primary);margin-top: 10px;font-size: 14px;" (click)="showDetails(item.Value.BarberId,item.Links)">Details ></p>
+    <div class="barber-content">
+      <div class="info">
+        <p style="font-weight: 600;font-size: 16px;margin-top: 10px;">{{item.Value.FirstName}} {{item.Value.LastName}}</p>
+        <p style="font-size: 14px;">Phone: {{item.Value.PhoneNumber}}</p>
+        <p fill="clear" style="color:var(--ion-color-primary);margin-top: 10px;font-size: 14px;" (click)="showDetails(item.Value.BarberId,item.Links)">Update ></p>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>

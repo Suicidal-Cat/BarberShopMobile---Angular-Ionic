@@ -82,8 +82,10 @@ export class BarberDetailsPage implements OnInit {
           this.LastName=data.Value.LastName;
           this.PhoneNumber=data.Value.PhoneNumber;
           this.selectedStatus=data.Value.Status;
-          this.startHours=data.Value.StartWorkingHours;
-          this.endHours=data.Value.EndWorkingHours;
+          if(data.Value.StartWorkingHours)this.startHours=data.Value.StartWorkingHours;
+          else this.startHours="";
+          if(data.Value.EndWorkingHours)this.endHours=data.Value.EndWorkingHours;
+          else this.endHours="";
           this.ImageUrl=data.Value.ImageUrl
           this.barberService.setBarberLink(undefined);
           this.UpdateLink=data.Links.find((link)=>link.Rel=="update");

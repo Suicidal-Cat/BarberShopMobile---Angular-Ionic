@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Barber } from 'src/app/models/Barber/barber';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { BarberService } from 'src/app/services/Barber/barber.service';
+import { OneDriveService } from 'src/app/services/one-drive.service';
 
 @Component({
   selector: 'app-barber-page',
@@ -20,6 +21,8 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
   nextPage:boolean=true;
   prevPage:boolean=false;
   noBarbersMessage:boolean=false;
+  maxPages:number=0;
+  selectedPage:number=1;
 
   constructor(private barberService:BarberService,private router:Router) { }
 
@@ -33,6 +36,8 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
         else this.prevPage=false;
         if(this.barbers.Links.find((link)=>link.Rel=="next")!=undefined)this.nextPage=true;
         else this.nextPage=false;
+        if(this.barberService.MaxPages>0)this.maxPages=this.barberService.MaxPages;
+        else this.maxPages=1;
       })
   }
 
@@ -43,17 +48,19 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
   getPrevPage(){
     const link=this.barbers.Links.find((link)=>link.Rel=="prev");
     this.barberService.getBarbersPagination(link?.Href)?.subscribe();
+    this.selectedPage=this.selectedPage-1;
   }
   getNextPage(){
     const link=this.barbers.Links.find((link)=>link.Rel=="next");
     this.barberService.getBarbersPagination(link?.Href)?.subscribe();
+    this.selectedPage=this.selectedPage+1;
   }
 
   filterBarbers(barberName:string=""){
     const link=this.barbers.Links.find((link)=>link.Rel=="curr");
     if(link){
       var href=link?.Href;
-      href=href.replace(/pageNumber=[^&]*/,"$pageNumber=1");
+      href=href.replace(/pageNumber=[^&]*/,"pageNumber=1");
       if(href.includes("&search"))href=href.replace(/&search=[^&]*/,"");
       if(barberName!="")href+=`&search=${barberName}`;
       this.barberService.getBarbersPagination(href)?.subscribe();  
@@ -74,6 +81,16 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
 
   createBarberPage(){
     this.router.navigateByUrl("home/tabs/barber/details/0")
+  }
+
+  changePage(page:number){
+    const link=this.barbers.Links.find((link)=>link.Rel=="curr");
+    if(link){
+      var href=link?.Href;
+      href=href.replace(/pageNumber=[^&]*/,"pageNumber="+page);
+      this.barberService.getBarbersPagination(href)?.subscribe();
+      this.selectedPage=page;
+    }
   }
 
 }

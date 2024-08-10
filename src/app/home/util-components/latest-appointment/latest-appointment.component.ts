@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Appointment } from 'src/app/models/Appointment/Appointment';
 import { Link } from 'src/app/models/Hateoas/Link';
 import { AppointmentService } from 'src/app/services/Appointment/appointment.service';
+import { OneDriveService } from 'src/app/services/one-drive.service';
 
 @Component({
   selector: 'app-latest-appointment',
@@ -22,7 +23,11 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
 
   appSub!:Subscription;
 
-  constructor(private appointmentService:AppointmentService,private router:Router) { }
+  showContent:boolean=false;
+
+  constructor(private appointmentService:AppointmentService,private router:Router,
+    private oneDrive:OneDriveService
+  ) { }
 
   ngOnDestroy(): void {
     if(this.appSub)this.appSub.unsubscribe();
@@ -33,6 +38,15 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
       if(data){
         this.latestAppointment=data.Value;
         this.links=data.Links;
+          this.oneDrive.getImageUrl(this.latestAppointment.Barber.ImageUrl).subscribe((data)=>{
+            if(this.latestAppointment){
+              if(data && data['@microsoft.graph.downloadUrl']){
+                this.latestAppointment.Barber.ImageUrl=data['@microsoft.graph.downloadUrl'];
+              }
+              else this.latestAppointment.Barber.ImageUrl='../../../../assets/images/maleBarber.jpg';
+              this.showContent=true;
+            }
+          })
       }
     })
   }

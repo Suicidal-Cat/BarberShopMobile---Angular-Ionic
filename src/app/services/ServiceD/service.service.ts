@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AccountService } from '../Account/account.service';
 import { BehaviorSubject, map, Observable, switchMap, take, tap } from 'rxjs';
 import { Service } from 'src/app/models/ServiceD/service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { Link } from 'src/app/models/Hateoas/Link';
 import { ServiceCategory } from 'src/app/models/ServiceCategory/serviceCategory';
@@ -15,6 +15,7 @@ export class ServiceService{
   private _servicesPag=new BehaviorSubject<LinkCollection<LinkCollection<Service>[]>>({Value:[],Links:[]});
   private _serviceCategories=new BehaviorSubject<ServiceCategory[]>([]);
   private getServiceIdLink!:Link | undefined;
+  private maxPagesPagination!:number;
 
   get servicesPag(): Observable<LinkCollection<LinkCollection<Service>[]>>{
     return this._servicesPag.asObservable();
@@ -27,15 +28,35 @@ export class ServiceService{
   constructor(private http: HttpClient,private accountService:AccountService) {
   }
 
-  getServicesPagination(linkHref:string=""){
-    const link:Link | undefined=this.accountService.getServicePaginationLink();
-    if(link){
-      if(linkHref=="")linkHref=link.Href;
-      return this.http.request<LinkCollection<LinkCollection<Service>[]>>(link.Method,linkHref).pipe(
-          tap((data:LinkCollection<LinkCollection<Service>[]>)=>{
-            this._servicesPag.next(data);
+  // getServicesPagination(linkHref:string=""){
+  //   const link:Link | undefined=this.accountService.getServicePaginationLink();
+  //   if(link){
+  //     if(linkHref=="")linkHref=link.Href;
+  //     return this.http.request<LinkCollection<LinkCollection<Service>[]>>(link.Method,linkHref).pipe(
+  //         tap((data:LinkCollection<LinkCollection<Service>[]>)=>{
+  //           this._servicesPag.next(data);
+  //         })
+  //       )
+  //   }
+  //   return undefined;
+  // }
+
+  getServicesPagination(linkHref: string = "") {
+    const link: Link | undefined = this.accountService.getServicePaginationLink();
+    if (link) {
+      if (linkHref == "") linkHref = link.Href;
+      return this.http.request<LinkCollection<LinkCollection<Service>[]>>(link.Method, linkHref, { observe: 'response' })
+        .pipe(
+          tap((response: HttpEvent<any>) => {
+            if (response instanceof HttpResponse) {
+              const maxPages = response.headers.get('maxPages');
+              if (maxPages) {
+                this.maxPagesPagination=parseInt(maxPages);
+                this._servicesPag.next(response.body as LinkCollection<LinkCollection<Service>[]>);
+              }
+            }
           })
-        )
+        );
     }
     return undefined;
   }
@@ -102,5 +123,8 @@ export class ServiceService{
     return this.getServiceIdLink;
   }
 
+  get MaxPages():number{
+    return this.maxPagesPagination;
+  }
 
 }
