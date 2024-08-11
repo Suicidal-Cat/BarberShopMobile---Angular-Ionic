@@ -1,67 +1,64 @@
 
-.header{
-    font-size: 1.5rem;
-    padding: 1rem;
-}
-
-.legend{
-    display: flex;
-    flex-direction: row;
-}
-
-.legendItem{
-    font-size: 1rem;
+.weekDays{
+    font-size: 14px;
+    font-weight: 700;
+    width: 33px;
+    height: 33px;
     display: flex;
     align-items: center;
-    padding-left: 1rem;
+    justify-content: center;
 }
 
-.legendItem ion-icon{
-    font-size: 3rem;
-}
-
-ion-col{
+.daysContainer{
     text-align: center;
+    font-size: 14px;
+    margin-bottom: 6px;
 }
 
-.weekDays{
-    box-shadow: 0 0 0.5px 0.5px var(--ion-color-tertiary);
-}
-
-.dayAvaiable{
-    box-shadow: 0 0 0.5px 0.5px var(--ion-color-tertiary);
-    background-color:white;
+.days{
+    font-weight: 500;
+    width: 33px !important;
+    height: 33px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dayAvaiable:hover{
     background-color:var(--ion-color-secondary);
 }
 
-.dayUnavaiable{
-    box-shadow: 0 0 0.5px 0.5px var(--ion-color-tertiary);
-    background-color: lightgray;
-}
 
 .dayBusyIndicator{
-    width: 100%;
-    height: 30%;
-    margin-top: 25%;
-    background-color: var(--ion-color-danger);
+    color: white;
+    border-radius: 50%;
+    background-color: #DC571D;
 }
 
 .daySemiBusyIndicator{
-    width: 100%;
-    height: 30%;
-    margin-top: 25%;
-    background-color: var(--ion-color-warning);
-}
-
-.startDay{
-    color: firebrick;
+    color: white;
+    border-radius: 50%;
+    background-color: var(--ion-color-primary);
 }
 
 .dayHeader{
-    padding-top: 10px;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selectedDay{
+    border: 1px solid black;
+    background-color: transparent;
+    border-radius: 50%;
+}
+
+.dayUnavaiable{
+    background-color: #A1A1A1;
+    border-radius: 50%;
 }
 
 ion-modal {
@@ -83,16 +80,21 @@ ion-modal ion-toolbar {
 .times{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
-    gap:5px
+    gap:5px;
 }
 
 .timeItem{
-    width: 22%;
-    padding: 1rem;
+    height: 33px;
+    width: 18%;
     border: 1px solid var(--ion-color-secondary);
-    text-align: center;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px;
     margin-top: 5px;
 }
 
@@ -105,4 +107,63 @@ ion-toast {
     --background: #f4f4fa;
     --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
     --color: #4b4a50;
+}
+
+
+.monthIconContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid #A9A9A9;
+    border-radius: 6px;
+    width: 54px;
+    height: 21px;
+}
+
+.changeMonthIcon{
+    font-size: 14px;
+    background: none;
+    border: none;
+    color: black;
+}
+
+.divider {
+    width: 1px;
+    height: 14px;
+    background-color: #A9A9A9;
+}
+
+.divider-calendar{
+    border-bottom: 1px solid #C3C1C0;
+}
+
+.legend{
+    display: flex;
+    align-items: center;
+    gap:1rem;
+    margin-left: 2rem;
+    margin-top: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.legendItem{
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap:5px;
+    font-weight: 500;
+}
+
+.busyCircle{
+    width: 26px;
+    height: 26px;
+    background-color: var(--ion-color-primary);
+    border-radius: 50%;
+}
+
+.littleCircle{
+    width: 26px;
+    height: 26px;
+    background-color: #DC571D;
+    border-radius: 50%;
 }

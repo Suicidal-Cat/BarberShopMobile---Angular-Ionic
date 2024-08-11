@@ -10,19 +10,6 @@
         </ion-buttons>
       </ion-toolbar>
 
-      <div class="times" >
-        <ng-container *ngFor="let time of availableTimes; let i = index">
-          <div
-            class="timeItem"
-            *ngIf="time!='0'"
-            (click)="choosenTime($event, i)"
-            [ngClass]="{'selected': selectedTimeIndex === i}"
-          >
-            {{time}}
-          </div>
-        </ng-container>
-      </div>
-
       <div style="display: flex;justify-content: center;">
         <div *ngIf="showSpinner" style="margin-top: 1.6rem;position: absolute;bottom: 10px;">
           <ion-spinner color="blue"></ion-spinner>
@@ -35,39 +22,71 @@
   </ng-template>
 </ion-modal>
 
+<div style="margin-top: 2rem;">
+  <div class="divider-calendar" style="margin-bottom: 1rem;"></div>
+  <div style="margin: 0px 1rem;">
 
-<ion-grid class="ion-no-padding" style="height: 70%;"> 
-  <ion-row class="header">
-      <ion-icon name="caret-back-outline" color="secondary" (click)="prevMonth()"></ion-icon>
-      <div style="margin: 0rem 1.3rem;">{{currentMonth | date: 'MMMM yyyy'}}</div>
-      <ion-icon name="caret-forward-outline" color="secondary" (click)="nextMonth()"></ion-icon>
-  </ion-row>
-  
+  <ion-grid class="ion-no-padding"> 
 
-  <ion-row>
-    <ion-col *ngFor="let weekday of weekDays" class="weekDays">
-      {{weekday}}
-    </ion-col>
-  </ion-row>
-
-  <ion-row *ngFor="let week of daysInMonth" [style.height]="calcHeightWeek()">
-    <ion-col *ngFor="let day of week" [class]="day==0 || (day<=startDay && currentMonth.getMonth()==startMonth.getMonth())?'dayUnavaiable':'dayAvaiable'" (click)="showModal(day)">
-      <div *ngIf="day!=0" [class]="day==startDay && startDay==currentMonth.getDate()?'dayHeader startDay':'dayHeader'">
-        {{day}}
+    <ion-row class="ion-justify-content-between ion-align-items-center">
+      <div style="font-size: 16px;font-weight: 700;">{{currentMonth | date: 'MMMM yyyy'}}</div>
+      <div style="display: flex;align-items: center;gap:1.2rem">
+        <div class="monthIconContainer">
+          <ion-icon name="chevron-back-outline" (click)="prevMonth()" class="changeMonthIcon" style="padding-left: 3px;"></ion-icon>
+          <div class="divider"></div>
+          <ion-icon name="chevron-forward-outline" (click)="nextMonth()" class="changeMonthIcon" style="padding-right: 3px;"></ion-icon>
+        </div>
       </div>
-      <div *ngIf="day!=0 && day>startDay" [ngClass]="addAvailabilityClass(day)">
+    </ion-row>
+    
+    <div style="margin-top: 1.2rem">
 
-      </div>
+      <ion-row class="daysContainer">
+        <ion-col *ngFor="let weekday of weekDays" class="weekDays">
+          {{weekday}}
+        </ion-col>
+      </ion-row>
 
-    </ion-col>
-  </ion-row>
+      <ion-row *ngFor="let week of daysInMonth;let i=index" class="daysContainer">
+        <ion-col *ngFor="let day of week;let j=index" class="days" (click)="showModal(day)">
+          <div *ngIf="day!=0" [ngClass]="generateDayClass(day,i,j)">
+            {{day}}
+          </div>
+        </ion-col>
+      </ion-row>
 
-  <div class="legend">
-    <div class="legendItem">Busy <ion-icon name="remove-outline" color="warning"></ion-icon></div>
-    <div class="legendItem">Little left <ion-icon name="remove-outline" color="danger"></ion-icon></div>
+    </div>
+  </ion-grid>
+
   </div>
+  <div class="divider-calendar" style="margin-top: 1rem;"></div>
+</div>
 
-</ion-grid>
+<div class="legend">
+  <div class="legendItem">
+    <div class="busyCircle"></div>
+    Busy
+  </div>
+  <div class="legendItem">
+    <div class="littleCircle"></div> 
+    Little left
+  </div>
+</div>
+
+<div style="margin-bottom: 4px;font-size: 16px;font-weight: 600;color: #5C5959;margin-left: 16px;">All available times for 8th August</div>
+
+<div class="times" style="margin-left: 1.2rem;">
+  <ng-container *ngFor="let time of availableTimes; let i = index">
+    <div
+      class="timeItem"
+      *ngIf="time!='0'"
+      (click)="choosenTime($event, i)"
+      [ngClass]="{'selected': selectedTimeIndex === i}"
+    >
+      {{time}}
+    </div>
+  </ng-container>
+</div>
 
 <ion-toast
         [isOpen]="isToastOpen"

@@ -21,6 +21,11 @@ export class AppointmentCalendarComponent  implements OnInit {
   daysInMonth: number[][]=[];
   weekDays:String[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+  startColumnOfMonth!:number;
+  endColumnOfMonth!:number;
+  selectedDay:number=this.startDay+1;
+  selectedMonth:Date=this.startMonth;
+
   availableDates:AvaiableDatesApp[]=[];
   isModalOpen=false;
   @Input() totalPrice!:number;
@@ -40,6 +45,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   ngOnInit() {
     this.currentMonth = new Date();
     this.generateCalendar(this.currentMonth);
+    this.showModal(this.startDay+1);
   }
 
   getAvaiableDates(startDate:string,endDate:string){
@@ -58,7 +64,6 @@ export class AppointmentCalendarComponent  implements OnInit {
       }
       else{
         this.availableTimes=data;
-        this.isModalOpen=true;
         this.selectedDate=formatedDate;
       }
     })
@@ -149,7 +154,15 @@ export class AppointmentCalendarComponent  implements OnInit {
     let currentDay=1;
 
     daysInMonth[0]=[];
-    for(let i=0;i<startDayOfTheWeek;i++)daysInMonth[0][i]=0;
+
+    let dayOfPreviosMonth=new Date(start.getFullYear(),start.getMonth(),0).getDate();
+
+    for(let i=startDayOfTheWeek-1;i>=0;i--){
+      daysInMonth[0][i]=dayOfPreviosMonth;
+      dayOfPreviosMonth--;
+    }
+
+    this.startColumnOfMonth=startDayOfTheWeek;
     for(let i=startDayOfTheWeek;i<7;i++){
       daysInMonth[0][i]=currentDay;
       currentDay++;
@@ -166,7 +179,12 @@ export class AppointmentCalendarComponent  implements OnInit {
       }
     }
 
-    for(let i=endDayOfTheWeek+1;i<7;i++)daysInMonth[row][i]=0;
+    let nextMonthDays=1;
+    for(let i=endDayOfTheWeek+1;i<7;i++){
+      daysInMonth[row][i]=nextMonthDays;
+      nextMonthDays++;
+    }
+    this.endColumnOfMonth=endDayOfTheWeek;
 
     return daysInMonth;
   }
@@ -197,8 +215,8 @@ export class AppointmentCalendarComponent  implements OnInit {
     
     const dateApp=this.availableDates.find((date)=>date.date==formatedDate);
     if(dateApp){
-      if(dateApp.count>=4 && dateApp.count<=7)return "daySemiBusyIndicator";
-      else if(dateApp.count>7)return "dayBusyIndicator";
+      if(dateApp.count>=4 && dateApp.count<=7)return " daySemiBusyIndicator";
+      else if(dateApp.count>7)return " dayBusyIndicator";
     }
 
     return "";
@@ -213,6 +231,18 @@ export class AppointmentCalendarComponent  implements OnInit {
   onWillDismiss($event: IonModalCustomEvent<OverlayEventDetail<any>>) {
     this.isModalOpen=false;
     this.selectedTimeIndex=null;
+  }
+
+  generateDayClass(day:number,i:number,j:number):string{
+    let className="dayHeader";
+
+    if(this.currentMonth.getMonth()==this.startMonth.getMonth() && (day<this.startDay || (i==0 && j<this.startColumnOfMonth)))className+=" dayUnavaiable";
+    if(this.currentMonth.getMonth()==this.selectedMonth.getMonth() && day==this.selectedDay)className+=" selectedDay";
+
+    className+=this.addAvailabilityClass(day);
+
+
+    return className;
   }
 
 }
