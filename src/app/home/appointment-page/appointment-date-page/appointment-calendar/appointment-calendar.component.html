@@ -1,28 +1,4 @@
-
-<ion-modal #modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
-  <ng-template>
-    <ion-content>
-
-      <ion-toolbar>
-        <ion-title>Chose appointment time</ion-title>
-        <ion-buttons slot="end">
-          <ion-button color="light" (click)="modal.dismiss();isModalOpen=false">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-
-      <div style="display: flex;justify-content: center;">
-        <div *ngIf="showSpinner" style="margin-top: 1.6rem;position: absolute;bottom: 10px;">
-          <ion-spinner color="blue"></ion-spinner>
-        </div>
-        <ion-button *ngIf="!showSpinner" expand="block" class="ion-button-form" style="width: 80%;margin-top: 1.6rem;position: absolute;bottom: 10px;" (click)="createAppointment()">
-          Make appointment
-        </ion-button>
-      </div>
-    </ion-content>
-  </ng-template>
-</ion-modal>
-
-<div style="margin-top: 2rem;">
+<div>
   <div class="divider-calendar" style="margin-bottom: 1rem;"></div>
   <div style="margin: 0px 1rem;">
 
@@ -39,7 +15,7 @@
       </div>
     </ion-row>
     
-    <div style="margin-top: 1.2rem">
+    <div style="margin-top: 0.8rem">
 
       <ion-row class="daysContainer">
         <ion-col *ngFor="let weekday of weekDays" class="weekDays">
@@ -48,7 +24,7 @@
       </ion-row>
 
       <ion-row *ngFor="let week of daysInMonth;let i=index" class="daysContainer">
-        <ion-col *ngFor="let day of week;let j=index" class="days" (click)="showModal(day)">
+        <ion-col *ngFor="let day of week;let j=index" class="days" (click)="showTimes(day)">
           <div *ngIf="day!=0" [ngClass]="generateDayClass(day,i,j)">
             {{day}}
           </div>
@@ -73,7 +49,9 @@
   </div>
 </div>
 
-<div style="margin-bottom: 4px;font-size: 16px;font-weight: 600;color: #5C5959;margin-left: 16px;">All available times for 8th August</div>
+<div style="margin-bottom: 4px;font-size: 16px;font-weight: 600;color: #5C5959;margin-left: 16px;">
+  All available times for {{selectedDay}}th {{selectedMonth | date: 'MMMM'}}
+</div>
 
 <div class="times" style="margin-left: 1.2rem;">
   <ng-container *ngFor="let time of availableTimes; let i = index">
@@ -88,9 +66,29 @@
   </ng-container>
 </div>
 
+<div class="navigate-buttons">
+  <button class="back-button">
+    <ion-icon name="chevron-back-outline" style="font-size:16px;color:var(--ion-color-primary)"></ion-icon>
+    Services
+  </button>
+  <button class="forward-button">
+    Continue
+    <ion-icon name="chevron-forward-outline" style="font-size:16px;color:white"></ion-icon>
+  </button>
+</div>
+
 <ion-toast
         [isOpen]="isToastOpen"
         message="There are no available times for this date."
         [duration]="2000"
         (didDismiss)="setOpen(false)"
 ></ion-toast>
+
+<!-- <div style="display: flex;justify-content: center;">
+  <div *ngIf="showSpinner" style="margin-top: 1.6rem;position: absolute;bottom: 10px;">
+    <ion-spinner color="blue"></ion-spinner>
+  </div>
+  <ion-button *ngIf="!showSpinner" expand="block" class="ion-button-form" style="width: 80%;margin-top: 1.6rem;position: absolute;bottom: 10px;" (click)="createAppointment()">
+    Make appointment
+  </ion-button>
+</div> -->

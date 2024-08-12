@@ -45,7 +45,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   ngOnInit() {
     this.currentMonth = new Date();
     this.generateCalendar(this.currentMonth);
-    this.showModal(this.startDay+1);
+    this.showTimes(this.startDay+1);
   }
 
   getAvaiableDates(startDate:string,endDate:string){
@@ -54,7 +54,9 @@ export class AppointmentCalendarComponent  implements OnInit {
     })
   }
 
-  showModal(day:number){
+  showTimes(day:number){
+    this.selectedDay=day;
+    this.selectedMonth=this.currentMonth;
     if(day<=this.startDay)return;
     if(day!=0){
       const formatedDate:string=this.formatDate(new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day));
@@ -204,11 +206,6 @@ export class AppointmentCalendarComponent  implements OnInit {
 
     return `${year}-${month}-${day}`;
   }
-
-  calcHeightWeek(){
-    return `calc(100% / ${this.daysInMonth.length})`;
-  }
-
   addAvailabilityClass(day:number):string{
     const currentDate=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day);
     const formatedDate=this.formatDate(currentDate);
@@ -236,7 +233,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   generateDayClass(day:number,i:number,j:number):string{
     let className="dayHeader";
 
-    if(this.currentMonth.getMonth()==this.startMonth.getMonth() && (day<this.startDay || (i==0 && j<this.startColumnOfMonth)))className+=" dayUnavaiable";
+    if(this.currentMonth.getMonth()==this.startMonth.getMonth() && (day<=this.startDay || (i==0 && j<this.startColumnOfMonth)))className+=" dayUnavaiable";
     if(this.currentMonth.getMonth()==this.selectedMonth.getMonth() && day==this.selectedDay)className+=" selectedDay";
 
     className+=this.addAvailabilityClass(day);

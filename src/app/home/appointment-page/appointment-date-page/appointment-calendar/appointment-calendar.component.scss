@@ -52,29 +52,12 @@
 
 .selectedDay{
     border: 1px solid black;
-    background-color: transparent;
     border-radius: 50%;
 }
 
 .dayUnavaiable{
     background-color: #A1A1A1;
     border-radius: 50%;
-}
-
-ion-modal {
-    --height: 60%;
-    --border-radius: 16px;
-    --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-  
-ion-modal::part(backdrop) {
-    background: rgba(209, 213, 219);
-    opacity: 1;
-}
-  
-ion-modal ion-toolbar {
-    --background: var(--ion-color-primary);
-    --color: white;
 }
 
 .times{
@@ -96,6 +79,7 @@ ion-modal ion-toolbar {
     align-items: center;
     padding: 14px;
     margin-top: 5px;
+    color: var(--ion-color-primary);
 }
 
 .timeItem.selected{
@@ -166,4 +150,44 @@ ion-toast {
     height: 26px;
     background-color: #DC571D;
     border-radius: 50%;
+}
+
+.navigate-buttons{
+    position: absolute;
+    bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 1rem;
+    width: 100%;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.back-button{
+    border-radius: 8px;
+    border: 1px solid var(--ion-color-primary);
+    color: var(--ion-color-primary);
+    text-transform: initial;
+    font-size: 16px;
+    height: 46px;
+    width: 47%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:6px;
+}
+
+.forward-button{
+    border-radius: 8px;
+    background-color: var(--ion-color-primary);
+    color: white;
+    text-transform: initial;
+    font-size: 16px;
+    height: 46px;
+    width: 47%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:6px;
 }

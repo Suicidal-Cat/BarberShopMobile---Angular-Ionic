@@ -1,5 +1,14 @@
 <ion-content [fullscreen]="true">
-  <app-toolbar></app-toolbar>
+  
+  <div class="header">
+    <div class="header-text">
+      Select a date<br>and then choose a time
+    </div>
+    <div>
+      <img src="../../../../assets/images/3step.png">
+    </div>
+  </div>
+
   <app-appointment-calendar [totalPrice]="totalPrice" [appDuration]="appDuration" [serviceIds]="choosenServices" 
       [appointmentId]="appointmentId">
   </app-appointment-calendar>
