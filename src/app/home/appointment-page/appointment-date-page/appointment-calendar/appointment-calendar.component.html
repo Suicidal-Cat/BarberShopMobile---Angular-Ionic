@@ -71,7 +71,7 @@
     <ion-icon name="chevron-back-outline" style="font-size:16px;color:var(--ion-color-primary)"></ion-icon>
     Services
   </button>
-  <button class="forward-button">
+  <button class="forward-button" (click)="openModal()">
     Continue
     <ion-icon name="chevron-forward-outline" style="font-size:16px;color:white"></ion-icon>
   </button>
@@ -92,3 +92,27 @@
     Make appointment
   </ion-button>
 </div> -->
+
+<ion-modal [isOpen]="isModalOpen" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (willDismiss)="onWillDismiss($event)">
+  <ng-template>
+    <div class="block">
+      <div class="block1">
+        <div><b>Barber: </b>{{barberInfo.FirstName}} {{barberInfo.LastName}}</div>
+        <div class="services">
+          <span class="services-title">Services:</span>
+          <ul class="services-list">
+            <li *ngFor="let service of servicesInfo">{{service.Name}}</li>
+          </ul>
+        </div>
+        <div><b>Total duration: </b>{{appDuration}} min</div>
+        <div><b>Total cost: </b>{{totalPrice}} RSD</div>
+      </div>
+
+      <div>
+        <button class="confirm-button">Confirm</button>
+        <button class="change-button" (click)="closeModal()">Change</button>
+      </div>
+
+    </div>
+  </ng-template>
+</ion-modal>

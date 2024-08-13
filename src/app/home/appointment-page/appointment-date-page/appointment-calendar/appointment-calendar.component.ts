@@ -1,11 +1,15 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IonModal, NavController } from '@ionic/angular';
+import { ActionSheetController, IonModal, NavController } from '@ionic/angular';
 import { IonModalCustomEvent,OverlayEventDetail } from '@ionic/core';
+import { Subscription } from 'rxjs';
 import { Appointment } from 'src/app/models/Appointment/Appointment';
 import { AvaiableDatesApp } from 'src/app/models/Appointment/AvaiableDatesApp';
+import { Barber } from 'src/app/models/Barber/barber';
+import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { Service } from 'src/app/models/ServiceD/service';
 import { AccountService } from 'src/app/services/Account/account.service';
 import { AppointmentService } from 'src/app/services/Appointment/appointment.service';
+import { ServiceService } from 'src/app/services/ServiceD/service.service';
 
 @Component({
   selector: 'app-appointment-calendar',
@@ -40,7 +44,14 @@ export class AppointmentCalendarComponent  implements OnInit {
   showSpinner=false;
   isToastOpen = false;
 
-  constructor(private appointmentService:AppointmentService,private navCtr:NavController,private accountService:AccountService) {}
+  @Input() services!:LinkCollection<LinkCollection<Service>[]>;
+  @Input() barbers!:LinkCollection<LinkCollection<Barber>[]>;
+  barberInfo!:Barber;
+  servicesInfo:Service[]=[];
+
+  constructor(private appointmentService:AppointmentService,private navCtr:NavController,
+    private accountService:AccountService,private actionSheetCtrl: ActionSheetController,
+    private serviceService:ServiceService) {}
 
   ngOnInit() {
     this.currentMonth = new Date();
@@ -224,6 +235,22 @@ export class AppointmentCalendarComponent  implements OnInit {
     this.isToastOpen = isOpen;
   }
 
+  openModal(){
+    const barb=this.barbers.Value.find((bar)=>bar.Value.BarberId==this.appointmentService.barberApp.Value.BarberId);
+    if(barb)this.barberInfo=barb.Value;
+
+    this.serviceIds.forEach(id => {
+      const service=this.services.Value.find((serv)=>serv.Value.ServiceId==id);
+      if(service)this.servicesInfo.push(service.Value);
+    });
+
+    this.isModalOpen=true;
+  }
+
+  closeModal(){
+    this.isModalOpen=false;
+    this.selectedTimeIndex=null;
+  }
 
   onWillDismiss($event: IonModalCustomEvent<OverlayEventDetail<any>>) {
     this.isModalOpen=false;

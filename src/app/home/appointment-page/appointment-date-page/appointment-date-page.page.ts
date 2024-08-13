@@ -24,6 +24,7 @@ export class AppointmentDatePagePage implements OnInit {
   appDuration:number=0;
 
   services!:LinkCollection<LinkCollection<Service>[]>;
+  barbers!:LinkCollection<LinkCollection<Barber>[]>;
 
   constructor(private route:ActivatedRoute,private navCtr:NavController,
     private appointmentService:AppointmentService,private barberSrevice:BarberService,private serviceService:ServiceService) { }
@@ -52,6 +53,10 @@ export class AppointmentDatePagePage implements OnInit {
       this.services=data;
       this.calculatePriceAndDuration(this.services);
       });
+
+    this.barberSrevice.getBarbers()?.subscribe((data)=>{
+      this.barbers=data;
+    })
 
   }
 

@@ -191,3 +191,78 @@ ion-toast {
     justify-content: center;
     gap:6px;
 }
+
+.confirm-button{
+    width: 100%;
+    border-radius: 8px;
+    background-color: var(--ion-color-primary);
+    color: white;
+    text-transform: initial;
+    font-size: 16px;
+    height: 46px;
+    margin-bottom: 10px;
+}
+
+.change-button{
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--ion-color-primary);
+    color: var(--ion-color-primary);
+    background-color: white;
+    text-transform: initial;
+    font-size: 16px;
+    height: 46px;
+}
+
+ion-modal {
+    --height: auto;
+    --border-radius: 20px 20px 0px 0px;
+    backdrop-filter: blur(2px);
+}
+
+ion-modal::part(handle){
+    width: 75px;
+}
+
+ion-modal::part(backdrop) {
+    background: rgba(140, 143, 148, 0.3);
+    opacity: 1;
+}
+
+.block{
+    max-width: 100%;
+    height: 275px;
+    font-size: 15px;
+    margin-top: 35px;
+    margin-bottom: 28px;
+    margin-left: 26px;
+    margin-right: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.block1{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.services {
+    display: flex;
+}
+
+.services-title {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.services-list {
+    list-style-type: disc;
+    margin: 0 2px;
+    padding: 0;
+}
+
+.services-list li {
+    margin-left: 20px;
+}
