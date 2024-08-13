@@ -95,7 +95,7 @@
 
 <ion-modal [isOpen]="isModalOpen" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (willDismiss)="onWillDismiss($event)">
   <ng-template>
-    <div class="block">
+    <div class="block" *ngIf="isConfirmed==false">
       <div class="block1">
         <div><b>Barber: </b>{{barberInfo.FirstName}} {{barberInfo.LastName}}</div>
         <div class="services">
@@ -109,10 +109,22 @@
       </div>
 
       <div>
-        <button class="confirm-button">Confirm</button>
+        <button class="confirm-button" (click)="play()">Confirm</button>
         <button class="change-button" (click)="closeModal()">Change</button>
       </div>
 
+    </div>
+
+    <div
+    [hidden]="isConfirmed==false"
+    id="confirm">
+      <ion-img src="../../../../../assets/images/confirmApp.png"></ion-img>
+      <div style="font-weight: 600;font-size: 20px;text-align: center;">Your appointment has been<br>
+        successfully scheduled!
+      </div>
+    </div>
+    <div [hidden]="isConfirmed==false" style="width: 100%;padding: 0px 26px;position: absolute;bottom: 20px;">
+      <button class="confirm-button" style="width: 100%;">Close</button>
     </div>
   </ng-template>
 </ion-modal>

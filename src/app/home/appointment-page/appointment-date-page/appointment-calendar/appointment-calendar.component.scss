@@ -215,7 +215,7 @@ ion-toast {
 }
 
 ion-modal {
-    --height: auto;
+    --height: 310px;
     --border-radius: 20px 20px 0px 0px;
     backdrop-filter: blur(2px);
 }
@@ -265,4 +265,14 @@ ion-modal::part(backdrop) {
 
 .services-list li {
     margin-left: 20px;
+}
+
+.img-confirm{
+    display: flex;
+    height: 275px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 60px;
 }

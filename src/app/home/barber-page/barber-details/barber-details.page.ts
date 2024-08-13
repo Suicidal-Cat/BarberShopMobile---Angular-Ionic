@@ -51,7 +51,11 @@ export class BarberDetailsPage implements OnInit {
 
   ngOnInit() {
     for(let i=8;i<=20;i++){
-      const time1:string=i+":00";
+      let time1:string="";
+      if(i<10){
+        time1="0"+i+":00";
+      }
+      else time1=i+":00";
       this.workingHours.push(time1);
       const time2:string=i+":30";
       this.workingHours.push(time2);

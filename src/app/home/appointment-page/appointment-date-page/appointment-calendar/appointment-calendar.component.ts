@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController, IonModal, NavController } from '@ionic/angular';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ActionSheetController, AnimationController, IonImg, IonModal, NavController,Animation } from '@ionic/angular';
 import { IonModalCustomEvent,OverlayEventDetail } from '@ionic/core';
-import { Subscription } from 'rxjs';
 import { Appointment } from 'src/app/models/Appointment/Appointment';
 import { AvaiableDatesApp } from 'src/app/models/Appointment/AvaiableDatesApp';
 import { Barber } from 'src/app/models/Barber/barber';
@@ -10,6 +9,7 @@ import { Service } from 'src/app/models/ServiceD/service';
 import { AccountService } from 'src/app/services/Account/account.service';
 import { AppointmentService } from 'src/app/services/Appointment/appointment.service';
 import { ServiceService } from 'src/app/services/ServiceD/service.service';
+
 
 @Component({
   selector: 'app-appointment-calendar',
@@ -49,14 +49,37 @@ export class AppointmentCalendarComponent  implements OnInit {
   barberInfo!:Barber;
   servicesInfo:Service[]=[];
 
+  //animation
+  private imgAnimation!: Animation;
+  @ViewChild('confirmImg', { static: false }) confirmImg!: ElementRef<HTMLIonImgElement>;
+  isConfirmed:boolean=false;
+  
+
   constructor(private appointmentService:AppointmentService,private navCtr:NavController,
     private accountService:AccountService,private actionSheetCtrl: ActionSheetController,
-    private serviceService:ServiceService) {}
+    private serviceService:ServiceService,private animationCtrl: AnimationController) {}
+
 
   ngOnInit() {
     this.currentMonth = new Date();
     this.generateCalendar(this.currentMonth);
     this.showTimes(this.startDay+1);
+    
+  }
+
+  async play() {
+    this.isConfirmed=true;
+    document.getElementById('confirm')?.classList.add('img-confirm');
+    this.imgAnimation = this.animationCtrl
+      .create()
+      .addElement(document.getElementById('confirm') as HTMLDivElement)
+      .fill('none')
+      .duration(1500)
+      .keyframes([
+        { offset: 0.5, transform: 'scale(1.1)', opacity: '1' },
+        { offset: 1, transform: 'scale(1)', opacity: '1' },
+      ]);
+    await this.imgAnimation.play();
   }
 
   getAvaiableDates(startDate:string,endDate:string){
@@ -250,11 +273,13 @@ export class AppointmentCalendarComponent  implements OnInit {
   closeModal(){
     this.isModalOpen=false;
     this.selectedTimeIndex=null;
+    this.isConfirmed=false;
   }
 
   onWillDismiss($event: IonModalCustomEvent<OverlayEventDetail<any>>) {
     this.isModalOpen=false;
     this.selectedTimeIndex=null;
+    this.isConfirmed=false;
   }
 
   generateDayClass(day:number,i:number,j:number):string{
