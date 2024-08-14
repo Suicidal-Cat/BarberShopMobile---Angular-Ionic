@@ -24,7 +24,7 @@
       </ion-row>
 
       <ion-row *ngFor="let week of daysInMonth;let i=index" class="daysContainer">
-        <ion-col *ngFor="let day of week;let j=index" class="days" (click)="showTimes(day)">
+        <ion-col *ngFor="let day of week;let j=index" class="days" (click)="showTimes(day,i,j)">
           <div *ngIf="day!=0" [ngClass]="generateDayClass(day,i,j)">
             {{day}}
           </div>
@@ -71,7 +71,7 @@
     <ion-icon name="chevron-back-outline" style="font-size:16px;color:var(--ion-color-primary)"></ion-icon>
     Services
   </button>
-  <button class="forward-button" (click)="openModal()">
+  <button [ngClass]="selectedTimeIndex!=null?'forward-button':'forward-button disabled-button'" (click)="openModal()">
     Continue
     <ion-icon name="chevron-forward-outline" style="font-size:16px;color:white"></ion-icon>
   </button>
@@ -109,7 +109,7 @@
       </div>
 
       <div>
-        <button class="confirm-button" (click)="play()">Confirm</button>
+        <button class="confirm-button" (click)="createAppointment()">Confirm</button>
         <button class="change-button" (click)="closeModal()">Change</button>
       </div>
 
@@ -124,7 +124,7 @@
       </div>
     </div>
     <div [hidden]="isConfirmed==false" style="width: 100%;padding: 0px 26px;position: absolute;bottom: 20px;">
-      <button class="confirm-button" style="width: 100%;">Close</button>
+      <button class="confirm-button" style="width: 100%;" (click)="navigateToHome()">Close</button>
     </div>
   </ng-template>
 </ion-modal>

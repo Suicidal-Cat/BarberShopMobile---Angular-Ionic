@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActionSheetController, AnimationController, IonImg, IonModal, NavController,Animation } from '@ionic/angular';
 import { IonModalCustomEvent,OverlayEventDetail } from '@ionic/core';
+import { from } from 'rxjs';
 import { Appointment } from 'src/app/models/Appointment/Appointment';
 import { AvaiableDatesApp } from 'src/app/models/Appointment/AvaiableDatesApp';
 import { Barber } from 'src/app/models/Barber/barber';
@@ -53,6 +54,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   private imgAnimation!: Animation;
   @ViewChild('confirmImg', { static: false }) confirmImg!: ElementRef<HTMLIonImgElement>;
   isConfirmed:boolean=false;
+
   
 
   constructor(private appointmentService:AppointmentService,private navCtr:NavController,
@@ -76,9 +78,13 @@ export class AppointmentCalendarComponent  implements OnInit {
       .fill('none')
       .duration(1500)
       .keyframes([
-        { offset: 0.5, transform: 'scale(1.1)', opacity: '1' },
-        { offset: 1, transform: 'scale(1)', opacity: '1' },
-      ]);
+         { offset: 0, transform: 'scale(1)', opacity: '0' },
+         { offset: 1, transform: 'scale(1.1)', opacity: '1' },
+
+      ])
+      // .fromTo('transform', 'rotateY(0deg)', 'rotateY(360deg)')
+      .iterations(1)
+      .fill('forwards');
     await this.imgAnimation.play();
   }
 
@@ -88,9 +94,38 @@ export class AppointmentCalendarComponent  implements OnInit {
     })
   }
 
-  showTimes(day:number){
+  showTimes(day:number,i:number=0,j:number=0){
+    this.selectedTimeIndex=null;
     this.selectedDay=day;
-    this.selectedMonth=this.currentMonth;
+    //moramo da vidimo jel prethodni ili trenutni dan za mesec
+    if(i==0 && j<this.startColumnOfMonth){
+      let month:number;
+      let year:number;
+      if(this.currentMonth.getMonth()==0){
+        month=11;
+        year=this.currentMonth.getFullYear()-1;
+      }
+      else {
+        month=this.currentMonth.getMonth()-1;
+        year=this.currentMonth.getFullYear();
+      }
+      this.selectedMonth=new Date(year,month,1);
+    }
+    else if(i==this.daysInMonth.length-1 && j>this.endColumnOfMonth){
+      let month:number;
+      let year:number;
+      if(this.currentMonth.getMonth()==11){
+        month=0;
+        year=this.currentMonth.getFullYear()+1;
+      }
+      else{
+        month=this.currentMonth.getMonth()+1;
+        year=this.currentMonth.getFullYear();
+      } 
+      this.selectedMonth=new Date(year,month,1);
+    }
+    else this.selectedMonth=this.currentMonth;
+
     if(day<=this.startDay)return;
     if(day!=0){
       const formatedDate:string=this.formatDate(new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day));
@@ -128,9 +163,7 @@ export class AppointmentCalendarComponent  implements OnInit {
           this.appointmentService.createAppointment(app)?.subscribe({
             next:()=>{
               this.showSpinner=false;
-              this.modal.dismiss(null,'cancel');
-              this.appointmentService.getLatestAppointment()?.subscribe();
-              this.navCtr.navigateRoot("/home");
+              this.play();
             },
             error:()=> {
               this.showSpinner=false;
@@ -141,9 +174,7 @@ export class AppointmentCalendarComponent  implements OnInit {
           this.appointmentService.updateAppointment(app)?.subscribe({
             next:()=>{
               this.showSpinner=false;
-              this.modal.dismiss(null,'cancel');
-              this.appointmentService.getLatestAppointment()?.subscribe();
-              this.navCtr.navigateRoot("/home");
+              this.play();
             },
             error:()=> {
               this.showSpinner=false;
@@ -259,6 +290,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   }
 
   openModal(){
+    this.servicesInfo=[];
     const barb=this.barbers.Value.find((bar)=>bar.Value.BarberId==this.appointmentService.barberApp.Value.BarberId);
     if(barb)this.barberInfo=barb.Value;
 
@@ -271,9 +303,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   }
 
   closeModal(){
-    this.isModalOpen=false;
-    this.selectedTimeIndex=null;
-    this.isConfirmed=false;
+    this.modal.dismiss();
   }
 
   onWillDismiss($event: IonModalCustomEvent<OverlayEventDetail<any>>) {
@@ -286,12 +316,20 @@ export class AppointmentCalendarComponent  implements OnInit {
     let className="dayHeader";
 
     if(this.currentMonth.getMonth()==this.startMonth.getMonth() && (day<=this.startDay || (i==0 && j<this.startColumnOfMonth)))className+=" dayUnavaiable";
-    if(this.currentMonth.getMonth()==this.selectedMonth.getMonth() && day==this.selectedDay)className+=" selectedDay";
+    if(this.currentMonth.getMonth()==this.selectedMonth.getMonth() && day==this.selectedDay && !(i==0 && j<this.startColumnOfMonth)
+    && !((i==0 && j<this.startColumnOfMonth) || (i==this.daysInMonth.length-1 && j>this.endColumnOfMonth)))
+      className+=" selectedDay";
 
     className+=this.addAvailabilityClass(day);
 
 
     return className;
+  }
+
+  navigateToHome(){
+    this.appointmentService.getLatestAppointment()?.subscribe();
+    this.modal.dismiss();
+    this.navCtr.navigateBack("/home");
   }
 
 }
