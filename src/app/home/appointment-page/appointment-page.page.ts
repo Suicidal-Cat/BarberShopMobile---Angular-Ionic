@@ -111,7 +111,7 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
           barberId: this.barberId,
           choosenServices: this.choosenServices.join(',')
       },
-      queryParamsHandling: 'merge' // Opcija za spajanje sa postojećim query parametrima
+      queryParamsHandling: 'merge'
   });
   }
 

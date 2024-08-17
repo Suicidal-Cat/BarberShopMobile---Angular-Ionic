@@ -11,7 +11,15 @@ const routes: Routes = [
   {
     path: 'appointment-date',
     loadChildren: () => import('./appointment-date-page/appointment-date-page.module').then(m => m.AppointmentDatePagePageModule)
-  } 
+  },   {
+    path: 'choose-services-page',
+    loadChildren: () => import('./choose-services-page/choose-services-page.module').then( m => m.ChooseServicesPagePageModule)
+  },  {
+    path: 'choose-barbers-page',
+    loadChildren: () => import('./choose-barbers-page/choose-barbers-page.module').then( m => m.ChooseBarbersPagePageModule)
+  }
+
+
 
 
 ];
