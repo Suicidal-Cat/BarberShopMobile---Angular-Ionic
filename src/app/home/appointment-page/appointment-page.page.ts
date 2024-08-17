@@ -109,7 +109,8 @@ export class AppointmentPagePage implements OnInit, ViewWillEnter, OnDestroy {
       relativeTo: this.route,
       queryParams: {
           barberId: this.barberId,
-          choosenServices: this.choosenServices.join(',')
+          choosenServices: this.choosenServices.join(','),
+          appointment: this.appointmentId
       },
       queryParamsHandling: 'merge'
   });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { BarberService } from 'src/app/services/Barber/barber.service';
   templateUrl: './choose-barbers-page.page.html',
   styleUrls: ['./choose-barbers-page.page.scss'],
 })
-export class ChooseBarbersPagePage implements OnInit,ViewWillEnter {
+export class ChooseBarbersPagePage implements OnInit,ViewWillEnter,OnDestroy {
 
   barbers!: LinkCollection<Barber>[];
   barbersSub!: Subscription;
@@ -25,6 +25,11 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter {
 
   constructor(private barberService:BarberService,private route:ActivatedRoute,
     private router:Router,private appointmentService:AppointmentService) {
+
+  }
+
+  ngOnInit() {
+
     this.route.queryParamMap.subscribe(paramMap=>{
       if(paramMap.has('barberId')){
         const barber=paramMap.get('barberId');
@@ -38,10 +43,6 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter {
         }
       }
     })
-
-  }
-
-  ngOnInit() {
 
     this.barbersSub=this.barberService.barbersPag.subscribe((barbers)=>{
       this.barbers=barbers.Value.filter((barber)=>barber.Value.Status==Status.Active && barber.Value.StartWorkingHours!=null);
@@ -64,6 +65,7 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter {
   selectCard(barber:LinkCollection<Barber>){
     this.barberId=barber.Value.BarberId;
     this.selectedBarber=barber;
+    this.updateQueryParameters();
   }
 
   navigateToServices(){
@@ -77,6 +79,21 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter {
         }
       });
     }
+  }
+  ngOnDestroy(): void {
+    if (this.barbersSub) this.barbersSub.unsubscribe();
+  }
+
+  updateQueryParameters(){
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+          barberId: this.barberId,
+          choosenServices: this.choosenServices.join(','),
+          appointment: this.appointmentId
+      },
+      queryParamsHandling: 'merge'
+  });
   }
 
 }
