@@ -46,7 +46,7 @@ export class AppointmentDatePagePage implements OnInit {
 
     const barber=this.appointmentService.barberApp;
     if(!barber || this.barberId==0 || this.choosenServices.length==0){
-      this.navCtr.navigateBack("/home/appointment")
+      this.navCtr.navigateBack("/home/appointment/choose-barbers")
     }
 
     this.serviceService.getServices()?.subscribe((data)=>{

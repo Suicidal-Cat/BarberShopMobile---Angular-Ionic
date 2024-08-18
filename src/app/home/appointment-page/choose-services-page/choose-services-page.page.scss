@@ -79,7 +79,7 @@
 
 .category-block{
     color: var(--ion-color-primary);
-    border:1px solid var(--ion-color-primary);
+    border:1px solid var(--ion-color-secondary);
     border-radius: 8px;
     height: 33px;
     padding: 12px 12px;
@@ -91,7 +91,7 @@
 
 .category-block.selected{
     color: white;
-    background-color: var(--ion-color-primary);
+    background-color: var(--ion-color-secondary);
 }
 
 .service-card{
@@ -103,6 +103,11 @@
     margin-bottom: 10px;
     padding: 0px 1rem;
     height: 65px;
+}
+
+.service-card.selected{
+    border: 1px solid var(--ion-color-secondary);
+    background-color: rgba(212, 154, 50, 0.08);
 }
 
 .service-info{
@@ -131,3 +136,23 @@ swiper-slide {
 .service-navigation ion-icon{
     font-size: 14px;
 }
+
+.service-price{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+ion-radio::part(container) {
+    width: 17px;
+    height: 17px;
+    margin-bottom: 1px;
+}
+
+ion-checkbox {
+    --size: 17px;
+    --checkbox-background-checked: var(--ion-color-secondary);
+  }

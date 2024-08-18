@@ -71,7 +71,7 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter,OnDestroy {
   navigateToServices(){
     if(this.selectedBarber && this.barberId!=0){
       this.appointmentService.barberApp=this.selectedBarber;
-      this.router.navigate(['home/appointment/choose-services-page'], {
+      this.router.navigate(['home/appointment/choose-services'], {
         queryParams: {
             barberId: this.barberId,
             choosenServices: this.choosenServices.join(','),

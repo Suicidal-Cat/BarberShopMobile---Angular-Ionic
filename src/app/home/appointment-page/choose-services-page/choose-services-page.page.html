@@ -19,35 +19,65 @@
     <div style="margin: 0px 10px;margin-bottom: 2.5rem;">
       <swiper-container  #swiper (swiperslidechange)="swiperSlideChanged($event)">
         <ng-container *ngFor="let sbc of servicesByCategories;let i=index">
-          <swiper-slide>
-            <ng-container *ngFor="let item of sbc">
-                <div class="service-card">
-                    <div class="service-info">
-                    <div class="pic">
-                        <img [src]="getImagePath(item.Value.ServiceCategory.Name)">
-                    </div>
-                    <div class="info">
-                        <p style="margin-bottom: 5px;font-size: 16px;font-weight: 700;">{{item.Value.Name}}</p>
-                        <div style="font-size: 14px;color: #A1A1A1;">
-                        <p>{{item.Value.Duration}} min</p>
+          <ng-container *ngIf="sbc[0].Value.ServiceCategory.Name!='Other'">
+              <swiper-slide>
+                <ion-radio-group value="" [allowEmptySelection]="true" (ionChange)="addChoosenService($event,sbc[0].Value.ServiceCategory.Name)" 
+                #radioGroup [name]="sbc[0].Value.ServiceCategory.Name">
+                  <ng-container *ngFor="let item of sbc">         
+                        <div [ngClass]="isSelected(item.Value.ServiceId)?'service-card selected':'service-card'">
+                            <div class="service-info">
+                            <div class="pic">
+                                <img [src]="getImagePath(item.Value.ServiceCategory.Name)">
+                            </div>
+                            <div class="info">
+                                <p style="margin-bottom: 5px;font-size: 16px;font-weight: 700;">{{item.Value.Name}}</p>
+                                <div style="font-size: 14px;color: #A1A1A1;">
+                                <p>{{item.Value.Duration}} min</p>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="service-price">
+                              <p>{{item.Value.Price}} RSD</p>
+                              <ion-radio [value]="item.Value.ServiceId" color="secondary"></ion-radio><br />
+                            </div>
+                        </div>
+                  </ng-container>
+                </ion-radio-group>
+              </swiper-slide>
+          </ng-container>
+
+          <ng-container *ngIf="sbc[0].Value.ServiceCategory.Name=='Other'">
+            <swiper-slide>
+                <ng-container *ngFor="let item of sbc">         
+                    <div [ngClass]="isSelected(item.Value.ServiceId)?'service-card selected':'service-card'">
+                        <div class="service-info">
+                        <div class="pic">
+                            <img [src]="getImagePath(item.Value.ServiceCategory.Name)">
+                        </div>
+                        <div class="info">
+                            <p style="margin-bottom: 5px;font-size: 16px;font-weight: 700;">{{item.Value.Name}}</p>
+                            <div style="font-size: 14px;color: #A1A1A1;">
+                            <p>{{item.Value.Duration}} min</p>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="service-price">
+                          <p>{{item.Value.Price}} RSD</p>
+                          <ion-checkbox [value]="item.Value.ServiceId" (ionChange)="addOtherService($event)" color="secondary"></ion-checkbox><br />
                         </div>
                     </div>
-                    </div>
-                    <div class="service-price">
-                    <p style="font-size: 14px;font-weight: 700;">{{item.Value.Price}} RSD</p>
-                    </div>
-                </div>
-            </ng-container>
-          </swiper-slide>
+              </ng-container>
+            </swiper-slide>
+        </ng-container>
         </ng-container>
       </swiper-container>
 
-      <div *ngIf="services.Value.length>0 && canBackwards()" class="service-navigation" style="float: left;" (click)="slidePrev()">
+      <div *ngIf="services.Value.length>0 && canBackwards() && serviceCategories.length>0" class="service-navigation" style="float: left;" (click)="slidePrev()">
         <ion-icon name="chevron-back-outline"></ion-icon>
         {{generateBackwards()}}
       </div>
 
-      <div *ngIf="services.Value.length>0 && canForward()" class="service-navigation" style="float: right;" (click)="slideNext()">
+      <div *ngIf="services.Value.length>0 && canForward() && serviceCategories.length>0" class="service-navigation" style="float: right;" (click)="slideNext()">
         {{generateForward()}}
         <ion-icon name="chevron-forward-outline"></ion-icon>
       </div>
@@ -57,11 +87,11 @@
 </ion-content>
 
 <div class="navigate-buttons">
-    <button class="back-button">
+    <button class="back-button" (click)="navigateToBarber()">
       <ion-icon name="chevron-back-outline" style="font-size:16px;color:var(--ion-color-primary)"></ion-icon>
       Barber
     </button>
-    <button [ngClass]="choosenServices.length>0?'forward-button':'forward-button disabled-button'">
+    <button [ngClass]="choosenServices.length>0?'forward-button':'forward-button disabled-button'" (click)="naviteToChooseDate()">
       Continue
       <ion-icon name="chevron-forward-outline" style="font-size:16px;color:white"></ion-icon>
     </button>

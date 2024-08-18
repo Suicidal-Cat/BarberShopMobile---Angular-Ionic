@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActionSheetController, AnimationController, IonImg, IonModal, NavController,Animation } from '@ionic/angular';
 import { IonModalCustomEvent,OverlayEventDetail } from '@ionic/core';
 import { from } from 'rxjs';
@@ -36,7 +37,8 @@ export class AppointmentCalendarComponent  implements OnInit {
   @Input() totalPrice!:number;
   @Input() appDuration!:number;
   @Input() serviceIds!:number[];
-  @Input() appointmentId:number=0;;
+  @Input() appointmentId:number=0;
+  @Input() barberId:number=0;
   availableTimes!:string[];
   selectedTimeIndex:number | null=null;
   selectedDate!:string;
@@ -59,7 +61,8 @@ export class AppointmentCalendarComponent  implements OnInit {
 
   constructor(private appointmentService:AppointmentService,private navCtr:NavController,
     private accountService:AccountService,private actionSheetCtrl: ActionSheetController,
-    private serviceService:ServiceService,private animationCtrl: AnimationController) {}
+    private serviceService:ServiceService,private animationCtrl: AnimationController,
+    private router:Router) {}
 
 
   ngOnInit() {
@@ -330,6 +333,21 @@ export class AppointmentCalendarComponent  implements OnInit {
     this.appointmentService.getLatestAppointment()?.subscribe();
     this.modal.dismiss();
     this.navCtr.navigateBack("/home");
+  }
+
+  navigateToServices(){
+    if(this.barberId!=0 && this.serviceIds.length>0){
+      this.router.navigate(['home/appointment/choose-services'], {
+        queryParams: {
+            barberId: this.barberId,
+            choosenServices: this.serviceIds.join(','),
+            appointment: this.appointmentId
+        }
+      });
+    }
+    else {
+      this.router.navigateByUrl("home");
+    }
   }
 
 }

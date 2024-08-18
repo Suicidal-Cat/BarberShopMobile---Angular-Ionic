@@ -67,7 +67,7 @@
 </div>
 
 <div class="navigate-buttons">
-  <button class="back-button">
+  <button class="back-button" (click)="navigateToServices()">
     <ion-icon name="chevron-back-outline" style="font-size:16px;color:var(--ion-color-primary)"></ion-icon>
     Services
   </button>
@@ -83,15 +83,6 @@
         [duration]="2000"
         (didDismiss)="setOpen(false)"
 ></ion-toast>
-
-<!-- <div style="display: flex;justify-content: center;">
-  <div *ngIf="showSpinner" style="margin-top: 1.6rem;position: absolute;bottom: 10px;">
-    <ion-spinner color="blue"></ion-spinner>
-  </div>
-  <ion-button *ngIf="!showSpinner" expand="block" class="ion-button-form" style="width: 80%;margin-top: 1.6rem;position: absolute;bottom: 10px;" (click)="createAppointment()">
-    Make appointment
-  </ion-button>
-</div> -->
 
 <ion-modal [isOpen]="isModalOpen" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (willDismiss)="onWillDismiss($event)">
   <ng-template>
