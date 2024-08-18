@@ -23,7 +23,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   startMonth:Date=new Date();
   startDay:number=new Date().getDate();
 
-  currentMonth!:Date;
+  currentMonth:Date=new Date();
   daysInMonth: number[][]=[];
   weekDays:String[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -96,8 +96,8 @@ export class AppointmentCalendarComponent  implements OnInit {
       this.availableDates=data;
     })
   }
-
-  showTimes(day:number,i:number=0,j:number=0){
+  
+  showTimes(day:number,i:number=-1,j:number=-1){
     this.selectedTimeIndex=null;
     this.selectedDay=day;
     //moramo da vidimo jel prethodni ili trenutni dan za mesec
@@ -319,12 +319,21 @@ export class AppointmentCalendarComponent  implements OnInit {
     let className="dayHeader";
 
     if(this.currentMonth.getMonth()==this.startMonth.getMonth() && (day<=this.startDay || (i==0 && j<this.startColumnOfMonth)))className+=" dayUnavaiable";
-    if(this.currentMonth.getMonth()==this.selectedMonth.getMonth() && day==this.selectedDay && !(i==0 && j<this.startColumnOfMonth)
+    if(this.currentMonth.getMonth()==this.selectedMonth.getMonth() && day==this.selectedDay
     && !((i==0 && j<this.startColumnOfMonth) || (i==this.daysInMonth.length-1 && j>this.endColumnOfMonth)))
+      className+=" selectedDay";
+    if((i==this.daysInMonth.length-1 && j>this.endColumnOfMonth) && this.selectedMonth.getMonth()==this.currentMonth.getMonth()+1
+  && day==this.selectedDay)
+      className+=" selectedDay";
+    if((i==0 && j<this.startColumnOfMonth) && this.selectedMonth.getMonth()==this.currentMonth.getMonth()-1
+  && day==this.selectedDay)
       className+=" selectedDay";
 
     className+=this.addAvailabilityClass(day);
 
+    // console.log(className,i,j)
+    // console.log(this.currentMonth.getMonth()==this.selectedMonth.getMonth(),day==this.selectedDay,
+    // !((i==0 && j<this.startColumnOfMonth) || (i==this.daysInMonth.length-1 && j>this.endColumnOfMonth)),this.currentMonth.getMonth(),this.selectedMonth.getMonth())
 
     return className;
   }

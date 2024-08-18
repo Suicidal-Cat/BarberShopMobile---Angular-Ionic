@@ -10,11 +10,15 @@
     </div>
   </div>
 
-  <div class="barbers-container">
+  <div *ngIf="showSpinner==true" style="margin-top: 3rem;display: flex;flex-direction: column;align-items: center;">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <div class="barbers-container" [style.display]="allLoaded ? 'flex' : 'none'">
     <div [ngClass]="barberId==barber.Value.BarberId?'barber-card selected-card':'barber-card'" 
     *ngFor="let barber of barbers" (click)="selectCard(barber)">
       <div class="barber-header">
-        <img src="../../../../assets/images/maleBarber.jpg">
+        <img [src]="barber.Value.ImageUrl" (load)="onImageLoad()">
         <p style="font-size: 12px;font-weight: 600;margin:4px 0px;">{{barber.Value.FirstName}} {{barber.Value.LastName}}</p>
       </div>
       <div class="divider"></div>

@@ -23,12 +23,18 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter,OnDestroy {
   choosenServices:number[]=[];
   appointmentId:number=0;
 
+  showSpinner:boolean=false;
+  loadedPicNum:number=0;
+  allLoaded:boolean=false;
+
   constructor(private barberService:BarberService,private route:ActivatedRoute,
     private router:Router,private appointmentService:AppointmentService) {
 
   }
 
   ngOnInit() {
+    this.allLoaded=false;
+    this.showSpinner=false;
 
     this.route.queryParamMap.subscribe(paramMap=>{
       if(paramMap.has('barberId')){
@@ -59,7 +65,8 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter,OnDestroy {
   }
 
   ionViewWillEnter(): void {
-    this.barberService.getBarbers()?.subscribe();
+    this.showSpinner=true;
+    if(this.barbers.length<=0)this.barberService.getBarbers()?.subscribe();
   }
 
   selectCard(barber:LinkCollection<Barber>){
@@ -94,6 +101,15 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter,OnDestroy {
       },
       queryParamsHandling: 'merge'
   });
+  }
+
+  onImageLoad(){
+    this.loadedPicNum++;
+    if(this.loadedPicNum==this.barbers.length){
+      this.showSpinner=false;
+      this.allLoaded=true;
+      this.loadedPicNum=0;
+    }
   }
 
 }

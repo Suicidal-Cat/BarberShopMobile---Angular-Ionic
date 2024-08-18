@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ViewWillEnter } from '@ionic/angular';
 import { AvaiableDatesApp } from 'src/app/models/Appointment/AvaiableDatesApp';
 import { Barber } from 'src/app/models/Barber/barber';
 import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
@@ -14,7 +14,7 @@ import { ServiceService } from 'src/app/services/ServiceD/service.service';
   templateUrl: './appointment-date-page.page.html',
   styleUrls: ['./appointment-date-page.page.scss'],
 })
-export class AppointmentDatePagePage implements OnInit {
+export class AppointmentDatePagePage implements OnInit,ViewWillEnter {
 
   barberId:number=0;
   choosenServices:number[]=[];
@@ -49,6 +49,9 @@ export class AppointmentDatePagePage implements OnInit {
       this.navCtr.navigateBack("/home/appointment/choose-barbers")
     }
 
+  }
+
+  ionViewWillEnter(): void {
     this.serviceService.getServices()?.subscribe((data)=>{
       this.services=data;
       this.calculatePriceAndDuration(this.services);
@@ -57,7 +60,6 @@ export class AppointmentDatePagePage implements OnInit {
     this.barberSrevice.getBarbers()?.subscribe((data)=>{
       this.barbers=data;
     })
-
   }
 
   calculatePriceAndDuration(services:LinkCollection<LinkCollection<Service>[]>){
