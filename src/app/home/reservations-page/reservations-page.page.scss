@@ -1,6 +1,6 @@
 
 .container{
-    margin: 0px 30px;
+    margin: 0px 20px;
 }
 
 .date-picker{
@@ -40,4 +40,10 @@ ion-datetime-button::part(native){
 
 .app-cont{
     margin-top: 1rem;
+}
+
+ion-spinner{
+    color: var(--ion-color-secondary);
+    height: 38px;
+    width: 38px;
 }

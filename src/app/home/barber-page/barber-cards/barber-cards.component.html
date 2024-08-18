@@ -1,20 +1,8 @@
-<!-- <ion-card *ngFor="let item of barbers.Value">
-  <ion-card-header style="padding-bottom: 6px;">
-    <ion-card-title style="color: white;">{{item.Value.FirstName}} {{item.Value.LastName}}</ion-card-title>
-    {{getStatusName(item.Value.Status)}}
-  </ion-card-header>
-
-  <ion-card-content>
-    <b>Phone:</b> {{item.Value.PhoneNumber}}
-  </ion-card-content>
-
-  <ion-button fill="clear" style="color:white;">Details</ion-button>
-</ion-card> -->
 
 <ng-container *ngIf="loadedPic">
-  <div class="barber-card" *ngFor="let item of barbers.Value">
+  <div class="barber-card" *ngFor="let item of barbers.Value" [style.display]="allLoaded ? 'flex' : 'none'">
     <div style="height: 81px;width: 81px;">
-      <img [src]="item.Value.ImageUrl" style="height: 81px;width: 81px;border-radius: 16px;">
+      <img [src]="item.Value.ImageUrl" style="height: 81px;width: 81px;border-radius: 16px;" (load)="onImageLoad()">
       <div class="status-image">
         <img [src]="getStatusName(item.Value.Status)=='Active'?'../../../../assets/images/activeBarber.png':'../../../../assets/images/inActiveBarber.png'">
       </div>

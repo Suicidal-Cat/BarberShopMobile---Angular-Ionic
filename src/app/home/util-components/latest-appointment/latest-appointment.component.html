@@ -8,10 +8,10 @@
   <b>Your upcoming appointment</b>
 </div>
 
-<div class="app-card" *ngIf="latestAppointment" (click)="showModalApp()">
+<div class="app-card" *ngIf="latestAppointment" (click)="showModalApp()" [style.display]="isImageLoaded ? 'flex' : 'none'">
   <div class="app-info">
     <div class="pic">
-      <img [src]="latestAppointment.Barber.ImageUrl">
+      <img [src]="latestAppointment.Barber.ImageUrl" (load)="onImageLoad()">
     </div>
     <div class="info">
       <p style="margin-bottom: 5px;font-size: 16px;font-weight: 700;">

@@ -26,6 +26,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   noServicesMessage:boolean=false;
   maxPages:number=0;
   selectedPage:number=1;
+  showSpinner:boolean=false;
 
   constructor(private serviceService:ServiceService,private router:Router) { }
 
@@ -39,6 +40,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
       if(this.services.Links.find((link)=>link.Rel=="next")!=undefined)this.nextPage=true;
       else this.nextPage=false;
       if(this.serviceService.MaxPages!=0)this.maxPages=this.serviceService.MaxPages;
+      this.showSpinner=false;
     })
     this.categoriesSub=this.serviceService.serviceCategories.subscribe((categories)=>{
       if(categories.length>0){
@@ -48,23 +50,27 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   }
 
   ionViewWillEnter(): void {
+    this.showSpinner=true;
     this.serviceService.getServicesPagination()?.subscribe();
     this.serviceService.getServiceCategories()?.subscribe();
   }
 
   getPrevPage(){
+    this.showSpinner=true;
     const link=this.services.Links.find((link)=>link.Rel=="prev");
     this.serviceService.getServicesPagination(link?.Href)?.subscribe();
     this.selectedPage=this.selectedPage-1;
   }
 
   getNextPage(){
+    this.showSpinner=true;
     const link=this.services.Links.find((link)=>link.Rel=="next");
     this.serviceService.getServicesPagination(link?.Href)?.subscribe();
     this.selectedPage=this.selectedPage+1;
   }
 
   filterServices(serviceName:string="",category:string=""){
+    this.showSpinner=true;
     const link=this.services.Links.find((link)=>link.Rel=="curr");
     if(link){
       var href=link?.Href;
@@ -101,6 +107,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   }
 
   changePage(page:number){
+    this.showSpinner=true;
     const link=this.services.Links.find((link)=>link.Rel=="curr");
     if(link){
       var href=link?.Href;

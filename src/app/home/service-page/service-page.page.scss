@@ -20,7 +20,7 @@ input{
 .category-container{
     display: flex;
     gap:10px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .category-block{
@@ -70,11 +70,12 @@ ion-input{
 
 .pagination-cont{
     position: absolute;
-    bottom: 10px;
+    bottom: 7px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 15px;
 }
 
 .pagination-cont ion-icon{
@@ -103,4 +104,10 @@ ion-input{
     color: white;
     background-color: var(--ion-color-primary);
     border-radius: 50%;
+}
+
+ion-spinner{
+    color: var(--ion-color-secondary);
+    height: 38px;
+    width: 38px;
 }

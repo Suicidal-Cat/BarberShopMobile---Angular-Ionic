@@ -16,6 +16,7 @@ export class ReservationsPagePage implements OnInit,ViewWillEnter {
 
   appointments:LinkCollection<Appointment>[]=[];
   empty:boolean=true;
+  showSpinner:boolean=false;
 
   constructor(private appointmnetServce:AppointmentService) { }
 
@@ -48,11 +49,13 @@ export class ReservationsPagePage implements OnInit,ViewWillEnter {
   }
 
   getAppointments(date:string){
+    this.showSpinner=true;
     this.appointmnetServce.getAllAppointments(this.formatDate(date))?.subscribe(
       (data)=>{
         this.appointments=data.Value;
         if(this.appointments!=undefined && this.appointments.length>0)this.empty=false;
         else this.empty=true;
+        this.showSpinner=false;
       }
     )
   }

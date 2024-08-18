@@ -58,3 +58,9 @@ ion-input{
     background-color: var(--ion-color-primary);
     border-radius: 50%;
 }
+
+ion-spinner{
+    color: var(--ion-color-secondary);
+    height: 38px;
+    width: 38px;
+}

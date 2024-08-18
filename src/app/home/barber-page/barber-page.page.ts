@@ -23,10 +23,12 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
   noBarbersMessage:boolean=false;
   maxPages:number=0;
   selectedPage:number=1;
+  showSpinner:boolean=false;
 
   constructor(private barberService:BarberService,private router:Router) { }
 
   ngOnInit() {
+    this.showSpinner=false;
     this.barberSub=this.barberService.barbersPag.subscribe(
       (barbers)=>{
         if(barbers.Value.length==0)this.noBarbersMessage=true;
@@ -42,21 +44,30 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
   }
 
   ionViewWillEnter(): void {
-    this.barberService.getBarbersPagination()?.subscribe();
+    if(this.barbers.Value.length==0){
+      this.showSpinner=true;
+      this.barberService.getBarbersPagination()?.subscribe();
+    }
   }
 
   getPrevPage(){
+    this.showSpinner=true;
+    this.barbers.Value=[];
     const link=this.barbers.Links.find((link)=>link.Rel=="prev");
     this.barberService.getBarbersPagination(link?.Href)?.subscribe();
     this.selectedPage=this.selectedPage-1;
   }
   getNextPage(){
+    this.showSpinner=true;
+    this.barbers.Value=[];
     const link=this.barbers.Links.find((link)=>link.Rel=="next");
     this.barberService.getBarbersPagination(link?.Href)?.subscribe();
     this.selectedPage=this.selectedPage+1;
   }
 
   filterBarbers(barberName:string=""){
+    this.showSpinner=true;
+    this.barbers.Value=[];
     const link=this.barbers.Links.find((link)=>link.Rel=="curr");
     if(link){
       var href=link?.Href;
@@ -84,6 +95,8 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
   }
 
   changePage(page:number){
+    this.showSpinner=true;
+    this.barbers.Value=[];
     const link=this.barbers.Links.find((link)=>link.Rel=="curr");
     if(link){
       var href=link?.Href;
@@ -91,6 +104,10 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
       this.barberService.getBarbersPagination(href)?.subscribe();
       this.selectedPage=page;
     }
+  }
+  
+  picAreLoaded(){
+    this.showSpinner=false;
   }
 
 }

@@ -8,9 +8,9 @@
 <ion-content [fullscreen]="true">
   <app-toolbar></app-toolbar>
 
-  <h1 style="margin-left: 35px;">Services</h1>
-  <div style="width: 100%;margin-top: 5px;">
-    <div style="margin-top: 1.2rem;margin-left: 1rem;margin-right: 1rem;">
+  <h1 style="margin-left: 35px;margin-bottom: 0.3rem;margin-top: 0rem;">Services</h1>
+  <div style="width: 100%">
+    <div style="margin-top: 0.4rem;margin-left: 1rem;margin-right: 1rem;">
       <ion-input placeholder="Find a service" type="text"
       ngModel name="serviceName" #serviceName="ngModel" fill="outline" (ionInput)="onInput($event)"
       (keyup.enter)="onEnter($event,serviceName.value,selectedCategory)" class="ion-input-form search-input">
@@ -46,6 +46,10 @@
       </h1>
       <img src="../../../assets/images/Nothing Found.png" style="width: 100px;height: 100px;">
     </div>
+
+    <!-- <div *ngIf="showSpinner==true" style="margin-top: 2rem;display: flex;flex-direction: column;align-items: center;">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div> -->
 
     <app-service-cards [services]="services"></app-service-cards>
     

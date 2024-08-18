@@ -24,6 +24,7 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
   appSub!:Subscription;
 
   showContent:boolean=false;
+  isImageLoaded:boolean=false;
 
   constructor(private appointmentService:AppointmentService,private router:Router,
     private oneDrive:OneDriveService
@@ -38,15 +39,16 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
       if(data){
         this.latestAppointment=data.Value;
         this.links=data.Links;
-          this.oneDrive.getImageUrl(this.latestAppointment.Barber.ImageUrl).subscribe((data)=>{
-            if(this.latestAppointment){
-              if(data && data['@microsoft.graph.downloadUrl']){
-                this.latestAppointment.Barber.ImageUrl=data['@microsoft.graph.downloadUrl'];
-              }
-              else this.latestAppointment.Barber.ImageUrl='../../../../assets/images/maleBarber.jpg';
-              this.showContent=true;
-            }
-          })
+        this.showContent=true;
+          // this.oneDrive.getImageUrl(this.latestAppointment.Barber.ImageUrl).subscribe((data)=>{
+          //   if(this.latestAppointment){
+          //     if(data && data['@microsoft.graph.downloadUrl']){
+          //       this.latestAppointment.Barber.ImageUrl=data['@microsoft.graph.downloadUrl'];
+          //     }
+          //     else this.latestAppointment.Barber.ImageUrl='../../../../assets/images/maleBarber.jpg';
+          //     this.showContent=true;
+          //   }
+          // })
       }
     })
   }
@@ -110,7 +112,7 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
       });
       barberId=this.latestAppointment?.Barber.BarberId;
       this.modal.dismiss();
-      this.router.navigate(['home/appointment'], {
+      this.router.navigate(['home/appointment/choose-barbers'], {
         queryParams: {
             barberId: barberId,
             choosenServices: choosenServices.join(','),
@@ -130,6 +132,10 @@ export class LatestAppointmentComponent  implements OnInit,AfterViewInit,OnDestr
     const month = months[d.getMonth()];
 
     return `${month} ${days}`;
+  }
+
+  onImageLoad(){
+    this.isImageLoaded=true;;
   }
 
 
