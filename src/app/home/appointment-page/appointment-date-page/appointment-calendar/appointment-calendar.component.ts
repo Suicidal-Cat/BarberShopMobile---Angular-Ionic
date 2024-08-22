@@ -10,6 +10,7 @@ import { LinkCollection } from 'src/app/models/Hateoas/LinkCollection';
 import { Service } from 'src/app/models/ServiceD/service';
 import { AccountService } from 'src/app/services/Account/account.service';
 import { AppointmentService } from 'src/app/services/Appointment/appointment.service';
+import { BarberService } from 'src/app/services/Barber/barber.service';
 import { ServiceService } from 'src/app/services/ServiceD/service.service';
 
 
@@ -48,7 +49,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   isToastOpen = false;
 
   @Input() services!:LinkCollection<LinkCollection<Service>[]>;
-  @Input() barbers!:LinkCollection<LinkCollection<Barber>[]>;
+  //@Input() barbers!:LinkCollection<LinkCollection<Barber>[]>;
   barberInfo!:Barber;
   servicesInfo:Service[]=[];
 
@@ -62,7 +63,7 @@ export class AppointmentCalendarComponent  implements OnInit {
   constructor(private appointmentService:AppointmentService,private navCtr:NavController,
     private accountService:AccountService,private actionSheetCtrl: ActionSheetController,
     private serviceService:ServiceService,private animationCtrl: AnimationController,
-    private router:Router) {}
+    private router:Router,private barberService:BarberService) {}
 
 
   ngOnInit() {
@@ -294,15 +295,17 @@ export class AppointmentCalendarComponent  implements OnInit {
 
   openModal(){
     this.servicesInfo=[];
-    const barb=this.barbers.Value.find((bar)=>bar.Value.BarberId==this.appointmentService.barberApp.Value.BarberId);
-    if(barb)this.barberInfo=barb.Value;
+    const selectedBarber=this.appointmentService.barberApp;
+    const link=selectedBarber.Links.find((link)=>link.Rel=="get");
+    if(link)this.barberService.getBarber(link).subscribe(data=>{
+      this.barberInfo=data.Value;
+      this.isModalOpen=true;
+    })
 
     this.serviceIds.forEach(id => {
       const service=this.services.Value.find((serv)=>serv.Value.ServiceId==id);
       if(service)this.servicesInfo.push(service.Value);
     });
-
-    this.isModalOpen=true;
   }
 
   closeModal(){

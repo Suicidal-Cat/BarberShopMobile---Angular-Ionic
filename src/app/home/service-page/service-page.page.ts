@@ -41,6 +41,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
       else this.nextPage=false;
       if(this.serviceService.MaxPages!=0)this.maxPages=this.serviceService.MaxPages;
       this.showSpinner=false;
+      if(services.Value.length==0)this.maxPages=1;
     })
     this.categoriesSub=this.serviceService.serviceCategories.subscribe((categories)=>{
       if(categories.length>0){
@@ -56,17 +57,21 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   }
 
   getPrevPage(){
-    this.showSpinner=true;
-    const link=this.services.Links.find((link)=>link.Rel=="prev");
-    this.serviceService.getServicesPagination(link?.Href)?.subscribe();
-    this.selectedPage=this.selectedPage-1;
+    if(this.selectedPage>1){
+      this.showSpinner=true;
+      const link=this.services.Links.find((link)=>link.Rel=="prev");
+      this.serviceService.getServicesPagination(link?.Href)?.subscribe();
+      this.selectedPage=this.selectedPage-1;
+    }
   }
 
   getNextPage(){
-    this.showSpinner=true;
-    const link=this.services.Links.find((link)=>link.Rel=="next");
-    this.serviceService.getServicesPagination(link?.Href)?.subscribe();
-    this.selectedPage=this.selectedPage+1;
+    if(this.selectedPage<this.maxPages){
+      this.showSpinner=true;
+      const link=this.services.Links.find((link)=>link.Rel=="next");
+      this.serviceService.getServicesPagination(link?.Href)?.subscribe();
+      this.selectedPage=this.selectedPage+1;
+    }
   }
 
   filterServices(serviceName:string="",category:string=""){

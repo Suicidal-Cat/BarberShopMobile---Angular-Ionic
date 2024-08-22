@@ -40,6 +40,10 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
         else this.nextPage=false;
         if(this.barberService.MaxPages>0)this.maxPages=this.barberService.MaxPages;
         else this.maxPages=1;
+        if(barbers.Value.length==0){
+          this.showSpinner=false;
+          this.maxPages=1;
+        }
       })
   }
 
@@ -51,18 +55,22 @@ export class BarberPagePage implements OnInit,ViewWillEnter,OnDestroy {
   }
 
   getPrevPage(){
-    this.showSpinner=true;
-    this.barbers.Value=[];
-    const link=this.barbers.Links.find((link)=>link.Rel=="prev");
-    this.barberService.getBarbersPagination(link?.Href)?.subscribe();
-    this.selectedPage=this.selectedPage-1;
+    if(this.selectedPage>1){
+      this.showSpinner=true;
+      this.barbers.Value=[];
+      const link=this.barbers.Links.find((link)=>link.Rel=="prev");
+      this.barberService.getBarbersPagination(link?.Href)?.subscribe();
+      this.selectedPage=this.selectedPage-1;
+    }
   }
   getNextPage(){
-    this.showSpinner=true;
-    this.barbers.Value=[];
-    const link=this.barbers.Links.find((link)=>link.Rel=="next");
-    this.barberService.getBarbersPagination(link?.Href)?.subscribe();
-    this.selectedPage=this.selectedPage+1;
+    if(this.selectedPage<this.maxPages){
+      this.showSpinner=true;
+      this.barbers.Value=[];
+      const link=this.barbers.Links.find((link)=>link.Rel=="next");
+      this.barberService.getBarbersPagination(link?.Href)?.subscribe();
+      this.selectedPage=this.selectedPage+1;
+    }
   }
 
   filterBarbers(barberName:string=""){

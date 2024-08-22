@@ -57,9 +57,9 @@ export class AppointmentDatePagePage implements OnInit,ViewWillEnter {
       this.calculatePriceAndDuration(this.services);
       });
 
-    this.barberSrevice.getBarbers()?.subscribe((data)=>{
-      this.barbers=data;
-    })
+    // this.barberSrevice.getBarbers()?.subscribe((data)=>{
+    //   this.barbers=data;
+    // })
   }
 
   calculatePriceAndDuration(services:LinkCollection<LinkCollection<Service>[]>){

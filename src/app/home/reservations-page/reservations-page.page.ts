@@ -50,6 +50,7 @@ export class ReservationsPagePage implements OnInit,ViewWillEnter {
 
   getAppointments(date:string){
     this.showSpinner=true;
+    this.appointments=[];
     this.appointmnetServce.getAllAppointments(this.formatDate(date))?.subscribe(
       (data)=>{
         this.appointments=data.Value;

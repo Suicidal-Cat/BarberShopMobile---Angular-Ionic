@@ -100,7 +100,12 @@
       </div>
 
       <div>
-        <button class="confirm-button" (click)="createAppointment()">Confirm</button>
+        <button class="confirm-button" (click)="createAppointment()">
+          <div *ngIf="showSpinner">
+            <ion-spinner></ion-spinner>
+          </div>
+          <div *ngIf="!showSpinner">Confirm</div>
+        </button>
         <button class="change-button" (click)="closeModal()">Change</button>
       </div>
 
