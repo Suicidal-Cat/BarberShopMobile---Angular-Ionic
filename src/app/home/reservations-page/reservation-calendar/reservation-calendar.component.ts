@@ -38,18 +38,19 @@ export class ReservationCalendarComponent  implements OnInit {
   getAppointments(day:number,row:number,column:number){
 
     let date=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day);
+    this.selectedDay=day;
+    this.selectedWeek=row;
     if(row==0 && column<this.startColumnOfMonth){
-      console.log("PRETHODNI");
       date=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth()-1,day);
+      this.selectedMonthForDay=date;
       this.prevMonth();
     }
     if(row==this.daysInMonth.length-1 && column>this.endColumnOfMonth){
-      console.log("SLEDECI");
       date=new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth()+1,day);
+      this.selectedMonthForDay=date;
       this.nextMonth();
     }
 
-    this.selectedDay=day;
     this.selectedMonthForDay=date;
     this.selectedDateUser.emit(this.formatDate(date));
   }
@@ -78,7 +79,6 @@ export class ReservationCalendarComponent  implements OnInit {
     //   this.selectedDay=-1;
     //   this.selectedWeek=0;
     // }
-    this.selectedWeek=0;
     this.generateCalendar(this.currentMonth);
   }
 
@@ -142,13 +142,24 @@ export class ReservationCalendarComponent  implements OnInit {
     if(start.getMonth()==this.startMonth.getMonth() && this.selectedWeek==-1){
       for(let i=0;i<=row;i++){
         for(let j=0;j<7;j++){
-          if(daysInMonth[i][j]==this.startDay){
+          if(daysInMonth[i][j]==this.selectedDay){
             this.selectedWeek=i;
             i=row+1;
             j=7;
           }
         }
       }    
+    }
+
+    if(this.currentMonth.getMonth()==this.selectedMonthForDay.getMonth()){
+      for(let i=0;i<this.daysInMonth.length;i++){
+        for(let j=0;j<7;j++){
+          if(daysInMonth[i][j]==this.selectedDay){
+            this.selectedWeek=i;
+            break;
+          }
+        }
+      }
     }
 
     return daysInMonth;
