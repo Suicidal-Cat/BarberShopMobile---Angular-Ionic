@@ -31,6 +31,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   constructor(private serviceService:ServiceService,private router:Router) { }
 
   ngOnInit() {
+    this.selectedPage=1;
     this.servicesSub=this.serviceService.servicesPag.subscribe((services)=>{
       if(services.Value.length==0)this.noServicesMessage=true;
       else this.noServicesMessage=false;
@@ -51,6 +52,7 @@ export class ServicePagePage implements OnInit,ViewWillEnter,OnDestroy {
   }
 
   ionViewWillEnter(): void {
+    this.selectedPage=1;
     this.showSpinner=true;
     this.serviceService.getServicesPagination()?.subscribe();
     this.serviceService.getServiceCategories()?.subscribe();

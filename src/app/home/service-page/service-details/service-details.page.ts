@@ -131,4 +131,20 @@ export class ServiceDetailsPage implements OnInit,ViewWillEnter{
     this.navCotroller.navigateBack("home/tabs/service");
   }
 
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+        this.deleteService();
+      },
+    },
+  ];
+
 }
