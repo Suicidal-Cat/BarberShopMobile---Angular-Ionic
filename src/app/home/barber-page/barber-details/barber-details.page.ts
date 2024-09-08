@@ -80,6 +80,8 @@ export class BarberDetailsPage implements OnInit {
         return;
       }
 
+      if(this.barberId)this.inputFileText="Change image";
+
       if(link!=undefined)this.barberService.getBarber(link).subscribe(
         (data)=>{
           this.FirstName=data.Value.FirstName;

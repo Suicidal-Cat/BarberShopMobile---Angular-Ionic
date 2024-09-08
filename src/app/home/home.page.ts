@@ -35,12 +35,12 @@ export class HomePage implements ViewWillEnter{
 
     if(path){
       if(path?.includes("US"))image.setAttribute("src",path.replace("US",""));
-      else image.setAttribute("src", path.replace(".png", "US.png"));
+      else image.setAttribute("src", path.replace(".svg", "US.svg"));
     };
 
     if(this.selectedTab){
       const pathSelected=this.selectedTab.getAttribute("src");
-      if(pathSelected)this.selectedTab.setAttribute("src",pathSelected.replace(".png", "US.png"));
+      if(pathSelected)this.selectedTab.setAttribute("src",pathSelected.replace(".svg", "US.svg"));
       this.selectedTab=image;
     }
 

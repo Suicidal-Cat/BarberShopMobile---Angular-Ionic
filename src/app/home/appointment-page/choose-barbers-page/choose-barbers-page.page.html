@@ -6,7 +6,7 @@
       <p style="font-size: 16px;color:#A1A1A1;font-weight: normal;margin:0px;">Next: Choose services</p>
     </div>
     <div>
-      <img src="../../../../assets/images/1step.png">
+      <img src="../../../../assets/images/1step.svg">
     </div>
   </div>
 
@@ -19,7 +19,7 @@
     *ngFor="let barber of barbers" (click)="selectCard(barber)">
       <div class="barber-header">
         <img [src]="barber.Value.ImageUrl" (load)="onImageLoad()">
-        <p style="font-size: 12px;font-weight: 600;margin:4px 0px;">{{barber.Value.FirstName}} {{barber.Value.LastName}}</p>
+        <p style="font-size: 14px;font-weight: 600;margin:4px 0px;">{{barber.Value.FirstName}} {{barber.Value.LastName}}</p>
       </div>
       <div class="divider"></div>
       <div class="barber-body">
@@ -30,9 +30,13 @@
   </div>
 
 </ion-content>
-<div class="navigate-buttons" (click)="navigateToServices()">
-  <button [ngClass]="barberId!=0?'forward-button':'forward-button disabled-button'">
-    Confirm and continue
+<div class="navigate-buttons">
+  <button class="back-button" (click)="navigateToHome()">
+    <ion-icon name="chevron-back-outline" style="font-size:16px;color:var(--ion-color-primary)"></ion-icon>
+    Home
+  </button>
+  <button [ngClass]="barberId!=0?'forward-button':'forward-button disabled-button'" (click)="navigateToServices()">
+    Continue
     <ion-icon name="chevron-forward-outline" style="font-size:16px;color:white"></ion-icon>
   </button>
 </div>

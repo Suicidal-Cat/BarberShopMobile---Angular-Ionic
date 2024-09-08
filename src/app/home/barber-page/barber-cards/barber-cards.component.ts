@@ -22,12 +22,10 @@ export class BarberCardsComponent  implements OnInit,OnChanges{
   @Output() loaded:EventEmitter<boolean>=new EventEmitter();
   
 
-  constructor(private navCtr:NavController,private barberService:BarberService,private oneDrive:OneDriveService) { }
+  constructor(private navCtr:NavController,private barberService:BarberService,private oneDrive:OneDriveService) {
+   }
 
   ngOnInit() {
-    this.loadedPic=false;
-    this.loadedPicNum=0;
-    this.allLoaded=false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -44,6 +42,8 @@ export class BarberCardsComponent  implements OnInit,OnChanges{
       //   })
       // });
       this.loadedPic=true;
+      this.loadedPicNum=0;
+      this.allLoaded=false;
     }
   }
 

@@ -4,7 +4,7 @@
 </div>
 
 <ng-container *ngIf="showContent">
-<div *ngIf="latestAppointment" class="message">
+<div *ngIf="latestAppointment && isImageLoaded" class="message">
   <b>Your upcoming appointment</b>
 </div>
 

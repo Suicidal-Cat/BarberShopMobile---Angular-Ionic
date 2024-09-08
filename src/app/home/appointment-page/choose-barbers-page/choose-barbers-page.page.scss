@@ -17,7 +17,7 @@
     text-transform: initial;
     font-size: 16px;
     height: 46px;
-    width: 100%;
+    width: 47%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,11 +55,12 @@
 .barber-card{
     border-radius: 16px;
     border: 1px solid #C3C1C0;
-    height: 170px;
-    width: 137px;
+    height: 190px;
+    width: 153px;
 
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
 
     padding: 16px;
@@ -71,9 +72,23 @@
     background-color: rgba(212, 154, 50, 0.08);
 }
 
+.back-button{
+    border-radius: 8px;
+    border: 1px solid var(--ion-color-primary);
+    color: var(--ion-color-primary);
+    text-transform: initial;
+    font-size: 16px;
+    height: 46px;
+    width: 47%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:6px;
+}
+
 .barber-body p{
     margin: 3px 0px;
-    font-size: 9px;
+    font-size: 10px;
 }
 
 .barber-header{
@@ -81,8 +96,8 @@
 }
 
 .barber-header img{
-    height: 80px;
-    width: 80px;
+    height: 85px;
+    width: 85px;
     border-radius: 16px;
 }
 

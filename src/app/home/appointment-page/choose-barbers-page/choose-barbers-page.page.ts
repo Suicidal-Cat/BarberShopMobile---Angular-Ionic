@@ -65,8 +65,11 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter,OnDestroy {
   }
 
   ionViewWillEnter(): void {
-    this.showSpinner=true;
-    if(this.barbers.length<=0)this.barberService.getBarbers()?.subscribe();
+
+    if(this.barbers.length<=0){
+      this.showSpinner=true;  
+      this.barberService.getBarbers()?.subscribe();
+    }
   }
 
   selectCard(barber:LinkCollection<Barber>){
@@ -110,6 +113,10 @@ export class ChooseBarbersPagePage implements OnInit,ViewWillEnter,OnDestroy {
       this.allLoaded=true;
       this.loadedPicNum=0;
     }
+  }
+
+  navigateToHome() {
+    this.router.navigateByUrl("/home");
   }
 
 }

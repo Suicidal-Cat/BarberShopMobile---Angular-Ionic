@@ -41,7 +41,7 @@
           <ion-col size="auto" style="padding: 0px;">
             <ion-button class="upload" (click)="f.click()">
               <ion-img src="../../../../assets/images/imgFile.png" slot="end"></ion-img>
-              <div style="margin-right: 1rem;">{{inputFileText}}</div>
+              <div style="margin-right: 1rem;font-weight: 400;">{{inputFileText}}</div>
             </ion-button>
             <input type="file" (change)="loadImageFromDevice($event)" id="file-input"
                 accept="image/png, image/jpeg" #f class="ion-hide"> 

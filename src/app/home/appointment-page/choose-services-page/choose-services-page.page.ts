@@ -236,7 +236,6 @@ export class ChooseServicesPagePage implements OnInit,ViewWillEnter,OnDestroy,Vi
       const radioButtons = radioGroup.nativeElement.querySelectorAll('ion-radio');
 
       radioButtons.forEach((button: any) => {
-        console.log(button.value)
         if(this.choosenServices.includes(button.value)){
           radioGroup.nativeElement.value=button.value;
           this.servicesId[this.servicesId.length]={category:radioGroup.nativeElement.name,id:button.value};
