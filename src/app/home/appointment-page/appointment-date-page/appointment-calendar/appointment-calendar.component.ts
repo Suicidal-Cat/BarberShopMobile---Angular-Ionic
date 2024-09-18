@@ -100,7 +100,6 @@ export class AppointmentCalendarComponent  implements OnInit {
   
   showTimes(day:number,i:number=-1,j:number=-1){
     this.selectedTimeIndex=null;
-    this.selectedDay=day;
     //moramo da vidimo jel prethodni ili trenutni dan za mesec
     if(i==0 && j<this.startColumnOfMonth){
       let month:number;
@@ -131,6 +130,7 @@ export class AppointmentCalendarComponent  implements OnInit {
     else this.selectedMonth=this.currentMonth;
 
     if(day<=this.startDay)return;
+    this.selectedDay=day;
     if(day!=0){
       const formatedDate:string=this.formatDate(new Date(this.currentMonth.getFullYear(),this.currentMonth.getMonth(),day));
     this.appointmentService.getAvailableTimes(formatedDate,this.appDuration)?.subscribe((data)=>{
@@ -321,7 +321,8 @@ export class AppointmentCalendarComponent  implements OnInit {
   generateDayClass(day:number,i:number,j:number):string{
     let className="dayHeader";
 
-    if(this.currentMonth.getMonth()==this.startMonth.getMonth() && (day<=this.startDay || (i==0 && j<this.startColumnOfMonth)))className+=" dayUnavaiable";
+    //if(this.currentMonth.getMonth()==this.startMonth.getMonth() && (day<=this.startDay || (i==0 && j<this.startColumnOfMonth)))className+=" dayUnavaiable";
+    if((day<=this.startDay && this.currentMonth.getMonth()==this.startMonth.getMonth()) || (i==0 && j<this.startColumnOfMonth) || (i==this.daysInMonth.length-1 && j>this.endColumnOfMonth))className+=" dayUnavaiable";
     if(this.currentMonth.getMonth()==this.selectedMonth.getMonth() && day==this.selectedDay
     && !((i==0 && j<this.startColumnOfMonth) || (i==this.daysInMonth.length-1 && j>this.endColumnOfMonth)))
       className+=" selectedDay";
